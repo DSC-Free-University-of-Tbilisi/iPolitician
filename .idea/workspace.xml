@@ -5,6 +5,10 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="debug" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="5dde64e6-eb60-48f5-9c23-4660654b61ab" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +54,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Devi\Desktop\Android\iPolitician\app\src\main\res\drawable" />
       <recent name="C:\Users\Devi\Desktop\Android\iPolitician\app\src\main\res\mipmap-xxxhdpi" />
       <recent name="C:\Users\Devi\Desktop\Android\iPolitician\app\src\main\res\ic_launcher_geo" />
       <recent name="C:\Users\Devi\Desktop\Android\iPolitician\app" />
@@ -137,14 +142,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="803" y="391" width="317" height="257" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1920.1040@0.0.1920.1040" timestamp="1615564609235" />
-    <state x="740" y="262" key="FileChooserDialogImpl" timestamp="1615652395969">
+    <state x="740" y="262" key="FileChooserDialogImpl" timestamp="1615656449905">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="262" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1615652395969" />
+    <state x="740" y="262" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1615656449905" />
     <state x="830" y="413" key="Github.ShareDialog" timestamp="1615569507866">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="830" y="413" key="Github.ShareDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615569507866" />
+    <state width="1877" height="239" key="GridCell.Tab.0.bottom" timestamp="1615657832538">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1615657832538" />
+    <state width="1877" height="239" key="GridCell.Tab.0.center" timestamp="1615657832538">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1615657832538" />
+    <state width="1877" height="239" key="GridCell.Tab.0.left" timestamp="1615657832537">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1615657832537" />
+    <state width="1877" height="239" key="GridCell.Tab.0.right" timestamp="1615657832538">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1615657832538" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1615569425919">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
