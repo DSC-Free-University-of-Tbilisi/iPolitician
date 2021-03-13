@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1025308000632",
+    "project_id": "ipolitician-9084b",
+    "storage_bucket": "ipolitician-9084b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025308000632:android:49d914923d2f433d70488d",
+        "android_client_info": {
+          "package_name": "com.example.ipolitician"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025308000632-4pedhku51387l5n61b47445qhe2medsu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuXQhipNw0Q91GrwmuZFRjBgmOFLXT8Qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025308000632-4pedhku51387l5n61b47445qhe2medsu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
