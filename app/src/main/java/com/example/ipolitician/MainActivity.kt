@@ -24,11 +24,13 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val fireStore = FireStore()
 
-
-    private var uniqueID: String? = null
+    var uniqueID: String? = null
     private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
+
+    fun getId(): String? {
+        return uniqueID
+    }
 
     @Synchronized
     fun id(context: Context): String? {
