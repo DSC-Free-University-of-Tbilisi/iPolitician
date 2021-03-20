@@ -5,7 +5,12 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.Settings
 import android.provider.Settings.Secure.ANDROID_ID
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Menu
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -15,21 +20,43 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.firebase.FireStore
+import com.example.ipolitician.firebase.QA
+import com.example.ipolitician.structures.User
+import com.example.ipolitician.ui.slideshow.SlideshowFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    var uniqueID: String? = null
-    private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
 
-    fun getId(): String? {
-        return uniqueID
+    private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
+    private val FS = Firebase.firestore
+
+
+    companion object{
+        var uniqueID: String? = null
+        var user: User? = null
+//        set(value: User?) {
+//            user = value
+//            synchWithFireStore()
+//        }
+
+//        fun synchWithFireStore() {
+//            uniqueID?.let { it1 ->
+//                user?.let {
+//                    FS.collection("users").document(it1)
+//                        .set(it)
+//                        .addOnSuccessListener { Log.d("aeee", "gaaketa") }
+//                        .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
+//                }
+//            }
+//        }
     }
 
     @Synchronized
@@ -66,6 +93,7 @@ class MainActivity : AppCompatActivity() {
                 null
             ).show()
         }
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -81,6 +109,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        getUser()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -93,4 +122,56 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    fun getUser() {
+        uniqueID?.let {
+            FS.collection("users").document(it)
+                .get()
+                .addOnSuccessListener { usr ->
+                    usr
+                    if (usr.exists()) {
+                        user = usr.toObject(User::class.java)
+                    } else {
+                        val inflater =
+                            this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                        val pw = PopupWindow(
+                            inflater.inflate(R.layout.fragment_slideshow, null, false),
+                            window.decorView.width,
+                            window.decorView.height - 200,
+                            true
+                        )
+                        val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
+                        val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
+                        pw.contentView.findViewById<Button>(R.id.save).text = "Welcome"
+                        SlideshowFragment.setSpinner(
+                            spinner1,
+                            context = baseContext,
+                            SlideshowFragment.ages
+                        )
+                        SlideshowFragment.setSpinner(
+                            spinner2,
+                            context = baseContext,
+                            SlideshowFragment.genders
+                        )
+                        pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
+                            val usr = User(
+                                age = spinner1.selectedItemPosition,
+                                gender = spinner2.selectedItemPosition
+                            )
+                            user = usr
+                            FS.collection("users").document(uniqueID!!)
+                                .set(
+                                    usr
+                                )
+                                .addOnSuccessListener { Log.d("aeee", "gaaketa") }
+                                .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
+                            pw.dismiss()
+                        }
+                        pw.showAtLocation(findViewById(R.id.home), Gravity.CENTER, 0, 0)
+                    }
+                }
+        }
+    }
+
+
 }

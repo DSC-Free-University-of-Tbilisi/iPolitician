@@ -17,6 +17,7 @@ import com.example.ipolitician.structures.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.FieldPosition
 
 
 class SlideshowFragment : Fragment() {
@@ -37,73 +38,52 @@ class SlideshowFragment : Fragment() {
 //        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
-        val ages = arrayOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
-        val genders = arrayOf("Male", "Female", "Non-binary/third gender")
 
         // access the spinner
         val spinner1 = root.findViewById<Spinner>(R.id.spinner)
         val spinner2 = root.findViewById<Spinner>(R.id.spinner2)
-        if (spinner1 != null && spinner2 != null) {
-            val adapter1 = ArrayAdapter(
-                root.context,
-                android.R.layout.simple_spinner_dropdown_item, ages
-            )
-            val adapter2 = ArrayAdapter(
-                root.context,
-                android.R.layout.simple_spinner_dropdown_item, genders
-            )
-            spinner1.adapter = adapter1
-            spinner2.adapter = adapter2
 
-            spinner1.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-                ) {
-                    Toast.makeText(
-                        root.context,
-                        "You selected " + ages[position], Toast.LENGTH_SHORT
-                    ).show()
-                }
+        setSpinner(spinner1, root.context, ages, MainActivity.user!!.age)
+        setSpinner(spinner2, root.context, genders, MainActivity.user!!.gender)
 
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
-                }
-            }
-
-            spinner2.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-                ) {
-                    Toast.makeText(
-                        root.context,
-                        "You selected " + genders[position], Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
-                }
-            }
-        }
         val but = root.findViewById<Button>(R.id.save)
 
-        but.setOnClickListener {
-            (activity as MainActivity).uniqueID?.let { it1 ->
+        setBtnListener(but, onClick = {
+            MainActivity.uniqueID?.let { it1 ->
+                val usr = User(
+                    age = spinner1.selectedItemPosition,
+                    gender = spinner2.selectedItemPosition
+                )
+                MainActivity.user = usr
                 FS.collection("users").document(it1)
-                    .set(
-                        User(
-                            age = spinner1.selectedItem.toString(),
-                            gender = spinner2.selectedItem.toString()
-                        )
-                    )
+                    .set(usr)
                     .addOnSuccessListener { Log.d("aeee", "gaaketa") }
                     .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
             }
-        }
+        })
+
         return root
+    }
+
+    companion object {
+        val ages = arrayOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
+        val genders = arrayOf("Male", "Female", "Non-binary/third gender")
+
+        fun setSpinner(spinner: Spinner, context: Context, arr: Array<String>, position: Int = 1){
+            if (spinner != null) {
+                val adapter = ArrayAdapter(
+                    context,
+                    android.R.layout.simple_spinner_dropdown_item, arr
+                )
+                spinner.adapter = adapter
+                spinner.setSelection(position)
+            }
+        }
+
+        fun setBtnListener(button: Button, onClick: () -> Unit){
+            button.setOnClickListener {
+                onClick()
+            }
+        }
     }
 }

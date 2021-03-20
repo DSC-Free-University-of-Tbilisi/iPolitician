@@ -1,16 +1,16 @@
 package com.example.ipolitician.recycler
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
 import com.example.ipolitician.firebase.QA
-import com.example.ipolitician.structures.Answer
 import com.example.ipolitician.structures.Question
 
 
-class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>) : RecyclerView.Adapter<QuestionsRecyclerViewHolder>() {
+class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>, private var answers: ArrayList<Int>) : RecyclerView.Adapter<QuestionsRecyclerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionsRecyclerViewHolder {
         return QuestionsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.question_holder, parent, false))
@@ -29,5 +29,12 @@ class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>) : Recyc
             holder.answers.addView(ans)
         }
 
+        holder.answers.setOnCheckedChangeListener { _, i ->
+            answers[position] = i
+        }
+    }
+
+    fun getAnswers(): ArrayList<Int> {
+        return answers
     }
 }

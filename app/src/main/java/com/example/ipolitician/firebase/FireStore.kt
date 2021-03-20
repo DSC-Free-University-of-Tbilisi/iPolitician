@@ -6,7 +6,6 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-
 data class QA(
     val question: String = "",
     val answers: List<String> = listOf()
@@ -48,7 +47,6 @@ class FireStore {
                 Log.d("aeee", "${dc.id}")
                 qas.add(dc.toObject(QA::class.java))
             }
-
         }
     }
 
