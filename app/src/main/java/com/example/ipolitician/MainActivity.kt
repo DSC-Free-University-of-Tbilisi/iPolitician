@@ -21,6 +21,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.firebase.FireStore
 import com.example.ipolitician.firebase.QA
+import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
 import com.example.ipolitician.ui.slideshow.SlideshowFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -29,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -128,7 +130,6 @@ class MainActivity : AppCompatActivity() {
             FS.collection("users").document(it)
                 .get()
                 .addOnSuccessListener { usr ->
-                    usr
                     if (usr.exists()) {
                         user = usr.toObject(User::class.java)
                     } else {
@@ -160,9 +161,11 @@ class MainActivity : AppCompatActivity() {
                             )
                             user = usr
                             FS.collection("users").document(uniqueID!!)
-                                .set(
-                                    usr
-                                )
+                                .set(usr)
+                                .addOnSuccessListener { Log.d("aeee", "gaaketa") }
+                                .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
+                            FS.collection("submissions").document(uniqueID!!)
+                                .set(Selected(selected = arrayListOf(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1)))
                                 .addOnSuccessListener { Log.d("aeee", "gaaketa") }
                                 .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
                             pw.dismiss()

@@ -69,7 +69,7 @@ class SlideshowFragment : Fragment() {
         val ages = arrayOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
         val genders = arrayOf("Male", "Female", "Non-binary/third gender")
 
-        fun setSpinner(spinner: Spinner, context: Context, arr: Array<String>, position: Int = 1){
+        fun setSpinner(spinner: Spinner, context: Context, arr: Array<String>, position: Int = 0){
             if (spinner != null) {
                 val adapter = ArrayAdapter(
                     context,

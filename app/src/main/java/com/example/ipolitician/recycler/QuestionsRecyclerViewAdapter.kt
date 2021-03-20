@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
 import com.example.ipolitician.firebase.QA
 import com.example.ipolitician.structures.Question
+import com.example.ipolitician.structures.Selected
 
 
-class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>, private var answers: ArrayList<Int>) : RecyclerView.Adapter<QuestionsRecyclerViewHolder>() {
+class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>, private var selected: Selected) : RecyclerView.Adapter<QuestionsRecyclerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionsRecyclerViewHolder {
         return QuestionsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.question_holder, parent, false))
@@ -23,18 +24,19 @@ class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>, private
     override fun onBindViewHolder(holder: QuestionsRecyclerViewHolder, position: Int) {
         holder.question.text = (position+1).toString() + "). " + questions[position].question
 
-        for(answer in  questions[position].answers) {
+        questions[position].answers.forEachIndexed { index, answer ->
             var ans = RadioButton(holder.answers.context)
             ans.text = answer
             holder.answers.addView(ans)
         }
 
+        holder.answers.check(selected.selected[position])
         holder.answers.setOnCheckedChangeListener { _, i ->
-            answers[position] = i
+            selected.selected[position] = i
         }
     }
 
-    fun getAnswers(): ArrayList<Int> {
-        return answers
+    fun getSelected(): Selected{
+        return selected
     }
 }
