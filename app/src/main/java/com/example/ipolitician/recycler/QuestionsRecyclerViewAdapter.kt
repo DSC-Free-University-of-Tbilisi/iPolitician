@@ -29,8 +29,9 @@ class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>, private
             ans.text = answer
             holder.answers.addView(ans)
         }
-
-        holder.answers.check(selected.selected[position])
+        if(selected.selected[position] > 0) {
+            holder.answers.check(selected.selected[position])
+        }
         holder.answers.setOnCheckedChangeListener { _, i ->
             selected.selected[position] = i
         }

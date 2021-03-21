@@ -28,6 +28,7 @@ class GalleryFragment : Fragment() {
     private var selected: Selected = Selected()
     private val FS = Firebase.firestore
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)

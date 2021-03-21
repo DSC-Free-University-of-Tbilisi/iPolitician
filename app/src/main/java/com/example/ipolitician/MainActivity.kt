@@ -3,13 +3,10 @@ package com.example.ipolitician
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.Settings
-import android.provider.Settings.Secure.ANDROID_ID
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -19,8 +16,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.ipolitician.firebase.FireStore
-import com.example.ipolitician.firebase.QA
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
 import com.example.ipolitician.ui.slideshow.SlideshowFragment
@@ -30,7 +25,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -100,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
 
+        navView.itemIconTintList = null
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
