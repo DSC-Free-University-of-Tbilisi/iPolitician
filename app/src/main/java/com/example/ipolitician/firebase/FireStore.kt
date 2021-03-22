@@ -10,33 +10,19 @@ data class QA(
     val question: String = "",
     val answers: List<String> = listOf()
 )
-
+/* Example */
 class FireStore {
     private val FS = Firebase.firestore
     var qas: MutableList<QA> = ArrayList()
 
-    init {
-//        qas.add(QA(question = "rao aba?", answers = listOf("ki", "ara")))
-//        qas.add(QA(question = "ras vaketebt?", answers = listOf("ara", "ki")))
-//        qas.add(QA(question = "ras vaketebt?", answers = listOf("ara", "ki")))
-//        qas.add(QA(question = "ras vaketebt?", answers = listOf("ara", "ki")))
-//        qas.add(QA(question = "ras vaketebt?", answers = listOf("ara", "ki")))
-//        qas.add(QA(question = "ras vaketebt?", answers = listOf("ara", "ki")))
-//        qas.add(QA(question = "ras vaketebt?", answers = listOf("ara", "ki")))
-
-    }
+    init { }
 
     fun add2FireStore(){
-//        db.collection("questions").get().addOnSuccessListener { documents ->
-//            for (dc in documents) {
-//                Log.d("aeee", "${dc.id}")
-//            }
-//        }
         qas.forEachIndexed { index, qa ->
             FS.collection("questions").document("question$index")
                 .set(qa)
-                .addOnSuccessListener { Log.d("aeee", "gaaketa") }
-                .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
+                .addOnSuccessListener { Log.d("listener", "yep") }
+                .addOnFailureListener { Log.d("listener", "nope") }
         }
     }
 

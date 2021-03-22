@@ -28,8 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:background="@drawable/checked"
-        android:src="@drawable/check"
+        android:src="@drawable/ic_submit"
         android:visibility="invisible"
         app:layout_behavior="com.example.ipolitician.recycler.SubmitFloatLayout" />
 

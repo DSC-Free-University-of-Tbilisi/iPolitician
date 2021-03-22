@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_population"
+            android:icon="@drawable/ic_nav_public"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_gallery"
@@ -14,7 +14,7 @@
             android:title="@string/menu_gallery" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/cv"
+            android:icon="@drawable/ic_nav_profile"
             android:title="@string/menu_slideshow" />
     </group>
 
@@ -22,15 +22,15 @@
         <menu>
             <item
                 android:id="@+id/nav_vote"
-                android:icon="@drawable/vote"
+                android:icon="@drawable/ic_nav_vote"
                 android:title="Vote" />
             <item
                 android:id="@+id/nav_problems"
-                android:icon="@drawable/newspaper"
+                android:icon="@drawable/ic_nav_problems"
                 android:title="Problems" />
             <item
                 android:id="@+id/nav_vocab"
-                android:icon="@drawable/book"
+                android:icon="@drawable/ic_nav_vocab"
                 android:title="Vocabulary" />
         </menu>
     </item>

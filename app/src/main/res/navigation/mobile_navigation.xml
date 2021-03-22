@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.ipolitician.ui.home.HomeFragment"
+        android:name="com.example.ipolitician.ui.publics.PublicFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_public" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.ipolitician.ui.gallery.GalleryFragment"
+        android:name="com.example.ipolitician.ui.survey.SurveyFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_survey" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.ipolitician.ui.slideshow.SlideshowFragment"
+        android:name="com.example.ipolitician.ui.profile.ProfileFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>

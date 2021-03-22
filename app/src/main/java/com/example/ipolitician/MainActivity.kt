@@ -18,7 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
-import com.example.ipolitician.ui.slideshow.SlideshowFragment
+import com.example.ipolitician.ui.profile.ProfileFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -30,29 +30,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-
     private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
     private val FS = Firebase.firestore
-
 
     companion object{
         var uniqueID: String? = null
         var user: User? = null
-//        set(value: User?) {
-//            user = value
-//            synchWithFireStore()
-//        }
-
-//        fun synchWithFireStore() {
-//            uniqueID?.let { it1 ->
-//                user?.let {
-//                    FS.collection("users").document(it1)
-//                        .set(it)
-//                        .addOnSuccessListener { Log.d("aeee", "gaaketa") }
-//                        .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
-//                }
-//            }
-//        }
     }
 
     @Synchronized
@@ -76,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val id: String = Settings.Secure.getString(contentResolver, ANDROID_ID)
         val id = id(context = this)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -106,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        getUser()
+        setUpUser()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun getUser() {
+    fun setUpUser() {
         uniqueID?.let {
             FS.collection("users").document(it)
                 .get()
@@ -131,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                         val inflater =
                             this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
                         val pw = PopupWindow(
-                            inflater.inflate(R.layout.fragment_slideshow, null, false),
+                            inflater.inflate(R.layout.fragment_profile, null, false),
                             window.decorView.width,
                             window.decorView.height - 200,
                             true
@@ -139,15 +121,15 @@ class MainActivity : AppCompatActivity() {
                         val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
                         val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
                         pw.contentView.findViewById<Button>(R.id.save).text = "Welcome"
-                        SlideshowFragment.setSpinner(
+                        ProfileFragment.setSpinner(
                             spinner1,
                             context = baseContext,
-                            SlideshowFragment.ages
+                            ProfileFragment.ages
                         )
-                        SlideshowFragment.setSpinner(
+                        ProfileFragment.setSpinner(
                             spinner2,
                             context = baseContext,
-                            SlideshowFragment.genders
+                            ProfileFragment.genders
                         )
                         pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
                             val usr = User(
@@ -157,12 +139,12 @@ class MainActivity : AppCompatActivity() {
                             user = usr
                             FS.collection("users").document(uniqueID!!)
                                 .set(usr)
-                                .addOnSuccessListener { Log.d("aeee", "gaaketa") }
-                                .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
+                                .addOnSuccessListener { Log.d("listener", "yep") }
+                                .addOnFailureListener { Log.d("listener", "nope") }
                             FS.collection("submissions").document(uniqueID!!)
                                 .set(Selected(selected = arrayListOf(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1)))
-                                .addOnSuccessListener { Log.d("aeee", "gaaketa") }
-                                .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
+                                .addOnSuccessListener { Log.d("listener", "yep") }
+                                .addOnFailureListener { Log.d("listener", "nope") }
                             pw.dismiss()
                         }
                         pw.showAtLocation(findViewById(R.id.home), Gravity.CENTER, 0, 0)
