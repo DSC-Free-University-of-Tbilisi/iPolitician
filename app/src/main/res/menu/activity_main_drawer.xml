@@ -5,33 +5,35 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_public"
             android:icon="@drawable/ic_nav_public"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_survey"
             android:icon="@drawable/checking"
             android:title="@string/menu_gallery" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_nav_profile"
             android:title="@string/menu_slideshow" />
     </group>
 
     <item android:title="App Features">
         <menu>
-            <item
-                android:id="@+id/nav_vote"
-                android:icon="@drawable/ic_nav_vote"
-                android:title="Vote" />
-            <item
-                android:id="@+id/nav_problems"
-                android:icon="@drawable/ic_nav_problems"
-                android:title="Problems" />
-            <item
-                android:id="@+id/nav_vocab"
-                android:icon="@drawable/ic_nav_vocab"
-                android:title="Vocabulary" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_vote"
+                    android:icon="@drawable/ic_nav_vote"
+                    android:title="Vote" />
+                <item
+                    android:id="@+id/nav_problems"
+                    android:icon="@drawable/ic_nav_problems"
+                    android:title="Problems" />
+                <item
+                    android:id="@+id/nav_vocab"
+                    android:icon="@drawable/ic_nav_vocab"
+                    android:title="Vocabulary" />
+            </group>
         </menu>
     </item>
 </menu>

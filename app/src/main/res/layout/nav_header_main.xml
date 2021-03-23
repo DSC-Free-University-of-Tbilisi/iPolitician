@@ -34,7 +34,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/ic_georg" />
 
             <TextView
                 android:layout_width="match_parent"
