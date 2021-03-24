@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
-import com.example.ipolitician.firebase.QA
 import com.example.ipolitician.structures.PV
-import com.example.ipolitician.structures.Question
 import com.example.ipolitician.structures.Selected
 
 

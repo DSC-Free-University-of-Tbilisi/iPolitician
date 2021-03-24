@@ -95,7 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Status"
+        android:text="Region"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"

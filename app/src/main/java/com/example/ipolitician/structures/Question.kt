@@ -1,8 +1,8 @@
 package com.example.ipolitician.structures
 
-data class Question(
-    val id: Int,
-    val question: String
+data class QA(
+    val question: String = "",
+    val answers: List<String> = listOf()
 )
 
 data class Selected(

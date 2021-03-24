@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
-import com.example.ipolitician.firebase.QA
 import com.example.ipolitician.recycler.QuestionsRecyclerViewAdapter
+import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
