@@ -8,3 +8,8 @@ data class QA(
 data class Selected(
     val selected: ArrayList<Int> = arrayListOf()
 )
+
+data class Party(
+    val displayName: String = "",
+    val selected: ArrayList<Int> = arrayListOf()
+)

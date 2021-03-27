@@ -29,7 +29,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_submit"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_behavior="com.example.ipolitician.recycler.SubmitFloatLayout" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

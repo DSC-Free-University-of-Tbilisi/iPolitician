@@ -10,33 +10,55 @@ import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.Selected
 
 
-class QuestionsRecyclerViewAdapter(private var questions: ArrayList<QA>, private var selected: Selected) : RecyclerView.Adapter<QuestionsRecyclerViewHolder>() {
+class QuestionsRecyclerViewAdapter(
+    private var questions: ArrayList<QA>,
+    private var selected: Selected
+) : RecyclerView.Adapter<QuestionsRecyclerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionsRecyclerViewHolder {
-        return QuestionsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.question_holder, parent, false))
+        return QuestionsRecyclerViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.question_holder,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
         return questions.size
     }
 
-    override fun onBindViewHolder(holder: QuestionsRecyclerViewHolder, position: Int) {
-        holder.question.text = (position+1).toString() + "). " + questions[position].question
+    private fun clearHolder(holder: QuestionsRecyclerViewHolder) {
+        val count: Int = holder.answers.childCount
+        if (count > 0) {
+            for (i in count - 1 downTo 0) {
+                val o = holder.answers.getChildAt(i)
+                if (o is RadioButton) {
+                    holder.answers.removeViewAt(i)
+                }
+            }
+        }
+    }
 
-        questions[position].answers.forEachIndexed { index, answer ->
+    override fun onBindViewHolder(holder: QuestionsRecyclerViewHolder, position: Int) {
+        clearHolder(holder)
+        holder.question.text = (position+1).toString() + "). " + questions[position].question
+        for (answer in questions[position].answers){
             var ans = RadioButton(holder.answers.context)
             ans.text = answer
             holder.answers.addView(ans)
         }
-        if(selected.selected[position] > 0) {
-            holder.answers.check(selected.selected[position])
+        Log.d("aeeee", selected.selected[position].toString() + " " + position.toString())
+        if(selected.selected[position] != -1) {
+            (holder.answers.getChildAt(selected.selected[position]) as RadioButton).isChecked = true
         }
-        holder.answers.setOnCheckedChangeListener { _, i ->
-            selected.selected[position] = i
+        holder.answers.setOnCheckedChangeListener { radio, _ ->
+            selected.selected[holder.adapterPosition] = radio.indexOfChild(radio.findViewById(radio.checkedRadioButtonId))
         }
     }
 
-    fun getSelected(): Selected{
+    fun getSelected(): Selected {
         return selected
     }
 }

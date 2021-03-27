@@ -24,30 +24,9 @@ class PublicFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_public, container, false)
 
-        val aaChartView = root.findViewById<AAChartView>(R.id.aa_chart_view)
+
         val aaChartView2 = root.findViewById<AAChartView>(R.id.aa_chart_view2)
-        val aaChartModel : AAChartModel = AAChartModel()
-            .chartType(AAChartType.Column)
-            .title("title")
-            .subtitle("subtitle")
-            .backgroundColor("#ffffff")
-            .polar(true)
-            .series(
-                arrayOf(
-                    AASeriesElement()
-                        .name("Tokyo")
-                        .data(arrayOf(30)),
-                    AASeriesElement()
-                        .name("NewYork")
-                        .data(arrayOf(15)),
-                    AASeriesElement()
-                        .name("London")
-                        .data(arrayOf(45)),
-                    AASeriesElement()
-                        .name("Berlin")
-                        .data(arrayOf(10))
-                )
-            )
+
         val aaChartModel2 : AAChartModel = AAChartModel()
             .chartType(AAChartType.Bar)
             .title("title")
@@ -69,7 +48,6 @@ class PublicFragment : Fragment() {
                         .data(arrayOf(60))
                 )
             )
-        aaChartView.aa_drawChartWithChartModel(aaChartModel)
         aaChartView2.aa_drawChartWithChartModel(aaChartModel2)
 
         val pie = AnyChart.pie()

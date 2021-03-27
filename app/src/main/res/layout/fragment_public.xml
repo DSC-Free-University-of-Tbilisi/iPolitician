@@ -20,12 +20,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
-                android:id="@+id/aa_chart_view"
-                android:layout_width="match_parent"
-                android:layout_height="350dp">
-            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
-
             <com.anychart.AnyChartView
                 android:id="@+id/any_chart_view"
                 android:layout_width="match_parent"
