@@ -7,17 +7,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.publics.PublicFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
+                android:id="@+id/aa_chart_view"
+                android:layout_width="match_parent"
+                android:layout_height="350dp">
+            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
+
+            <com.anychart.AnyChartView
+                android:id="@+id/any_chart_view"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                />
+            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
+                android:id="@+id/aa_chart_view2"
+                android:layout_width="match_parent"
+                android:layout_height="350dp">
+            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
