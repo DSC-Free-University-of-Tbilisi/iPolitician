@@ -5,7 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.publics.PublicFragment">
+    tools:context=".nav.publics.PublicFragment">
 
     <ScrollView
         android:layout_width="match_parent"

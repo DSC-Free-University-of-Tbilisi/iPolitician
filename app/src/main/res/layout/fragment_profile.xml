@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/design_default_color_background"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context=".nav.profile.ProfileFragment">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -95,7 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Status"
+        android:text="Region"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"

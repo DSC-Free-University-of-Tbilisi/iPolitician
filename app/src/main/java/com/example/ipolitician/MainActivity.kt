@@ -18,7 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
-import com.example.ipolitician.ui.profile.ProfileFragment
+import com.example.ipolitician.nav.profile.ProfileFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -81,9 +81,10 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,
-                R.id.nav_gallery,
-                R.id.nav_slideshow
+                R.id.nav_public,
+                R.id.nav_survey,
+                R.id.nav_profile,
+                R.id.nav_problems
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
