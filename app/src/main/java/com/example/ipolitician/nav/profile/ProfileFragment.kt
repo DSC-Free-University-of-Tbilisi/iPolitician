@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.structures.User
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -38,9 +39,11 @@ class ProfileFragment : Fragment() {
         // access the spinner
         val spinner1 = root.findViewById<Spinner>(R.id.spinner)
         val spinner2 = root.findViewById<Spinner>(R.id.spinner2)
+        val spinner3 = root.findViewById<Spinner>(R.id.spinner3)
 
         setSpinner(spinner1, root.context, ages, MainActivity.user!!.age)
         setSpinner(spinner2, root.context, genders, MainActivity.user!!.gender)
+        setSpinner(spinner3, root.context, regions)
 
         val but = root.findViewById<Button>(R.id.save)
 
@@ -64,6 +67,7 @@ class ProfileFragment : Fragment() {
     companion object {
         val ages = arrayOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
         val genders = arrayOf("Male", "Female", "Non-binary/third gender")
+        val regions = arrayOf("coming soon")
 
         fun setSpinner(spinner: Spinner, context: Context, arr: Array<String>, position: Int = 0){
             if (spinner != null) {
@@ -79,6 +83,10 @@ class ProfileFragment : Fragment() {
         fun setBtnListener(button: Button, onClick: () -> Unit){
             button.setOnClickListener {
                 onClick()
+                Snackbar.make(it, "Profile saved successfully.", Snackbar.LENGTH_LONG).setAction(
+                    "Action",
+                    null
+                ).show()
             }
         }
     }

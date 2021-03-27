@@ -23,14 +23,16 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_vote"
+                    android:enabled="false"
                     android:icon="@drawable/ic_nav_vote"
-                    android:title="Vote" />
+                    android:title="Election" />
                 <item
                     android:id="@+id/nav_problems"
                     android:icon="@drawable/ic_nav_problems"
                     android:title="Problems" />
                 <item
                     android:id="@+id/nav_vocab"
+                    android:enabled="false"
                     android:icon="@drawable/ic_nav_vocab"
                     android:title="Vocabulary" />
             </group>

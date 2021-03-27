@@ -45,9 +45,9 @@ class ProblemsFragment : Fragment() {
                 problems.add(dc.toObject(PV::class.java))
             }
             selected.selected.add(-1)
+            selected.selected.add(1)
             selected.selected.add(-1)
-            selected.selected.add(-1)
-            selected.selected.add(-1)
+            selected.selected.add(1)
             ProblemsRecyclerView.adapter =  ProblemsRecyclerViewAdapter(problems, selected)
 //            FS.collection("submissions").document(MainActivity.uniqueID!!).get().addOnSuccessListener { document ->
 //                selected = document.toObject(Selected::class.java)!!

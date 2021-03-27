@@ -24,6 +24,7 @@ import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -76,14 +77,19 @@ class SurveyFragment : Fragment() {
                 .addOnFailureListener { Log.d("listener", "nope") }
 
             configureFragment(root, false)
+
+            Snackbar.make(it, "Survey submitted successfully.", Snackbar.LENGTH_LONG).setAction(
+                "Action",
+                null
+            ).show()
         }
     }
 
     private fun configureChart(root: View) {
         val aaChartModel : AAChartModel = AAChartModel()
             .chartType(AAChartType.Column)
-            .title("title")
-            .subtitle("subtitle")
+            .title("Parties you match the most")
+            .subtitle("remember your vote counts")
             .backgroundColor("#ffffff")
             .polar(true)
             .series( chartArray.map{ AASeriesElement().name(it.displayName).data(arrayOf(calculateCompatibility(it.selected))) }.toTypedArray() )
@@ -128,24 +134,9 @@ class SurveyFragment : Fragment() {
 
         FS.collection("parties").get().addOnSuccessListener { documents ->
             for (dc in documents) {
-                Log.d("aeeeee", "${dc.id}")
+                Log.d("load", "${dc.id}")
                 chartArray.add(dc.toObject(Party::class.java))
             }
         }
-
-//        FS.collection("partys").get().addOnSuccessListener { documents ->
-//            for (dc in documents) {
-//                Log.d("aeeeee", "${dc.id}")
-//                Log.d("aeeeee", "${dc["question0"]}")
-//                var sl = Selected()
-//                for(i in 0..14){
-//                    sl.selected.add((dc["question${i}"] as Long).toInt())
-//                }
-//                FS.collection("parties")
-//                    .document(dc.id)
-//                    .set(sl)
-//                    .addOnSuccessListener {}
-//            }
-//        }
     }
 }
