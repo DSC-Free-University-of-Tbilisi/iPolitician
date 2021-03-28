@@ -6,7 +6,8 @@ data class QA(
 )
 
 data class Selected(
-    val selected: ArrayList<Int> = arrayListOf()
+    val selected: ArrayList<Int> = arrayListOf(),
+    var party: String = ""
 )
 
 data class Party(

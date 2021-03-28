@@ -23,13 +23,33 @@
             <com.anychart.AnyChartView
                 android:id="@+id/any_chart_view"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                />
-            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
-                android:id="@+id/aa_chart_view2"
-                android:layout_width="match_parent"
                 android:layout_height="350dp">
-            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
+
+            </com.anychart.AnyChartView>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Filters" />
+
+            <Spinner
+                android:id="@+id/spinner4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp" />
+
+            <Spinner
+                android:id="@+id/spinner5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp" />
+
+<!--            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView-->
+<!--                android:id="@+id/aa_chart_view2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="350dp">-->
+<!--            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>-->
         </LinearLayout>
     </ScrollView>
 

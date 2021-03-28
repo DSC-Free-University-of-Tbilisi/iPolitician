@@ -71,10 +71,8 @@ class SurveyFragment : Fragment() {
     private fun configureFloatingButton(root: View){
         fab.setOnClickListener {
             selected = (QuestionsRecyclerView.adapter as QuestionsRecyclerViewAdapter).getSelected()
-            FS.collection("submissions").document(MainActivity.uniqueID!!)
-                .set(selected)
-                .addOnSuccessListener { Log.d("listener", "yep") }
-                .addOnFailureListener { Log.d("listener", "nope") }
+
+
 
             configureFragment(root, false)
 
@@ -82,6 +80,13 @@ class SurveyFragment : Fragment() {
                 "Action",
                 null
             ).show()
+
+            selected.party = chartArray.get(0).displayName
+
+            FS.collection("submissions").document(MainActivity.uniqueID!!)
+                .set(selected)
+                .addOnSuccessListener { Log.d("listener", "yep") }
+                .addOnFailureListener { Log.d("listener", "nope") }
         }
     }
 
