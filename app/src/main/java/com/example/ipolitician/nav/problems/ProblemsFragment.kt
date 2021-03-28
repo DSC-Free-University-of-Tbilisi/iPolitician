@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.example.ipolitician.recycler.ProblemsRecyclerViewAdapter
 import com.example.ipolitician.recycler.QuestionsRecyclerViewAdapter
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.structures.Selected
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -33,6 +35,12 @@ class ProblemsFragment : Fragment() {
 
         ProblemsRecyclerView = root.findViewById(R.id.problems_recyclerview)
         ProblemsRecyclerView.layoutManager = LinearLayoutManager(context)
+        root.findViewById<Button>(R.id.add_post).setOnClickListener {
+            Snackbar.make(it, "Post what's in your mind - app feature", Snackbar.LENGTH_LONG).setAction(
+                "Action",
+                null
+            ).show()
+        }
 
         setFromFireStore()
         return root
