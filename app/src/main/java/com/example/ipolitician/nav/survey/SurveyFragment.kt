@@ -72,8 +72,6 @@ class SurveyFragment : Fragment() {
         fab.setOnClickListener {
             selected = (QuestionsRecyclerView.adapter as QuestionsRecyclerViewAdapter).getSelected()
 
-
-
             configureFragment(root, false)
 
             Snackbar.make(it, "Survey submitted successfully.", Snackbar.LENGTH_LONG).setAction(
