@@ -113,7 +113,9 @@ class MainActivity : AppCompatActivity() {
                         )
                         val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
                         val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
-                        pw.contentView.findViewById<Button>(R.id.save).text = "Welcome"
+                        val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
+                        pw.contentView.findViewById<Button>(R.id.save).text = getString(R.string.welcome)
+                        pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
                         ProfileFragment.setSpinner(
                             spinner1,
                             context = baseContext,
@@ -123,6 +125,11 @@ class MainActivity : AppCompatActivity() {
                             spinner2,
                             context = baseContext,
                             ProfileFragment.genders
+                        )
+                        ProfileFragment.setSpinner(
+                            spinner3,
+                            context = baseContext,
+                            ProfileFragment.regions
                         )
                         pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
                             val usr = User(

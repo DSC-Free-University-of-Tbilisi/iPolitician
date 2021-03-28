@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="Age"
+        android:text="Select your age range"
         android:textAlignment="viewStart"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Gender"
+        android:text="Your gender"
         android:textAlignment="viewStart"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -63,6 +63,7 @@
         android:id="@+id/spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -71,8 +72,10 @@
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:layout_editor_absoluteX="5dp" />
+        android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/save"
@@ -95,7 +98,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Region"
+        android:text="Region you live"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -107,20 +110,24 @@
         android:id="@+id/spinner3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        tools:layout_editor_absoluteX="19dp" />
+        android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/intro"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toTopOf="@+id/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner3"
+        tools:text="@string/intro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

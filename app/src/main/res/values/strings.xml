@@ -100,4 +100,9 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="intro">"* Remember you, all people create the government.\n\n"
+            "* Find your political party and keep up to political life to make your future better.\n\n"
+            "* Keep it in mind that the choice you make in Election will affect people around you.\n\n"
+            "* Your vote is important - don't let others to influence on it.\n"</string>
+    <string name="welcome">Welcome  ツ</string>
 </resources>

@@ -86,10 +86,11 @@ class SurveyFragment : Fragment() {
     }
 
     private fun configureChart(root: View) {
+        chartArray.sortBy { -calculateCompatibility(it.selected) }
         val aaChartModel : AAChartModel = AAChartModel()
             .chartType(AAChartType.Column)
             .title("Parties you match the most")
-            .subtitle("remember your vote counts")
+            .subtitle("remember your vote matters")
             .backgroundColor("#ffffff")
             .polar(true)
             .series( chartArray.map{ AASeriesElement().name(it.displayName).data(arrayOf(calculateCompatibility(it.selected))) }.toTypedArray() )
