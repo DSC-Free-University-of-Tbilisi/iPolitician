@@ -25,12 +25,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
-import java.lang.Math.random
 import java.lang.Math.round
-import java.util.*
 import java.util.concurrent.CountDownLatch
-import kotlin.collections.ArrayList
-import kotlin.random.Random.Default.nextInt
 
 
 class PublicFragment : Fragment() {
@@ -96,6 +92,7 @@ class PublicFragment : Fragment() {
                     users.add(dc.id)
                 }
             }
+            Log.d("dbg users", users.toString())
             load = users.size
             for (usr in users){
                 FS.collection("submissions").document(usr).get()
@@ -105,7 +102,7 @@ class PublicFragment : Fragment() {
                         if (sel.party == "") return@addOnSuccessListener
 
                         if (parties.containsKey(sel.party)){
-                            parties[sel.party]?.plus(1)
+                            parties[sel.party] = parties[sel.party]!! + 1
                         } else {
                             parties[sel.party] = 1
                         }
