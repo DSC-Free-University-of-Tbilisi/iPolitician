@@ -19,12 +19,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
 import com.example.ipolitician.nav.profile.ProfileFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 

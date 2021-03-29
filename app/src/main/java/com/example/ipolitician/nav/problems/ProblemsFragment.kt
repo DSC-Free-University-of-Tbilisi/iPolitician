@@ -1,6 +1,5 @@
 package com.example.ipolitician.nav.problems
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.nav.survey.SurveyViewModel
 import com.example.ipolitician.recycler.ProblemsRecyclerViewAdapter

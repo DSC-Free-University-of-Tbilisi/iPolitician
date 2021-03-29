@@ -1,6 +1,5 @@
 package com.example.ipolitician.nav.survey
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,7 +17,6 @@ import com.example.ipolitician.recycler.QuestionsRecyclerViewAdapter
 import com.example.ipolitician.structures.Party
 import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.Selected
-import com.example.ipolitician.structures.User
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartView

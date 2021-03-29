@@ -21,10 +21,16 @@ import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
 import com.github.aachartmodel.aainfographics.aachartcreator.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
+import java.lang.Math.random
+import java.lang.Math.round
+import java.util.*
 import java.util.concurrent.CountDownLatch
+import kotlin.collections.ArrayList
+import kotlin.random.Random.Default.nextInt
 
 
 class PublicFragment : Fragment() {
@@ -37,6 +43,7 @@ class PublicFragment : Fragment() {
     private var parties : MutableMap<String, Int> = mutableMapOf()
     private var ages = arrayListOf("All")
     private var genders = arrayListOf("All")
+    private var load = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +71,12 @@ class PublicFragment : Fragment() {
 
         root.findViewById<Button>(R.id.filterBtn).setOnClickListener {
             repaintGraph()
+            if(load == -1) {
+                Snackbar.make(it, "No such data found", Snackbar.LENGTH_LONG).setAction(
+                    "Action",
+                    null
+                ).show()
+            }
         }
 
         repaintGraph()
@@ -72,22 +85,22 @@ class PublicFragment : Fragment() {
 
     private fun repaintGraph(){
         FS.collection("users").get().addOnSuccessListener { documents ->
-            // here is bug with countdownlatch
             parties.clear()
             val users: ArrayList<String> = arrayListOf()
 
             for (dc in documents) {
                 Log.d("load", "${dc.id}")
                 val usr = dc.toObject(User::class.java)
-                if((usr.age == spinner1.selectedItemPosition - 1 || spinner1.selectedItemPosition <= 0) && (usr.gender == spinner2.selectedItemPosition - 1 || spinner2.selectedItemPosition <= 0)){
+                if((usr.age == spinner1.selectedItemPosition - 1 || spinner1.selectedItemPosition <= 0) &&
+                        (usr.gender == spinner2.selectedItemPosition - 1 || spinner2.selectedItemPosition <= 0)){
                     users.add(dc.id)
                 }
             }
+            load = users.size
             for (usr in users){
                 FS.collection("submissions").document(usr).get()
                     .addOnSuccessListener { document ->
                         if (!document.exists()){ return@addOnSuccessListener }
-                        Log.d("aeeee", "aketeeebs amis deda")
                         val sel = document.toObject(Selected::class.java)!!
                         if (sel.party == "") return@addOnSuccessListener
 
@@ -96,34 +109,31 @@ class PublicFragment : Fragment() {
                         } else {
                             parties[sel.party] = 1
                         }
-
-//                        val pie = AnyChart.pie()
-//                        val data = parties.map { it }.sortedBy { -it.value }.map { ValueDataEntry(it.key, it.value) }
-//                        pie.data(data)
-//
-//                        anyChartView.setChart(pie)
-                        var sorted = parties.map { it }.sortedBy { -it.value }
-                        val sum = sorted.map { it.value }.sum()
-                        val aaChartModel : AAChartModel = AAChartModel()
-                            .chartType(AAChartType.Column)
-                            .title("Parties you match the most")
-                            .subtitle("remember your vote matters")
-                            .backgroundColor("#ffffff")
-                            .series( sorted.map { AASeriesElement().name(it.key).data(arrayOf(it.value.toDouble() / sum * 100)) }.toTypedArray())
-                            .stacking(AAChartStackingType.False)
-                            .dataLabelsEnabled(true)
-
-                        aaChartView.aa_drawChartWithChartModel(aaChartModel)
-                    }
-                    .addOnFailureListener {
-                        Log.d("aeeee", "ar aketeeebs amis deda")
+                        tryDraw()
+                    }.addOnFailureListener {
+                        tryDraw()
+                        Log.d("listener", "fail")
                     }
             }
-//            aaChartView.aa_drawChartWithChartModel(aaChartModel)
-//            val pie = AnyChart.pie()
-//            val data = parties.map { it }.sortedBy { -it.value }.map { ValueDataEntry(it.key, it.value) }
-//            pie.data(data)
-//            anyChartView.setChart(pie)
+            if(parties.isEmpty()) { load = -1 }
         }
+
+    }
+
+    private fun tryDraw() {
+        if(--load > 0) return
+
+        var sorted = parties.map { it }.sortedBy { -it.value }
+        val sum = sorted.map { it.value }.sum()
+        val aaChartModel : AAChartModel = AAChartModel()
+            .chartType(AAChartType.Column)
+            .title("Parties you match the most")
+            .subtitle("remember your vote matters")
+            .backgroundColor("#ffffff")
+            .series(sorted.map { AASeriesElement().name(it.key).data(arrayOf("%.${2}f".format(it.value.toDouble() / sum * 100).toDouble()))}.toTypedArray())
+            .stacking(AAChartStackingType.False)
+            .dataLabelsEnabled(true)
+
+        aaChartView.aa_drawChartWithChartModel(aaChartModel)
     }
 }

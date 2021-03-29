@@ -11,7 +11,7 @@ import com.example.ipolitician.R
 
 class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val problem: TextView
-    val votes: TextView
+    val votes: Button
     val up_votes: Button
     val down_votes: Button
 
