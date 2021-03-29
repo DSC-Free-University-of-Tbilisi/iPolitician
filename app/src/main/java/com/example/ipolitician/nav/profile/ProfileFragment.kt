@@ -65,11 +65,11 @@ class ProfileFragment : Fragment() {
     }
 
     companion object {
-        val ages = arrayOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
-        val genders = arrayOf("Male", "Female", "Non-binary/third gender")
-        val regions = arrayOf("coming soon")
+        val ages = arrayListOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
+        val genders = arrayListOf("Male", "Female", "Non-binary/third gender")
+        val regions = arrayListOf("coming soon")
 
-        fun setSpinner(spinner: Spinner, context: Context, arr: Array<String>, position: Int = 0){
+        fun setSpinner(spinner: Spinner, context: Context, arr: ArrayList<String>, position: Int = 0){
             if (spinner != null) {
                 val adapter = ArrayAdapter(
                     context,
