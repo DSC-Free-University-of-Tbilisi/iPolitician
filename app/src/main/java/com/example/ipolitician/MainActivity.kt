@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val id = id(context = this)
-
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -107,9 +106,10 @@ class MainActivity : AppCompatActivity() {
                         val pw = PopupWindow(
                             inflater.inflate(R.layout.fragment_profile, null, false),
                             window.decorView.width,
-                            window.decorView.height - 200,
+                            window.decorView.height - 150,
                             true
                         )
+                        pw.animationStyle = R.style.Animation
                         val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
                         val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
                         val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)

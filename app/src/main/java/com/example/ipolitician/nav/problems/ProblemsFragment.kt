@@ -49,8 +49,8 @@ class ProblemsFragment : Fragment() {
                 Log.d("load probs", dc.toString())
                 problems.add(dc.toObject(PV::class.java))
             }
-            selected.selected.add(-1)
-            selected.selected.add(1)
+            selected.selected.add(0)
+            selected.selected.add(0)
             selected.selected.add(-1)
             selected.selected.add(1)
             ProblemsRecyclerView.adapter =  ProblemsRecyclerViewAdapter(problems, selected)
