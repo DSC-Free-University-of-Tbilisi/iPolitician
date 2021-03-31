@@ -1,7 +1,8 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![DSC][dsc-shield]][dsc-url]
+<p align="center">
+  [![Contributors][contributors-shield]][contributors-url]
+  [![Stargazers][stars-shield]][stars-url]
+  [![Issues][issues-shield]][issues-url]
+</p>
 
 <br />
 <p align="center">
@@ -15,7 +16,7 @@
     by <br />
     DSContinental <br />
     Free University of Tbilisi <br />
-    Google Developer Student Club <br />
+    [![DSC][dsc-shield]][dsc-url] <br />
     <a href=youtube.com">View Demo</a>
     ·
     <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues">Report Bug</a>
