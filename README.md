@@ -9,11 +9,11 @@
   <p align="center">
     by Free University of Tbilisi DSC
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href=youtube.com">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues">Request Feature</a>
   </p>
 </p>
 
@@ -35,7 +35,7 @@
       </ul>
     </li>
     <li>
-      <a href="#usage-and-features">Usage And Features</a>
+      <a href="#current-and-next-steps">Current And Next Steps</a>
       <ul>
         <li><a href="#welcome">Welcome</a></li>
         <li><a href="#public-page">Public Page</a></li>
@@ -48,6 +48,7 @@
   </ol>
 </details>
 
+---
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -59,6 +60,7 @@ Nowadays, many people are not familiar with political parties and their opinion 
 ### Built With
 * [Android Studio](https://developer.android.com/studio?gclid=CjwKCAjwu5CDBhB9EiwA0w6sLWLJ3og1k0bkmBN5P4nD6h0r52Q7G6W0T94mRyCzvp3GO3yYhI1TZBoCEtIQAvD_BwE&gclsrc=aw.ds)
 * [Firebase](https://firebase.google.com/?gclid=CjwKCAjwu5CDBhB9EiwA0w6sLXeffZ3yqVuWAcjTHE577SSDCVWdk4tW_OXXxJERXColzTOnBBs3OBoCWGkQAvD_BwE&gclsrc=aw.ds)
+---
 
 ## Getting Started
 
@@ -78,38 +80,34 @@ Download Android Studio - [Android Studio](https://developer.android.com/studio?
 2. Open Project in Android Studio
 3. Wait until synching gradle and indexing files
 4. Run Project on Emulator or on the device with usb tethering
+---
 
-## Usage
-What and jow the user can work with app
+## Current And Next Steps
+Tips how the application now works and features should be done during next steps. 
 
 ### Welcome
----
 
 ### Public Page
----
 
 ### Survey Page
----
 
 ### Profile Page
----
 
 ### Problems Page
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### FAQ
 
 Q: Please clearly describe the United Nations' Sustainable Development goal(s) AND target(s) you are looking to solve with technology. What inspired you to select these specific goal(s) AND target(s)? *
