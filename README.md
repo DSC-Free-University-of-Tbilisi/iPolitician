@@ -60,14 +60,16 @@
 Also, due to the current situation with COVID19-PANDEMIC, people aren't able to express their opinion in public,
 and we decided to create an application that describes the current political situation in the country.
 
+It's focused on making political life public and educate people in politics to have their independent opinion and their vote shouldn't be influenced by others. Political knowledge will guarantee stronger institutions in the country.
+
 ### The Goal
                 
-                                          With this application:
+                                                                With this application:
 You can now gain some knowledge in political life, find the party which shares you opinion and world view.
 Decide on your own! You can take part in voting for any problems that consists in your country/region.
 Political life should be partially digitized so emigrants are able to influence the fate of motherland.
 More people are politically educated stronger countries institutions become.
-
+Create safe and trusted data by people.
 
 ### Built With
 * [Android Studio](https://developer.android.com/studio?gclid=CjwKCAjwu5CDBhB9EiwA0w6sLWLJ3og1k0bkmBN5P4nD6h0r52Q7G6W0T94mRyCzvp3GO3yYhI1TZBoCEtIQAvD_BwE&gclsrc=aw.ds)
@@ -102,6 +104,7 @@ Tips how the application now works and features should be done during next steps
 - Current State
 
 At the first launch of the application on the device, the User will be asked: "tell a little bit about yourself".
+
 The user should select - the age range he/she/non-binary belongs.
 The user should select - the gender he/she/non-binary belongs to.
 
@@ -119,13 +122,16 @@ Also, they can use filters to see how the different categories of people think a
 
 - Next Step / App Feature
 
-Add charts and statistic of all the other pages(currently, it contains only the survey page stats)
+Add charts and statistic of all the other pages(currently, it contains only the survey page stats):
+
   from Profile Page - add region filter:
-      * citizen from (ქართლი/გურია/აჭარა/სამეგრელო/რაჭა/ხევსურეთი/სვანეთი/მთიულეთი/კახეთი/იმერეთი)   
-      * citizen from outside country (emigrant / ემიგრანტი)   
+      * citizen from (ქართლი/გურია/აჭარა/სამეგრელო/რაჭა/ხევსურეთი/სვანეთი/მთიულეთი/კახეთი/იმერეთი)                                                                           
+      * citizen from outside country (emigrant / ემიგრანტი)                                                                                                                     
 
   from Problems Page - add most important problems according to the votes.
+  
   from Election Page - add which candidats are liked most by publc.
+
 
 ### Survey Page
 
