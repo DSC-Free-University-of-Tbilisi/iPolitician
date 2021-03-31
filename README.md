@@ -1,6 +1,6 @@
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -8,10 +8,9 @@
 
   <p align="center">
     by <br />
-    Free University of Tbilisi
-    <br />
-    Google Developer Student Club
-    <br />
+    DSContinental <br />
+    Free University of Tbilisi <br />
+    Google Developer Student Club <br />
     <a href=youtube.com">View Demo</a>
     ·
     <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues">Report Bug</a>
@@ -56,15 +55,15 @@
 ---
 ## About The Project
 
-  Nowadays, many people are not familiar with political parties and their opinion about the country's future.
+   Nowadays, many people are not familiar with political parties and their opinion about the country's future.
 Also, due to the current situation with COVID19-PANDEMIC, people aren't able to express their opinion in public,
 and we decided to create an application that describes the current political situation in the country.
 
-It's focused on making political life public and educate people in politics to have their independent opinion and their vote shouldn't be influenced by others. Political knowledge will guarantee stronger institutions in the country.
+  It's focused on making political life public and educate people in politics to have their independent opinion and their vote shouldn't be influenced by others. Political knowledge will guarantee stronger institutions in the country.
 
 ### The Goal
                 
-                                                                With this application:
+                                                             With this application:
 You can now gain some knowledge in political life, find the party which shares you opinion and world view.
 Decide on your own! You can take part in voting for any problems that consists in your country/region.
 Political life should be partially digitized so emigrants are able to influence the fate of motherland.
@@ -124,9 +123,7 @@ Also, they can use filters to see how the different categories of people think a
 
 Add charts and statistic of all the other pages(currently, it contains only the survey page stats):
 
-  from Profile Page - add region filter:
-      * citizen from (ქართლი/გურია/აჭარა/სამეგრელო/რაჭა/ხევსურეთი/სვანეთი/მთიულეთი/კახეთი/იმერეთი)                                                                           
-      * citizen from outside country (emigrant / ემიგრანტი)                                                                                                                     
+  from Profile Page - add region filter, citizen from (ქართლი/გურია/აჭარა/სამეგრელო/რაჭა/ხევსურეთი/სვანეთი/მთიულეთი/კახეთი/იმერეთი) and citizen from outside country (emigrant / ემიგრანტი).
 
   from Problems Page - add most important problems according to the votes.
   
