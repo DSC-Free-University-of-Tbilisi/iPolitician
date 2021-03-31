@@ -62,6 +62,12 @@ and we decided to create an application that describes the current political sit
   It's focused on making political life public and educate people in politics to have their independent opinion and their vote shouldn't be influenced by others. Political knowledge will guarantee stronger institutions in the country.
 
 ### The Goal
+
+United Nations' Sustainable Development Goals (SDGs):
+- Goal 4: Quality Education
+- Goal 16: Peace, Justice & Strong Institutions
+
+
                 
                                                           With this application:
 - You can now gain some knowledge in political life, find the party which shares you opinion and world view.
