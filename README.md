@@ -1,3 +1,9 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
 <br />
 <p align="center">
   <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician">
@@ -64,11 +70,12 @@ and we decided to create an application that describes the current political sit
 ### The Goal
                 
                                                           With this application:
-You can now gain some knowledge in political life, find the party which shares you opinion and world view.
-Decide on your own! You can take part in voting for any problems that consists in your country/region.
-Political life should be partially digitized so emigrants are able to influence the fate of motherland.
-More people are politically educated stronger countries institutions become.
-Create safe and trusted data by people.
+- You can now gain some knowledge in political life, find the party which shares you opinion and world view.
+- Decide on your own!
+- You can take part in voting for any problems that consists in your country/region.
+- Political life should be partially digitized so emigrants are able to influence the fate of motherland.
+- More people are politically educated stronger countries institutions become.
+- Create safe and trusted data by people.
 
 ### Built With
 * [Android Studio](https://developer.android.com/studio?gclid=CjwKCAjwu5CDBhB9EiwA0w6sLWLJ3og1k0bkmBN5P4nD6h0r52Q7G6W0T94mRyCzvp3GO3yYhI1TZBoCEtIQAvD_BwE&gclsrc=aw.ds)
@@ -223,3 +230,12 @@ A: We used Android Studio as IDE and the programming language is only Kotlin. As
 [Optional] Q: Do you have feedback for the Google products/platforms you used? Are there any features you would like to add for those technologies?
 
 A: We'd like you to know that it was easy to use Firestore which has a very comfortable environment for developers. We would like you to add some basic chart components and a more comfortable recycler view component with many built-in features like swiping and etc.
+---
+
+## Acknowledgements 
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
