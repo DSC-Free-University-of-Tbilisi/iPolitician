@@ -10,7 +10,7 @@
     by <br />
     DSContinental <br />
     Free University of Tbilisi <br />
-    <img src="https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_hPnue3j.svg"> <br />
+    <a href="https://dsc.community.dev/free-university-of-tbilisi/"> <img src="https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_hPnue3j.svg"></a> <br />
     <a href=youtube.com">View Demo</a>
     ·
     <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues">Report Bug</a>
