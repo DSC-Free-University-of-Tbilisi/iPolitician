@@ -1,8 +1,7 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![DSC][dsc-shield]][dsc-url]
 
 <br />
 <p align="center">
@@ -234,8 +233,10 @@ A: We'd like you to know that it was easy to use Firestore which has a very comf
 
 ## Acknowledgements 
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/graphs/contributors
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[stars-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[issues-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues
+[dsc-shield]: https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_hPnue3j.svg
+[dsc-url]: https://dsc.community.dev/free-university-of-tbilisi/
