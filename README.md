@@ -1,8 +1,7 @@
-<p align="center">
-  [![Contributors][contributors-shield]][contributors-url]
-  [![Stargazers][stars-shield]][stars-url]
-  [![Issues][issues-shield]][issues-url]
-</p>
+[![Contributors][contributors-shield]][contributors-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
 
 <br />
 <p align="center">
@@ -239,5 +238,3 @@ A: We'd like you to know that it was easy to use Firestore which has a very comf
 [stars-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
 [issues-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues
-[dsc-shield]: https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_hPnue3j.svg
-[dsc-url]: https://dsc.community.dev/free-university-of-tbilisi/
