@@ -56,11 +56,18 @@
 ---
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+  Nowadays, many people are not familiar with political parties and their opinion about the country's future.
+Also, due to the current situation with COVID19-PANDEMIC, people aren't able to express their opinion in public,
+and we decided to create an application that describes the current political situation in the country.
 
 ### The Goal
+                
+                                          With this application:
+You can now gain some knowledge in political life, find the party which shares you opinion and world view.
+Decide on your own! You can take part in voting for any problems that consists in your country/region.
+Political life should be partially digitized so emigrants are able to influence the fate of motherland.
+More people are politically educated stronger countries institutions become.
 
-Nowadays, many people are not familiar with political parties and their opinion about the country's future. Also, due to the current situation with COVID-PANDEMIC, people aren't able to express their opinion in public, and we decided to create an application that describes the current political situation in the country.
 
 ### Built With
 * [Android Studio](https://developer.android.com/studio?gclid=CjwKCAjwu5CDBhB9EiwA0w6sLWLJ3og1k0bkmBN5P4nD6h0r52Q7G6W0T94mRyCzvp3GO3yYhI1TZBoCEtIQAvD_BwE&gclsrc=aw.ds)
@@ -93,21 +100,25 @@ Tips how the application now works and features should be done during next steps
 ### Welcome
 
 - Current State
+
 At the first launch of the application on the device, the User will be asked: "tell a little bit about yourself".
 The user should select - the age range he/she/non-binary belongs.
 The user should select - the gender he/she/non-binary belongs to.
 
 - Next Step / App Feature
+
 The user should select - the region he/she/non-binary lives in.
 [optional] - the user should be asked to use location permission to make sure the region was selected correctly.
 
 ### Public Page
 
 - Current State
+
 The Display of Charts and Statistics of all users let the user find out how the public thinks nowadays and which political parties are in the lead.
 Also, they can use filters to see how the different categories of people think and what’s their opinion.
 
 - Next Step / App Feature
+
 Add charts and statistic of all the other pages(currently, it contains only the survey page stats)
   from Profile Page - add region filter:
       * citizen from (ქართლი/გურია/აჭარა/სამეგრელო/რაჭა/ხევსურეთი/სვანეთი/მთიულეთი/კახეთი/იმერეთი)   
@@ -119,35 +130,42 @@ Add charts and statistic of all the other pages(currently, it contains only the 
 ### Survey Page
 
 - Current State
+
 The user can answer the questions and then submit the survey, after this user will be able to see
 which political parties are best matched and suitable to keep them up and vote in the election.
 Also, the user is able to change the answers and resubmit the survey, but for every user, only the last submitted survey is counted.
 
 - Next Step / App Feature
+
 Negotiation with other political parties increases the number of questions in the survey, which will guarantee better results after taking the survey.
 
 ### Profile Page
 
 - Current State
+
 The user can update the personal info. Also, now the user is identified per-app-installation,
 This means the user is unique by app installation - the unique id is generated in the first launch by app context.  
 
 - Next Step / App Feature
+
 * To avoid false/double/spam votes the user should be identified per-device by using the Mac Address of the Device.
 * To make stronger consistency data, as we know lots of people have multiple devices today, the user should be identified by a real ID, but here comes another problem about data security of citizens.
 
 ### Problems Page
 
 - Current State
+
 The user can vote whether the problems should be solved at first by the government or not.
 
 - Next Step / App Feature
+
 The user will be able to post the problem and wait for how the public will react or search similar problems.
 Also, the users should be given limited posts to avoid spam.
 
 ### Election Page
 
 - Next Step / App Feature
+
 This page should be like an online election in different aspects, like the whole country or given regions.
 If today is the election who wins - the user should vote for the candidates.
 Incase, by adding location future we can avoid votes from other regions.
@@ -155,6 +173,7 @@ Incase, by adding location future we can avoid votes from other regions.
 ### Vocabulary Page
 
 - Next Step / App Feature
+
 The user should be able to find the political word or phrases and find out what they mean
 or ask the word/phrase he/she couldn't understand and wait for the answers. Here the users will be able to
 help each other to become more politically educated.
