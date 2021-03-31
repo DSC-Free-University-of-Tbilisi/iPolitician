@@ -35,31 +35,35 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Usage</a>
+      <a href="#usage-and-features">Usage And Features</a>
       <ul>
-        <li><a href="#prerequisites">Public Page</a></li>
-        <li><a href="#prerequisites">Survey Page</a></li>
-        <li><a href="#prerequisites">Profile Page</a></li>
-        <li><a href="#prerequisites">Problems Page</a></li>
-        <li><a href="#prerequisites">More App Features</a></li>
+        <li><a href="#welcome">Welcome</a></li>
+        <li><a href="#public-page">Public Page</a></li>
+        <li><a href="#survey-page">Survey Page</a></li>
+        <li><a href="#profile-page">Profile Page</a></li>
+        <li><a href="#public-page">Problems Page</a></li>
       </ul>
     </li>
     <li><a href="#faq">FAQ</a></li>
   </ol>
 </details>
 
-### About The Project
+## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-## The Goal
+### The Goal
 
 Nowadays, many people are not familiar with political parties and their opinion about the country's future. Also, due to the current situation with COVID-PANDEMIC, people aren't able to express their opinion in public, and we decided to create an application that describes the current political situation in the country.
 
-## Built With
+### Built With
 * [Android Studio](https://developer.android.com/studio?gclid=CjwKCAjwu5CDBhB9EiwA0w6sLWLJ3og1k0bkmBN5P4nD6h0r52Q7G6W0T94mRyCzvp3GO3yYhI1TZBoCEtIQAvD_BwE&gclsrc=aw.ds)
 * [Firebase](https://firebase.google.com/?gclid=CjwKCAjwu5CDBhB9EiwA0w6sLXeffZ3yqVuWAcjTHE577SSDCVWdk4tW_OXXxJERXColzTOnBBs3OBoCWGkQAvD_BwE&gclsrc=aw.ds)
 
+## Getting Started
+
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
@@ -74,6 +78,24 @@ Download Android Studio - [Android Studio](https://developer.android.com/studio?
 2. Open Project in Android Studio
 3. Wait until synching gradle and indexing files
 4. Run Project on Emulator or on the device with usb tethering
+
+## Usage
+What and jow the user can work with app
+
+### Welcome
+---
+
+### Public Page
+---
+
+### Survey Page
+---
+
+### Profile Page
+---
+
+### Problems Page
+---
 
 
 
