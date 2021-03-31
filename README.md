@@ -15,7 +15,7 @@
     by <br />
     DSContinental <br />
     Free University of Tbilisi <br />
-    [![DSC][dsc-shield]][dsc-url] <br />
+    <img src="https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_hPnue3j.svg" class="svg" alt="Developer Student Clubs logo"> <br />
     <a href=youtube.com">View Demo</a>
     ·
     <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues">Report Bug</a>
