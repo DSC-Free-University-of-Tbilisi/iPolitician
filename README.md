@@ -43,7 +43,7 @@
         <li><a href="#public-page">Public Page</a></li>
         <li><a href="#survey-page">Survey Page</a></li>
         <li><a href="#profile-page">Profile Page</a></li>
-        <li><a href="#public-page">Problems Page</a></li>
+        <li><a href="#problems-page">Problems Page</a></li>
         <li><a href="#election-page">Election Page</a></li>
         <li><a href="#vocabulary-page">Vocabulary Page</a></li>
       </ul>
@@ -63,7 +63,7 @@ and we decided to create an application that describes the current political sit
 
 ### The Goal
                 
-                                                             With this application:
+                                                          With this application:
 You can now gain some knowledge in political life, find the party which shares you opinion and world view.
 Decide on your own! You can take part in voting for any problems that consists in your country/region.
 Political life should be partially digitized so emigrants are able to influence the fate of motherland.
