@@ -1,7 +1,9 @@
 [![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![Stargazers][stars-shield]][stars-url]
+[![Forks][forks-shield]][forks-url]
 [![Contributors][contributors-shield]][contributors-url]
 
 <br />
@@ -230,11 +232,14 @@ A: We used Android Studio as IDE and the programming language is only Kotlin. As
 [Optional] Q: Do you have feedback for the Google products/platforms you used? Are there any features you would like to add for those technologies?
 
 A: We'd like you to know that it was easy to use Firestore which has a very comfortable environment for developers. We would like you to add some basic chart components and a more comfortable recycler view component with many built-in features like swiping and etc.
+
 ---
 
-## Acknowledgements 
+### Acknowledgements 
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/network/members
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
 [stars-url]: https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
