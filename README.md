@@ -14,7 +14,7 @@
   <p align="center">
     by <br />
     DSContinental <br />
-    Free University of Tbilisi <br />
+    <img src="http://freeuni.edu.ge/sites/default/themes/freeuni/images/free-logo-2-ka.png" alt="თავისუფალი უნივერსიტეტი"> <br />
     <img src="https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_hPnue3j.svg" class="svg" alt="Developer Student Clubs logo"> <br />
     <a href=youtube.com">View Demo</a>
     ·
