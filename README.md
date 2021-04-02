@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician">
-    <img src="Logo.png" alt="Logo" width="80" height="80">
+    <img src="freeuni-dsc-logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">iPolitician</h3>
