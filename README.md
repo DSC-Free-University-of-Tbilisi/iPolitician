@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician">
-    <img src="freeuni-dsc-logo.png" alt="Logo" width="80" height="80">
+    <img src="images/freeuni-dsc-logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">iPolitician</h3>
@@ -104,8 +104,11 @@ Download Android Studio - [Android Studio](https://developer.android.com/studio?
 
 ## Current And Next Steps
 Tips how the application now works and features should be done during next steps. 
+Note: Current state of application is bilingual(english menu, georgian data) - we are going to make it clearly in both language,
+the app should be full georgian and has option to change language to full english.*
 
 ### Welcome
+<img src="images/welcome">
 
 - Current State
 
@@ -120,6 +123,7 @@ The user should select - the region he/she/non-binary lives in.
 [optional] - the user should be asked to use location permission to make sure the region was selected correctly.
 
 ### Public Page
+<img src="images/public1">
 
 - Current State
 
@@ -138,6 +142,11 @@ Add charts and statistic of all the other pages(currently, it contains only the 
 
 
 ### Survey Page
+<div style="display:flex"> 
+  <img src="images/survey">
+  <img src="images/survey1"> 
+</div>
+
 
 - Current State
 
@@ -150,6 +159,7 @@ Also, the user is able to change the answers and resubmit the survey, but for ev
 Negotiation with other political parties increases the number of questions in the survey, which will guarantee better results after taking the survey.
 
 ### Profile Page
+<img src="images/profile">
 
 - Current State
 
@@ -162,6 +172,7 @@ This means the user is unique by app installation - the unique id is generated i
 * To make stronger consistency data, as we know lots of people have multiple devices today, the user should be identified by a real ID, but here comes another problem about data security of citizens.
 
 ### Problems Page
+<img src="images/problems">
 
 - Current State
 
@@ -173,6 +184,7 @@ The user will be able to post the problem and wait for how the public will react
 Also, the users should be given limited posts to avoid spam.
 
 ### Election Page
+<img src="images/menu">
 
 - Next Step / App Feature
 
@@ -181,6 +193,7 @@ If today is the election who wins - the user should vote for the candidates.
 Incase, by adding location future we can avoid votes from other regions.
 
 ### Vocabulary Page
+<img src="images/menu">
 
 - Next Step / App Feature
 
