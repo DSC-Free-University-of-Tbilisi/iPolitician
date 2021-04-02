@@ -108,7 +108,7 @@ Note: Current state of application is bilingual(english menu, georgian data) - w
 the app should be full georgian and has option to change language to full english.*
 
 ### Welcome
-[![Product Name Screen Shot]["images/welcome"]]
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 - Current State
 
@@ -245,3 +245,7 @@ A: We used Android Studio as IDE and the programming language is only Kotlin. As
 A: We'd like you to know that it was easy to use Firestore which has a very comfortable environment for developers. We would like you to add some basic chart components and a more comfortable recycler view component with many built-in features like swiping and etc.
 
 ---
+
+## Acknowledgements
+
+[product-screenshot]: images/welcome.png
