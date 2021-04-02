@@ -108,7 +108,7 @@ Note: Current state of application is bilingual(english menu, georgian data) - w
 the app should be full georgian and has option to change language to full english.*
 
 ### Welcome
-<img src="images/welcome" width="100" height="250">
+<img src="images/welcome.png" width="200" height="400">
 
 - Current State
 
@@ -123,7 +123,7 @@ The user should select - the region he/she/non-binary lives in.
 [optional] - the user should be asked to use location permission to make sure the region was selected correctly.
 
 ### Public Page
-<img src="images/public1" width="100" height="250">
+<img src="images/public1" width="250" height="250">
 
 - Current State
 
