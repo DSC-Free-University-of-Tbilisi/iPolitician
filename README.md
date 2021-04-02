@@ -108,7 +108,7 @@ Note: Current state of application is bilingual(english menu, georgian data) - w
 the app should be full georgian and has option to change language to full english.*
 
 ### Welcome
-[![Product Name Screen Shot][images/welcome]]
+[![Product Name Screen Shot]["images/welcome"]]
 
 - Current State
 
