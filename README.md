@@ -108,7 +108,7 @@ Note: Current state of application is bilingual(english menu, georgian data) - w
 the app should be full georgian and has option to change language to full english.*
 
 ### Welcome
-<img src="images/welcome.png" width="200" height="400">
+<img src="images/welcome.png" width="250" height="450">
 
 - Current State
 
@@ -123,7 +123,7 @@ The user should select - the region he/she/non-binary lives in.
 [optional] - the user should be asked to use location permission to make sure the region was selected correctly.
 
 ### Public Page
-<img src="images/public1" width="250" height="250">
+<img src="images/public1.png" width="250" height="450">
 
 - Current State
 
@@ -142,9 +142,9 @@ Add charts and statistic of all the other pages(currently, it contains only the 
 
 
 ### Survey Page
-<div style="display:flex"> 
-  <img src="images/survey">
-  <img src="images/survey1"> 
+<div style="display:flex">
+  <img src="images/survey.png" width="250" height="450">
+  <img src="images/survey1.png" width="250" height="450">
 </div>
 
 
@@ -159,7 +159,7 @@ Also, the user is able to change the answers and resubmit the survey, but for ev
 Negotiation with other political parties increases the number of questions in the survey, which will guarantee better results after taking the survey.
 
 ### Profile Page
-<img src="images/profile">
+<img src="images/profile.png" width="250" height="450">
 
 - Current State
 
@@ -172,7 +172,7 @@ This means the user is unique by app installation - the unique id is generated i
 * To make stronger consistency data, as we know lots of people have multiple devices today, the user should be identified by a real ID, but here comes another problem about data security of citizens.
 
 ### Problems Page
-<img src="images/problems">
+<img src="images/problems.png" width="250" height="450">
 
 - Current State
 
@@ -184,7 +184,8 @@ The user will be able to post the problem and wait for how the public will react
 Also, the users should be given limited posts to avoid spam.
 
 ### Election Page
-<img src="images/menu">
+<img src="images/menu.png" width="250" height="450">
+
 
 - Next Step / App Feature
 
@@ -193,7 +194,7 @@ If today is the election who wins - the user should vote for the candidates.
 Incase, by adding location future we can avoid votes from other regions.
 
 ### Vocabulary Page
-<img src="images/menu">
+<img src="images/menu.png" width="250" height="450">
 
 - Next Step / App Feature
 
