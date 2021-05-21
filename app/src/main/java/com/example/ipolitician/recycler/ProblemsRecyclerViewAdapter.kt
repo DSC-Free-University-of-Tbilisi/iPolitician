@@ -6,12 +6,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.structures.Selected
+import com.example.ipolitician.structures.Voted
 
 
-class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var selected: Selected) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>() {
+class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var voted: Voted) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>() {
+
+    private var DB = DataAPI()
+    private var save = problems
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProblemsRecyclerViewHolder {
         return ProblemsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.problem_holder, parent, false))
@@ -28,24 +34,49 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
         holder.down_votes.text = problems[position].downvotes.toString()
         holder.TotalVotes()
 
-        if(selected.selected[position] == 1) {
-            holder.uvoted = true
-            holder.up_votes.setTextColor(Color.parseColor("#00ff04"))
-        } else if(selected.selected[position] == -1) {
-            holder.dvoted = true
-            holder.down_votes.setTextColor(Color.parseColor("#ff0000"))
+        val key = problems[position].id
+        holder.setID(key)
+
+        if(voted.voted.containsKey(key)) {
+            if(voted.voted[key] == 1) {
+                holder.uvoted = true
+                holder.up_votes.setTextColor(Color.parseColor("#00ff04"))
+            } else if(voted.voted[key] == -1) {
+                holder.dvoted = true
+                holder.down_votes.setTextColor(Color.parseColor("#ff0000"))
+            }
         }
+
 
         holder.up_votes.setOnClickListener {
             holder.UpVote()
+            update(1, holder.getState())
         }
 
         holder.down_votes.setOnClickListener {
             holder.DownVote()
+            update(-1, holder.getState())
         }
     }
 
-    fun getSelected(): Selected{
-        return selected
+    fun update(v: Int, p: PV) {
+        if(voted.voted.containsKey(p.id)) {
+            if(voted.voted[p.id] == v) voted.voted.remove(p.id)
+            else voted.voted[p.id] = v
+        } else {
+            voted.voted[p.id] = v
+        }
+
+        DB.setUserProblems(MainActivity.uniqueID!!, voted)
+        DB.setProblems(p)
+    }
+
+    fun search(query: String) {
+        problems = save.filter { it.problem.contains(query) } as ArrayList<PV>
+        notifyDataSetChanged()
+    }
+
+    fun getVoted(): Voted {
+        return voted
     }
 }

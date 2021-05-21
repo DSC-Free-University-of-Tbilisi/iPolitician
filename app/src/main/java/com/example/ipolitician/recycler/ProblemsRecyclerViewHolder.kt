@@ -8,6 +8,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
+import com.example.ipolitician.structures.PV
 
 class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val problem: TextView
@@ -17,6 +18,7 @@ class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     var uvoted = false
     var dvoted = false
+    var id: String = ""
 
     init {
         problem = itemView.findViewById(R.id.problem)
@@ -67,4 +69,11 @@ class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         return total_votes
     }
 
+    fun setID(id: String) {
+        this.id = id
+    }
+
+    fun getState() : PV {
+        return PV(problem = problem.text.toString(), upvotes = up_votes.text.toString().toInt(), downvotes = down_votes.text.toString().toInt(), id=id)
+    }
 }

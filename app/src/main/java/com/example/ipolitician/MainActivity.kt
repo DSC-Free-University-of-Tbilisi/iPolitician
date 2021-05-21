@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
 import com.example.ipolitician.nav.profile.ProfileFragment
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
-    private val FS = Firebase.firestore
+    private val DB = DataAPI()
 
     companion object{
         var uniqueID: String? = null
@@ -94,61 +95,52 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setUpUser() {
-        uniqueID?.let {
-            FS.collection("users").document(it)
-                .get()
-                .addOnSuccessListener { usr ->
-                    if (usr.exists()) {
-                        user = usr.toObject(User::class.java)
-                    } else {
-                        val inflater =
-                            this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                        val pw = PopupWindow(
-                            inflater.inflate(R.layout.fragment_profile, null, false),
-                            window.decorView.width,
-                            window.decorView.height - 150,
-                            true
-                        )
-                        pw.animationStyle = R.style.Animation
-                        val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
-                        val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
-                        val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
-                        pw.contentView.findViewById<Button>(R.id.save).text = getString(R.string.welcome)
-                        pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
-                        ProfileFragment.setSpinner(
-                            spinner1,
-                            context = baseContext,
-                            ProfileFragment.ages
-                        )
-                        ProfileFragment.setSpinner(
-                            spinner2,
-                            context = baseContext,
-                            ProfileFragment.genders
-                        )
-                        ProfileFragment.setSpinner(
-                            spinner3,
-                            context = baseContext,
-                            ProfileFragment.regions
-                        )
-                        pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
-                            val usr = User(
-                                age = spinner1.selectedItemPosition,
-                                gender = spinner2.selectedItemPosition
-                            )
-                            user = usr
-                            FS.collection("users").document(uniqueID!!)
-                                .set(usr)
-                                .addOnSuccessListener { Log.d("listener", "yep") }
-                                .addOnFailureListener { Log.d("listener", "nope") }
-                            FS.collection("submissions").document(uniqueID!!)
-                                .set(Selected(selected = arrayListOf(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1)))
-                                .addOnSuccessListener { Log.d("listener", "yep") }
-                                .addOnFailureListener { Log.d("listener", "nope") }
-                            pw.dismiss()
-                        }
-                        pw.showAtLocation(findViewById(R.id.home), Gravity.CENTER, 0, 0)
-                    }
+        DB.getUser(uniqueID!!) { user ->
+            Log.d("CALLBACK", user.toString())
+            if(user != null) {
+                Companion.user = user
+            } else {
+                val inflater =
+                    this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val pw = PopupWindow(
+                    inflater.inflate(R.layout.fragment_profile, null, false),
+                    window.decorView.width,
+                    window.decorView.height - 150,
+                    true
+                )
+                pw.animationStyle = R.style.Animation
+                val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
+                val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
+                val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
+                pw.contentView.findViewById<Button>(R.id.save).text = getString(R.string.welcome)
+                pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
+                ProfileFragment.setSpinner(
+                    spinner1,
+                    context = baseContext,
+                    ProfileFragment.ages
+                )
+                ProfileFragment.setSpinner(
+                    spinner2,
+                    context = baseContext,
+                    ProfileFragment.genders
+                )
+                ProfileFragment.setSpinner(
+                    spinner3,
+                    context = baseContext,
+                    ProfileFragment.regions
+                )
+                pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
+                    val usr = User(
+                        age = spinner1.selectedItemPosition,
+                        gender = spinner2.selectedItemPosition
+                    )
+                    Companion.user = usr
+                    DB.setUser(uniqueID!!, usr)
+                    pw.dismiss()
                 }
+                pw.showAtLocation(findViewById(R.id.home), Gravity.CENTER, 0, 0)
+            }
+
         }
     }
 

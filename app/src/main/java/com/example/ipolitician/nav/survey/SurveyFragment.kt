@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.recycler.QuestionsRecyclerViewAdapter
 import com.example.ipolitician.structures.Party
 import com.example.ipolitician.structures.QA
@@ -37,7 +38,7 @@ class SurveyFragment : Fragment() {
     private lateinit var reSurvey: Button
     private lateinit var surveyTitle: TextView
     private var chartArray: ArrayList<Party> = arrayListOf()
-    private val FS = Firebase.firestore
+    private val DB = DataAPI()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -77,12 +78,9 @@ class SurveyFragment : Fragment() {
                 null
             ).show()
 
-            selected.party = chartArray.get(0).displayName
+            selected.party = chartArray[0].displayName
 
-            FS.collection("submissions").document(MainActivity.uniqueID!!)
-                .set(selected)
-                .addOnSuccessListener { Log.d("listener", "yep") }
-                .addOnFailureListener { Log.d("listener", "nope") }
+            DB.setSubmissions(MainActivity.uniqueID!!, selected)
         }
     }
 
@@ -122,22 +120,17 @@ class SurveyFragment : Fragment() {
     }
 
     private fun setFromFireStore(root: View) {
-        FS.collection("questions").get().addOnSuccessListener { documents ->
-            questions.clear()
-            for (dc in documents) {
-                Log.d("load", "${dc.id}")
-                questions.add(dc.toObject(QA::class.java))
-            }
-            FS.collection("submissions").document(MainActivity.uniqueID!!).get().addOnSuccessListener { document ->
-                selected = document.toObject(Selected::class.java)!!
+        DB.getQuestions { questions ->
+            this.questions = questions
+            DB.getSubmissions(MainActivity.uniqueID!!) { selected ->
+                this.selected = selected
                 configureFragment(root, !selected.selected.any { it != -1 })
             }
         }
 
-        FS.collection("parties").get().addOnSuccessListener { documents ->
-            for (dc in documents) {
-                Log.d("load", "${dc.id}")
-                chartArray.add(dc.toObject(Party::class.java))
+        DB.getParties() { parties ->
+            for(p in parties) {
+                chartArray.add(p)
             }
         }
     }
