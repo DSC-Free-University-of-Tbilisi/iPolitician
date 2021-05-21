@@ -61,14 +61,25 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
 
     fun update(v: Int, p: PV) {
         if(voted.voted.containsKey(p.id)) {
-            if(voted.voted[p.id] == v) voted.voted.remove(p.id)
-            else voted.voted[p.id] = v
+            if(voted.voted[p.id] == v) {
+                voted.voted.remove(p.id)
+
+                if(v == 1) DB.voteProblem(p.id, -1, 0)
+                else DB.voteProblem(p.id, 0, -1)
+            } else {
+                voted.voted[p.id] = v
+
+                if(v == 1) DB.voteProblem(p.id, 1, -1)
+                else DB.voteProblem(p.id, -1, 1)
+            }
         } else {
             voted.voted[p.id] = v
+
+            if(v == 1) DB.voteProblem(p.id, 1, 0)
+            else DB.voteProblem(p.id, 0, 1)
         }
 
         DB.setUserProblems(MainActivity.uniqueID!!, voted)
-        DB.setProblems(p)
     }
 
     fun search(query: String) {
