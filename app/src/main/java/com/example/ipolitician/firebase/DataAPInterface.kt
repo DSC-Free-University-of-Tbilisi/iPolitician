@@ -17,8 +17,10 @@ interface DataAPInterface {
 
     fun getProblems(callback: (ArrayList<PV>) -> Unit)
     fun getProblem(problem_id: String, callback: (PV?) -> Unit)
-    fun setProblem(problem: PV)
     fun voteProblem(problem_id: String, upvote: Int, downvote: Int)
+    fun setProblem(problem: PV)
+
+    fun getProblemID(callback: (String) -> Unit)
 
     fun setUserProblems(user_id: String, voted: Voted)
     fun getUserProblems(user_id: String, callback: (Voted) -> Unit)

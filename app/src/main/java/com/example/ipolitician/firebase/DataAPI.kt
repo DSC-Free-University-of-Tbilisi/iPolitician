@@ -129,6 +129,24 @@ class DataAPI : DataAPInterface {
     }
 
     @Synchronized
+    override fun getProblemID(callback: (String) -> Unit) {
+        Log.d("IDDDDDDDDDDDDDDDDDDDDDD", "")
+        FS.collection("problems").get()
+            .addOnSuccessListener { documents ->
+                var id: String = "problem00"
+                for (dc in documents) {
+                    Log.d("load Problem", "${dc.id}")
+                    id = (dc.toObject(PV::class.java)).id
+                }
+                var next_id = id.substring(7).toInt() + 1
+                id = "problem" + if(next_id > 9) next_id.toString() else "0" + next_id.toString()
+                callback(id)
+            }.addOnFailureListener {
+                callback("problem00000")
+            }
+    }
+
+    @Synchronized
     override fun getQuestions(callback: (ArrayList<QA>) -> Unit) {
         FS.collection("questions").get()
             .addOnSuccessListener { documents ->

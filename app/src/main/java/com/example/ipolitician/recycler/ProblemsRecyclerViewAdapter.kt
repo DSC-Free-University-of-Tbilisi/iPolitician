@@ -17,7 +17,6 @@ import com.example.ipolitician.structures.Voted
 class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var voted: Voted) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>() {
 
     private var DB = DataAPI()
-    private var save = problems
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProblemsRecyclerViewHolder {
         return ProblemsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.problem_holder, parent, false))
@@ -41,9 +40,11 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
             if(voted.voted[key] == 1) {
                 holder.uvoted = true
                 holder.up_votes.setTextColor(Color.parseColor("#00ff04"))
+                holder.down_votes.setTextColor(Color.parseColor("#FFFFFF"))
             } else if(voted.voted[key] == -1) {
                 holder.dvoted = true
                 holder.down_votes.setTextColor(Color.parseColor("#ff0000"))
+                holder.up_votes.setTextColor(Color.parseColor("#FFFFFF"))
             }
         }
 
@@ -83,8 +84,23 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
     }
 
     fun search(query: String) {
-        problems = save.filter { it.problem.contains(query) } as ArrayList<PV>
-        notifyDataSetChanged()
+        DB.getProblems() { problems ->
+            DB.getUserProblems(MainActivity.uniqueID!!) { voted ->
+                this.problems = problems.filter { it.problem.contains(query) } as ArrayList<PV>
+                this.voted = voted
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun fetch_data() {
+        DB.getProblems() { problems ->
+            DB.getUserProblems(MainActivity.uniqueID!!) { voted ->
+                this.problems = problems
+                this.voted = voted
+                notifyDataSetChanged()
+            }
+        }
     }
 
     fun getVoted(): Voted {
