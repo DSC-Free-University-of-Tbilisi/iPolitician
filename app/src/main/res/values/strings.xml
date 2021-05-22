@@ -6,10 +6,13 @@
     <string name="nav_header_subtitle">by Free University of Tbilisi</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="action_settings_profile">Profile</string>
 
-    <string name="menu_home">Public</string>
-    <string name="menu_gallery">Survey</string>
-    <string name="menu_slideshow">Profile</string>
+
+    <string name="menu_public">Public</string>
+    <string name="menu_survey">Survey</string>
+    <string name="menu_problems">Problems</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -104,5 +107,6 @@
             "* Find your political party and keep up to political life to make your future better.\n\n"
             "* Keep it in mind that the choice you make in Election will affect people around you.\n\n"
             "* Your vote is important - don't let others to influence on it.\n"</string>
-    <string name="welcome">Welcome  ツ</string>
+    <string name="welcome">Welcome</string>
+    <string name="save">Save</string>
 </resources>

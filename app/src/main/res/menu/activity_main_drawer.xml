@@ -7,15 +7,15 @@
         <item
             android:id="@+id/nav_public"
             android:icon="@drawable/ic_nav_public"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_public" />
         <item
             android:id="@+id/nav_survey"
             android:icon="@drawable/checking"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_survey" />
         <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_nav_profile"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_problems"
+            android:icon="@drawable/ic_nav_problems"
+            android:title="@string/menu_problems" />
     </group>
 
     <item android:title="App Features">
@@ -26,10 +26,7 @@
                     android:enabled="false"
                     android:icon="@drawable/ic_nav_vote"
                     android:title="Election" />
-                <item
-                    android:id="@+id/nav_problems"
-                    android:icon="@drawable/ic_nav_problems"
-                    android:title="Problems" />
+
                 <item
                     android:id="@+id/nav_vocab"
                     android:enabled="false"

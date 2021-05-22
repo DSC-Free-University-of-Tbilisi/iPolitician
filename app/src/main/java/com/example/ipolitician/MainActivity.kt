@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -74,7 +75,6 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_public,
                 R.id.nav_survey,
-                R.id.nav_profile,
                 R.id.nav_problems
             ), drawerLayout
         )
@@ -89,60 +89,74 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_settings -> loadProfilePopUp(getString(R.string.save))
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun setUpUser() {
+    private fun setUpUser() {
         DB.getUser(uniqueID!!) { user ->
             Log.d("CALLBACK", user.toString())
             if(user != null) {
                 Companion.user = user
             } else {
-                val inflater =
-                    this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                val pw = PopupWindow(
-                    inflater.inflate(R.layout.fragment_profile, null, false),
-                    window.decorView.width,
-                    window.decorView.height - 150,
-                    true
-                )
-                pw.animationStyle = R.style.Animation
-                val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
-                val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
-                val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
-                pw.contentView.findViewById<Button>(R.id.save).text = getString(R.string.welcome)
-                pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
-                ProfileFragment.setSpinner(
-                    spinner1,
-                    context = baseContext,
-                    ProfileFragment.ages
-                )
-                ProfileFragment.setSpinner(
-                    spinner2,
-                    context = baseContext,
-                    ProfileFragment.genders
-                )
-                ProfileFragment.setSpinner(
-                    spinner3,
-                    context = baseContext,
-                    ProfileFragment.regions
-                )
-                pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
-                    val usr = User(
-                        age = spinner1.selectedItemPosition,
-                        gender = spinner2.selectedItemPosition
-                    )
-                    Companion.user = usr
-                    DB.setUser(uniqueID!!, usr)
-                    pw.dismiss()
-                }
-                pw.showAtLocation(findViewById(R.id.home), Gravity.CENTER, 0, 0)
+                loadProfilePopUp(getString(R.string.welcome))
             }
-
         }
     }
 
+    private fun loadProfilePopUp(button_text: String) {
+        val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val pw = PopupWindow(
+            inflater.inflate(R.layout.fragment_profile, null, false),
+            window.decorView.width,
+            window.decorView.height - 150,
+            true
+        )
+        pw.animationStyle = R.style.Animation
+        val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
+        val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
+        val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
+        pw.contentView.findViewById<Button>(R.id.save).text = button_text
+        pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
+
+        val age_idx = if(user != null) user!!.age else 0
+        val gender_idx = if(user != null) user!!.gender else 0
+
+        ProfileFragment.setSpinner(
+            spinner1,
+            context = baseContext,
+            ProfileFragment.ages,
+            age_idx
+        )
+        ProfileFragment.setSpinner(
+            spinner2,
+            context = baseContext,
+            ProfileFragment.genders,
+            gender_idx
+        )
+        ProfileFragment.setSpinner(
+            spinner3,
+            context = baseContext,
+            ProfileFragment.regions
+        )
+        pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
+            val usr = User(
+                age = spinner1.selectedItemPosition,
+                gender = spinner2.selectedItemPosition
+            )
+            Companion.user = usr
+            DB.setUser(uniqueID!!, usr)
+            pw.dismiss()
+        }
+        pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
+    }
 
 }

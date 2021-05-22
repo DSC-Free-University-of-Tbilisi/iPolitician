@@ -8,20 +8,14 @@
     <fragment
         android:id="@+id/nav_public"
         android:name="com.example.ipolitician.nav.publics.PublicFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_public"
         tools:layout="@layout/fragment_public" />
 
     <fragment
         android:id="@+id/nav_survey"
         android:name="com.example.ipolitician.nav.survey.SurveyFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_survey"
         tools:layout="@layout/fragment_survey" />
-
-    <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.example.ipolitician.nav.profile.ProfileFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_problems"
