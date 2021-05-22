@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
@@ -20,7 +21,7 @@ import com.google.firebase.ktx.Firebase
 class ProfileFragment : Fragment() {
 
     private lateinit var slideshowViewModel: ProfileViewModel
-    val FS = Firebase.firestore
+    private val DB = DataAPI.instance
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,10 +55,7 @@ class ProfileFragment : Fragment() {
                     gender = spinner2.selectedItemPosition
                 )
                 MainActivity.user = usr
-                FS.collection("users").document(it1)
-                    .set(usr)
-                    .addOnSuccessListener { Log.d("aeee", "gaaketa") }
-                    .addOnFailureListener { Log.d("aeee", "ar gauketebia") }
+                DB.setUser(it1, usr)
             }
         })
 

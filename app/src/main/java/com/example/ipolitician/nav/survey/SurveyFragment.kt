@@ -38,7 +38,7 @@ class SurveyFragment : Fragment() {
     private lateinit var reSurvey: Button
     private lateinit var surveyTitle: TextView
     private var chartArray: ArrayList<Party> = arrayListOf()
-    private val DB = DataAPI()
+    private val DB = DataAPI.instance
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,7 +80,7 @@ class SurveyFragment : Fragment() {
 
             selected.party = chartArray[0].displayName
 
-            DB.setSubmissions(MainActivity.uniqueID!!, selected)
+            DB.setSubmission(MainActivity.uniqueID!!, selected)
         }
     }
 
@@ -122,7 +122,7 @@ class SurveyFragment : Fragment() {
     private fun setFromFireStore(root: View) {
         DB.getQuestions { questions ->
             this.questions = questions
-            DB.getSubmissions(MainActivity.uniqueID!!) { selected ->
+            DB.getSubmission(MainActivity.uniqueID!!) { selected ->
                 this.selected = selected
                 configureFragment(root, !selected.selected.any { it != -1 })
             }

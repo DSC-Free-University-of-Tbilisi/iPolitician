@@ -5,25 +5,30 @@ import com.example.ipolitician.structures.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import java.util.concurrent.locks.Lock
 import kotlin.collections.ArrayList
+
 
 class DataAPI : DataAPInterface {
 
     private val FS = Firebase.firestore
+    companion object {
+        val instance = DataAPI()
+    }
 
     @Synchronized
-    override fun getUsers(callback: (List<User>) -> Unit) {
+    override fun getUsers(callback: (List<User>, List<String>) -> Unit) {
         FS.collection("users").get()
             .addOnSuccessListener { documents ->
+                var ids = ArrayList<String>()
                 var users = ArrayList<User>()
                 for (dc in documents) {
                     Log.d("load USERS", dc.toString())
+                    ids.add(dc.id)
                     users.add(dc.toObject(User::class.java))
                 }
-                callback(users)
+                callback(users, ids)
             }.addOnFailureListener {
-                callback(ArrayList())
+                callback(ArrayList(), ArrayList())
             }
     }
 
@@ -44,7 +49,28 @@ class DataAPI : DataAPInterface {
         FS.collection("users").document(user_id)
             .set(user)
             .addOnSuccessListener {
-                setSubmissions(user_id, Selected(selected = arrayListOf(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1)))
+                setSubmission(
+                    user_id, Selected(
+                        selected = arrayListOf(
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            -1
+                        )
+                    )
+                )
                 setUserProblems(user_id, Voted(voted = mutableMapOf()))
                 Log.d("listener", "USER SET success")
             }
@@ -52,18 +78,18 @@ class DataAPI : DataAPInterface {
     }
 
     @Synchronized
-    override fun getSubmissions(user_id: String, callback: (Selected) -> Unit) {
+    override fun getSubmission(user_id: String, callback: (Selected) -> Unit) {
         FS.collection("submissions").document(user_id).get()
             .addOnSuccessListener { document ->
-                var selected: Selected = document.toObject(Selected::class.java)!!
-                callback(selected)
+                if(document.exists()) callback(document.toObject(Selected::class.java)!!)
+                else callback(Selected())
             }.addOnFailureListener {
                 callback(Selected())
             }
     }
 
     @Synchronized
-    override fun setSubmissions(user_id: String, selected: Selected) {
+    override fun setSubmission(user_id: String, selected: Selected) {
         FS.collection("submissions").document(user_id)
             .set(selected)
             .addOnSuccessListener { Log.d("listener", "SUBMISSION SET success") }
@@ -108,7 +134,14 @@ class DataAPI : DataAPInterface {
     override fun voteProblem(problem_id: String, upvote: Int, downvote: Int) {
         getProblem(problem_id) { prob ->
             if(prob != null) {
-                setProblem(PV(problem = prob.problem, upvotes = prob.upvotes + upvote, downvotes = prob.downvotes + downvote, id = prob.id))
+                setProblem(
+                    PV(
+                        problem = prob.problem,
+                        upvotes = prob.upvotes + upvote,
+                        downvotes = prob.downvotes + downvote,
+                        id = prob.id
+                    )
+                )
             }
         }
     }

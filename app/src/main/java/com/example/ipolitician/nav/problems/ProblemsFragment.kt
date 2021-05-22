@@ -27,7 +27,7 @@ class ProblemsFragment : Fragment() {
     private lateinit var ProblemsRecyclerView: RecyclerView
     private lateinit var search: SearchView
     private lateinit var viewModel: ProblemsViewModel
-    private val DB = DataAPI()
+    private val DB = DataAPI.instance
 
     override fun onCreateView(
         inflater: LayoutInflater,

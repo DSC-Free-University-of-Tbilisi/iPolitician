@@ -15,6 +15,7 @@ import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
 import com.example.ipolitician.structures.Party
 import com.example.ipolitician.structures.QA
@@ -35,7 +36,7 @@ class PublicFragment : Fragment() {
     private lateinit var aaChartView: AAChartView
     private lateinit var spinner1 : Spinner
     private lateinit var spinner2 : Spinner
-    private val FS = Firebase.firestore
+    private val DB = DataAPI.instance
     private var parties : MutableMap<String, Int> = mutableMapOf()
     private var ages = arrayListOf("All")
     private var genders = arrayListOf("All")
@@ -80,41 +81,22 @@ class PublicFragment : Fragment() {
     }
 
     private fun repaintGraph(){
-        FS.collection("users").get().addOnSuccessListener { documents ->
-            parties.clear()
-            val users: ArrayList<String> = arrayListOf()
-
-            for (dc in documents) {
-                Log.d("load", "${dc.id}")
-                val usr = dc.toObject(User::class.java)
-                if((usr.age == spinner1.selectedItemPosition - 1 || spinner1.selectedItemPosition <= 0) &&
-                        (usr.gender == spinner2.selectedItemPosition - 1 || spinner2.selectedItemPosition <= 0)){
-                    users.add(dc.id)
-                }
-            }
-            Log.d("dbg users", users.toString())
+        DB.getUsers() { users, ids ->
             load = users.size
-            for (usr in users){
-                FS.collection("submissions").document(usr).get()
-                    .addOnSuccessListener { document ->
-                        if (!document.exists()){ return@addOnSuccessListener }
-                        val sel = document.toObject(Selected::class.java)!!
-                        if (sel.party == "") return@addOnSuccessListener
+            for (id in ids){
+                DB.getSubmission(id) { sel ->
+                    if(sel.selected.isEmpty() || sel.party == "") return@getSubmission
 
-                        if (parties.containsKey(sel.party)){
-                            parties[sel.party] = parties[sel.party]!! + 1
-                        } else {
-                            parties[sel.party] = 1
-                        }
-                        tryDraw()
-                    }.addOnFailureListener {
-                        tryDraw()
-                        Log.d("listener", "fail")
+                    if (parties.containsKey(sel.party)){
+                        parties[sel.party] = parties[sel.party]!! + 1
+                    } else {
+                        parties[sel.party] = 1
                     }
+                    tryDraw()
+                }
             }
             if(parties.isEmpty()) { load = -1 }
         }
-
     }
 
     private fun tryDraw() {

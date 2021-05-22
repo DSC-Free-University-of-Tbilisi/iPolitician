@@ -16,7 +16,7 @@ import com.example.ipolitician.structures.Voted
 
 class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var voted: Voted) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>() {
 
-    private var DB = DataAPI()
+    private var DB = DataAPI.instance
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProblemsRecyclerViewHolder {
         return ProblemsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.problem_holder, parent, false))
