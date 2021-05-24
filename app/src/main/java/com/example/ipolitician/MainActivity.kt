@@ -1,5 +1,6 @@
 package com.example.ipolitician
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,35 +9,50 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.firebase.DataAPI
+import com.example.ipolitician.Auth.Authenticate
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.User
 import com.example.ipolitician.nav.profile.ProfileFragment
+import com.example.ipolitician.structures.VocabData
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    private val authenticate = Authenticate(this)
     private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
     private val DB = DataAPI()
 
     companion object{
         var uniqueID: String? = null
         var user: User? = null
+        private const val TAG = "PhoneAuthActivity"
     }
 
     @Synchronized
@@ -60,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        authenticate.startPhoneNumberVerification("+995568552663")
+
         val id = id(context = this)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -75,7 +93,8 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_public,
                 R.id.nav_survey,
-                R.id.nav_problems
+                R.id.nav_problems,
+                R.id.nav_vocab
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -99,6 +118,18 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+//        val currentUser = authenticate.auth.currentUser
+//        updateUI(currentUser)
+    }
+
+    private fun updateUI(user: FirebaseUser? = authenticate.auth.currentUser) {
+
     }
 
     private fun setUpUser() {
@@ -158,5 +189,4 @@ class MainActivity : AppCompatActivity() {
         }
         pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
     }
-
 }

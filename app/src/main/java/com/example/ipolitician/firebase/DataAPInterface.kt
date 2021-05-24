@@ -25,4 +25,6 @@ interface DataAPInterface {
     fun setUserProblems(user_id: String, voted: Voted)
     fun getUserProblems(user_id: String, callback: (Voted) -> Unit)
 
+    fun setVocabulary(vocab: VocabData)
+    fun getVocabulary(callback: (ArrayList<VocabData>) -> Unit)
 }

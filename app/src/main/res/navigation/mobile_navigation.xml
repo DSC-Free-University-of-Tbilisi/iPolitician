@@ -22,4 +22,8 @@
         android:name="com.example.ipolitician.nav.problems.ProblemsFragment"
         android:label="Problems"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_vocab"
+        android:name="com.example.ipolitician.nav.vocab.VocabularyFragment"
+        android:label="VocabularyFragment" />
 </navigation>

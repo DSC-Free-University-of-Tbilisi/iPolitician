@@ -213,4 +213,21 @@ class DataAPI : DataAPInterface {
             }
     }
 
+    @Synchronized
+    override fun setVocabulary(vocab: VocabData) {
+        FS.collection("vocabulary").document()
+            .set(vocab)
+            .addOnSuccessListener { Log.d("listener", "setVocabulary success") }
+            .addOnFailureListener { Log.d("listener", "setVocabulary fail") }
+    }
+
+    @Synchronized
+    override fun getVocabulary(callback: (ArrayList<VocabData>) -> Unit) {
+        FS.collection("vocabulary").get()
+            .addOnSuccessListener { documents ->
+                Log.d("listener", "getVocabulary success")
+                callback(ArrayList(documents.map { it.toObject(VocabData::class.java) }.sortedBy { it.header }))
+            }
+            .addOnFailureListener { Log.d("listener", "getVocabulary fail") }
+    }
 }

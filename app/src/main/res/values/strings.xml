@@ -12,7 +12,7 @@
     <string name="menu_public">Public</string>
     <string name="menu_survey">Survey</string>
     <string name="menu_problems">Problems</string>
-
+    <string name="nav_vocabulary">Vocabulary</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
