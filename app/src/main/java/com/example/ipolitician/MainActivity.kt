@@ -1,45 +1,28 @@
 package com.example.ipolitician
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.Auth.Authenticate
-import com.example.ipolitician.structures.Selected
-import com.example.ipolitician.structures.User
+import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
-import com.example.ipolitician.structures.VocabData
+import com.example.ipolitician.structures.User
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -102,9 +85,20 @@ class MainActivity : AppCompatActivity() {
         setUpUser()
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+
+        val switch = findViewById<View>(R.id.switch_theme) as SwitchCompat
+
+        switch.setOnClickListener(View.OnClickListener {
+            Toast.makeText(
+                applicationContext,
+                if (switch.isChecked) "Dark Mode" else "Light Mode",
+                Toast.LENGTH_SHORT
+            ).show()
+        })
         return true
     }
 
@@ -128,9 +122,9 @@ class MainActivity : AppCompatActivity() {
 //        updateUI(currentUser)
     }
 
-    private fun updateUI(user: FirebaseUser? = authenticate.auth.currentUser) {
-
-    }
+//    private fun updateUI(user: FirebaseUser? = authenticate.auth.currentUser) {
+//
+//    }
 
     private fun setUpUser() {
         DB.getUser(uniqueID!!) { user ->
@@ -189,4 +183,6 @@ class MainActivity : AppCompatActivity() {
         }
         pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
     }
+
+
 }
