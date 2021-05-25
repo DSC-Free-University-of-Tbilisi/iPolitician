@@ -7,6 +7,3 @@ data class PV(
     val id: String = ""
     )
 
-data class Post(
-    val rame: String
-)

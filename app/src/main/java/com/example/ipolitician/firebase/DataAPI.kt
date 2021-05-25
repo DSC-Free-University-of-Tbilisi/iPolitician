@@ -230,4 +230,41 @@ class DataAPI : DataAPInterface {
             }
             .addOnFailureListener { Log.d("listener", "getVocabulary fail") }
     }
+
+    @Synchronized
+    override fun getElections(callback: (ArrayList<EV>) -> Unit) {
+        FS.collection("elections").get()
+            .addOnSuccessListener { documents ->
+                callback(ArrayList(documents.map{it.toObject(EV::class.java)}))
+            }.addOnFailureListener {
+                callback(ArrayList())
+            }
+    }
+
+    @Synchronized
+    override fun setElections(election: EV) {
+        FS.collection("elections").document()
+            .set(election)
+            .addOnSuccessListener { Log.d("listener", "setElections success") }
+            .addOnFailureListener { Log.d("listener", "setElections fail") }
+    }
+
+    @Synchronized
+    override fun setUserElections(user_id: String, voted: Voted) {
+        FS.collection("user_elections").document(user_id)
+            .set(voted)
+            .addOnSuccessListener { Log.d("listener", "setUserProblems success") }
+            .addOnFailureListener { Log.d("listener", "setUserProblems fail") }
+    }
+
+    @Synchronized
+    override fun getUserElections(user_id: String, callback: (Voted) -> Unit) {
+        FS.collection("user_elections").document(user_id).get()
+            .addOnSuccessListener { document ->
+                if(document.exists()) callback(document.toObject(Voted::class.java)!!)
+                else callback(Voted())
+            }.addOnFailureListener {
+                callback(Voted())
+            }
+    }
 }

@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.Auth.Authenticate
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
+import com.example.ipolitician.structures.EV
 import com.example.ipolitician.structures.User
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.*
