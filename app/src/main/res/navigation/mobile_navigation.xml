@@ -25,5 +25,10 @@
     <fragment
         android:id="@+id/nav_vocab"
         android:name="com.example.ipolitician.nav.vocab.VocabularyFragment"
-        android:label="VocabularyFragment" />
+        android:label="Vocabulary" />
+    <fragment
+        android:id="@+id/nav_election"
+        android:name="com.example.ipolitician.nav.election.ElectionFragment"
+        android:label="Election"
+        tools:layout="@layout/election_fragment" />
 </navigation>

@@ -77,7 +77,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_public,
                 R.id.nav_survey,
                 R.id.nav_problems,
-                R.id.nav_vocab
+                R.id.nav_vocab,
+                R.id.nav_election
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

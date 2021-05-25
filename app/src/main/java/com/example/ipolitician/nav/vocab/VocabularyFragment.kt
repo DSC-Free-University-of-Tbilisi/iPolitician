@@ -25,7 +25,7 @@ class VocabularyFragment: Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchComponent
     private lateinit var adapter: VocabularyRecyclerViewAdapter
-    private val DB = DataAPI()
+    private val DB = DataAPI.instance
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

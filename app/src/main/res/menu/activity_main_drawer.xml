@@ -17,21 +17,21 @@
             android:id="@+id/nav_problems"
             android:icon="@drawable/ic_nav_problems"
             android:title="@string/menu_problems" />
+        <item
+            android:id="@+id/nav_vocab"
+            android:icon="@drawable/ic_nav_vocab"
+            android:title="Vocabulary" />
     </group>
 
     <item android:title="App Features">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_vote"
-                    android:enabled="false"
+                    android:id="@+id/nav_election"
                     android:icon="@drawable/ic_nav_vote"
                     android:title="Election" />
 
-                <item
-                    android:id="@+id/nav_vocab"
-                    android:icon="@drawable/ic_nav_vocab"
-                    android:title="Vocabulary" />
+
             </group>
         </menu>
     </item>
