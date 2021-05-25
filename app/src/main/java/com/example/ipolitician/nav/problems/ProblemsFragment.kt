@@ -1,7 +1,9 @@
 package com.example.ipolitician.nav.problems
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +30,12 @@ class ProblemsFragment : Fragment() {
     private lateinit var search: SearchView
     private lateinit var viewModel: ProblemsViewModel
     private val DB = DataAPI.instance
+
+    private lateinit var upSort: Button
+    private lateinit var downSort: Button
+    private lateinit var totSort: Button
+    val sortBstate = mutableMapOf<Int,Int>()
+    val sortBcolor = mutableMapOf<Int,String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,9 +90,80 @@ class ProblemsFragment : Fragment() {
             }
         }
 
+        upSort = root.findViewById(R.id.sort_by_up_votes)
+        downSort = root.findViewById(R.id.sort_by_down_votes)
+        totSort = root.findViewById(R.id.sort_by_votes)
+
+        sortBcolor[upSort.id] = "#00ff04"
+        sortBcolor[downSort.id] = "#ff0000"
+        sortBcolor[totSort.id] = "#FF9800"
+
+        setDefaultExcept()
+
+        configureSortButtons(upSort)
+        configureSortButtons(downSort)
+        configureSortButtons(totSort)
+
         return root
     }
 
+    private fun setDefaultExcept(button: Button? = null, df_clr: String = "#FFFFFF") : Int {
+        var type = 0
+
+        if(upSort != button) {
+            sortBstate[upSort.id] = 0
+            upSort.setTextColor(Color.parseColor(df_clr))
+            upSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
+        } else type = 1
+
+        if(downSort != button) {
+            sortBstate[downSort.id] = 0
+            downSort.setTextColor(Color.parseColor(df_clr))
+            downSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
+        } else type = -1
+
+        if(totSort != button) {
+            sortBstate[totSort.id] = 0
+            totSort.setTextColor(Color.parseColor(df_clr))
+            totSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
+        }
+
+        return type
+    }
+
+    private fun configureSortButtons(button: Button) {
+        button.setOnClickListener {
+            val type = setDefaultExcept(button)
+            val key = it.id
+            when(sortBstate[key]) {
+                    0 -> {
+                        button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_down_float,0,0,0)
+                        button.setTextColor(Color.parseColor(sortBcolor[key]))
+                        sortBstate[key] = 1
+
+                        (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, 1)
+                    }
+                    1 -> {
+                        button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_up_float,0,0,0)
+                        button.setTextColor(Color.parseColor(sortBcolor[key]))
+                        sortBstate[key] = -1
+
+                        (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, -1)
+                    }
+                    else -> {
+                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
+                        button.setTextColor(Color.parseColor("#FFFFFF"))
+                        sortBstate[key] = 0
+
+                        if(sortBstate[upSort.id] == 0 && sortBstate[downSort.id] == 0 &&sortBstate[totSort.id] == 0) {
+                            (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
+                        } else {
+                            (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, 0)
+                        }
+                    }
+                }
+            }
+    }
 
     private fun setFromFireStore() {
         DB.getProblems() { problems ->

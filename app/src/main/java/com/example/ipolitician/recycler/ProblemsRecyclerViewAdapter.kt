@@ -93,6 +93,27 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
         }
     }
 
+    fun sortBy(type: Int, vector: Int) {
+        DB.getProblems() { problems ->
+            DB.getUserProblems(MainActivity.uniqueID!!) { voted ->
+                when(type) {
+                    1 -> {
+                        problems.sortBy { vector*it.upvotes }
+                    }
+                    -1 -> {
+                        problems.sortBy { vector*it.downvotes }
+                    }
+                    else -> {
+                        problems.sortBy { vector*(it.upvotes + it.downvotes)}
+                    }
+                }
+                this.problems = problems
+                this.voted = voted
+                notifyDataSetChanged()
+            }
+        }
+    }
+
     fun fetch_data() {
         DB.getProblems() { problems ->
             DB.getUserProblems(MainActivity.uniqueID!!) { voted ->
