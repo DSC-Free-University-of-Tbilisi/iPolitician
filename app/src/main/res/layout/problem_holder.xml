@@ -29,52 +29,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/breakline" />
 
-    <Button
-        android:id="@+id/up_vote"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/design_default_color_secondary_variant"
-        android:drawableLeft="@drawable/ic_up_arrow"
-        android:padding="8dp"
-        android:text="0"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/problem" />
-
-    <Button
-        android:id="@+id/down_vote"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/design_default_color_secondary_variant"
-        android:drawableLeft="@drawable/ic_down_arrow"
-        android:padding="8dp"
-        android:text="0"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/votes"
-        app:layout_constraintStart_toEndOf="@+id/up_vote"
-        app:layout_constraintTop_toBottomOf="@+id/problem" />
-
-    <Button
-        android:id="@+id/votes"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/design_default_color_secondary_variant"
-        android:padding="8dp"
-        android:text="VOTES: 0"
-        android:textAlignment="viewStart"
-        android:textColor="#FF9800"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/down_vote"
-        app:layout_constraintTop_toBottomOf="@+id/problem" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/problem">
+
+        <Button
+            android:id="@+id/up_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/design_default_color_secondary_variant"
+            android:drawableLeft="@drawable/ic_up_arrow"
+            android:padding="8dp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/down_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/design_default_color_secondary_variant"
+            android:drawableLeft="@drawable/ic_down_arrow"
+            android:padding="8dp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/votes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/design_default_color_secondary_variant"
+            android:drawableLeft="@drawable/sum"
+            android:padding="8dp"
+            android:text="0"
+            android:textColor="#FF9800"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

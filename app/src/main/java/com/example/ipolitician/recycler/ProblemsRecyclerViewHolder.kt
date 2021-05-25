@@ -65,7 +65,7 @@ class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     fun TotalVotes(): Int {
         var total_votes = up_votes.text.toString().toInt() + down_votes.text.toString().toInt()
-        votes.text = "Votes: $total_votes"
+        votes.text = "$total_votes"
         return total_votes
     }
 
