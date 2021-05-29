@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
@@ -11,10 +12,11 @@ import com.example.ipolitician.R
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.structures.Selected
+import com.example.ipolitician.structures.VocabData
 import com.example.ipolitician.structures.Voted
 
 
-class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var voted: Voted) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>() {
+class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var voted: Voted) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>(), FilterableRecyclerView  {
 
     private var DB = DataAPI.instance
 
@@ -126,5 +128,17 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
 
     fun getVoted(): Voted {
         return voted
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                return FilterResults()
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                search(constraint.toString())
+            }
+        }
     }
 }

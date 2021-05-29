@@ -18,16 +18,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.firebase.DataAPI
+import com.example.ipolitician.recycler.FilterableRecyclerView
 import com.example.ipolitician.recycler.ProblemsRecyclerViewAdapter
+import com.example.ipolitician.search.SearchComponent
 import com.example.ipolitician.structures.PV
+import com.example.ipolitician.textColor
 import com.google.android.material.snackbar.Snackbar
 
 
 class ProblemsFragment : Fragment() {
 
     private lateinit var ProblemsRecyclerView: RecyclerView
-    private lateinit var search: SearchView
+    private lateinit var search: SearchComponent
     private lateinit var viewModel: ProblemsViewModel
     private val DB = DataAPI.instance
 
@@ -49,26 +53,8 @@ class ProblemsFragment : Fragment() {
         ProblemsRecyclerView.layoutManager = LinearLayoutManager(context)
 
         search = root.findViewById(R.id.problemsSearch)
-
-        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                callSearch(query)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-//              if (searchView.isExpanded() && TextUtils.isEmpty(newText)) {
-                callSearch(newText)
-                //              }
-                return true
-            }
-
-            fun callSearch(query: String?) {
-                if (query == null) setFromFireStore()
-                else (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).search(query)
-            }
-        })
-
+        search.hideKeyboardOnClose(this)
+        dialog.show()
         setFromFireStore()
 
         root.findViewById<Button>(R.id.add_post).setOnClickListener {
@@ -107,25 +93,25 @@ class ProblemsFragment : Fragment() {
         return root
     }
 
-    private fun setDefaultExcept(button: Button? = null, df_clr: String = "#FFFFFF") : Int {
+    private fun setDefaultExcept(button: Button? = null, df_clr: Int = textColor.data) : Int {
         var type = 0
 
         if(upSort != button) {
             sortBstate[upSort.id] = 0
-            upSort.setTextColor(Color.parseColor(df_clr))
-            upSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
+            upSort.setTextColor(df_clr)
+            upSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
         } else type = 1
 
         if(downSort != button) {
             sortBstate[downSort.id] = 0
-            downSort.setTextColor(Color.parseColor(df_clr))
-            downSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
+            downSort.setTextColor(df_clr)
+            downSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
         } else type = -1
 
         if(totSort != button) {
             sortBstate[totSort.id] = 0
-            totSort.setTextColor(Color.parseColor(df_clr))
-            totSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
+            totSort.setTextColor(df_clr)
+            totSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
         }
 
         return type
@@ -137,22 +123,22 @@ class ProblemsFragment : Fragment() {
             val key = it.id
             when(sortBstate[key]) {
                     0 -> {
-                        button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_down_float,0,0,0)
+                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_down,0,0,0)
                         button.setTextColor(Color.parseColor(sortBcolor[key]))
                         sortBstate[key] = 1
 
                         (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, 1)
                     }
                     1 -> {
-                        button.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_up_float,0,0,0)
+                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up,0,0,0)
                         button.setTextColor(Color.parseColor(sortBcolor[key]))
                         sortBstate[key] = -1
 
                         (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, -1)
                     }
                     else -> {
-                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_and_down,0,0,0)
-                        button.setTextColor(Color.parseColor("#FFFFFF"))
+                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
+                        button.setTextColor(textColor.data)
                         sortBstate[key] = 0
 
                         if(sortBstate[upSort.id] == 0 && sortBstate[downSort.id] == 0 &&sortBstate[totSort.id] == 0) {
@@ -169,6 +155,8 @@ class ProblemsFragment : Fragment() {
         DB.getProblems() { problems ->
             DB.getUserProblems(MainActivity.uniqueID!!) { voted ->
                 ProblemsRecyclerView.adapter = ProblemsRecyclerViewAdapter(problems, voted)
+                search.setAdapter(ProblemsRecyclerView.adapter as FilterableRecyclerView)
+                dialog.dismiss()
             }
         }
     }

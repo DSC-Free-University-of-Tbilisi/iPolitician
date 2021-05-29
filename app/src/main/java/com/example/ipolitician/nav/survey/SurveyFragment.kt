@@ -1,5 +1,7 @@
 package com.example.ipolitician.nav.survey
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,19 +15,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.Util.dialog
+import com.example.ipolitician.backgroundColor
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.recycler.QuestionsRecyclerViewAdapter
 import com.example.ipolitician.structures.Party
 import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.Selected
+import com.example.ipolitician.textColor
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
 import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_survey.*
+import kotlin.random.Random
 
 class SurveyFragment : Fragment() {
 
@@ -34,7 +46,7 @@ class SurveyFragment : Fragment() {
     private var questions: ArrayList<QA> = arrayListOf()
     private var selected: Selected = Selected()
     private lateinit var fab: FloatingActionButton
-    private lateinit var aaChartView: AAChartView
+    private lateinit var pieChart: PieChart
     private lateinit var reSurvey: Button
     private lateinit var surveyTitle: TextView
     private var chartArray: ArrayList<Party> = arrayListOf()
@@ -44,11 +56,11 @@ class SurveyFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         surveyViewModel = ViewModelProviders.of(this).get(SurveyViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_survey, container, false)
-
+        dialog.show()
         QuestionsRecyclerView = root.findViewById(R.id.questions_recyclerview)
         QuestionsRecyclerView.layoutManager = LinearLayoutManager(context)
         reSurvey = root.findViewById(R.id.reSurvey)
-        aaChartView = root.findViewById(R.id.aa_chart_view)
+        pieChart = root.findViewById(R.id.pie_chart)
         fab = (activity as MainActivity).findViewById(R.id.fab)
         surveyTitle = root.findViewById(R.id.textView7)
         root.findViewById<Button>(R.id.reSurvey).setOnClickListener {
@@ -65,6 +77,7 @@ class SurveyFragment : Fragment() {
             configureChart(root)
         }
         configureVisibility(isFirst)
+        dialog.dismiss()
     }
 
     private fun configureFloatingButton(root: View){
@@ -86,29 +99,47 @@ class SurveyFragment : Fragment() {
 
     private fun configureChart(root: View) {
         chartArray.sortBy { -calculateCompatibility(it.selected) }
-        val aaChartModel : AAChartModel = AAChartModel()
-            .chartType(AAChartType.Column)
-            .title("Parties you match the most")
-            .subtitle("remember your vote matters")
-            .backgroundColor("#ffffff")
-            .polar(true)
-            .series( chartArray.map{ AASeriesElement().name(it.displayName).data(arrayOf(calculateCompatibility(it.selected))) }.toTypedArray() )
 
+        val entries = chartArray.map { PieEntry(calculateCompatibility(it.selected), it.displayName) }
 
-        aaChartView.aa_drawChartWithChartModel(aaChartModel)
+        val dataset = PieDataSet(entries, "")
+        dataset.valueTextSize = 12f
+        dataset.colors = ColorTemplate.VORDIPLOM_COLORS.toList()
+        dataset.valueTypeface = Typeface.DEFAULT_BOLD
+        dataset.valueTextSize = 14f
+        dataset.valueLineColor = ColorTemplate.VORDIPLOM_COLORS[0]
+        val lineData = PieData(dataset)
+
+        val legend = pieChart.legend
+        legend.textSize = 16f
+        legend.textColor = textColor.data
+        legend.isWordWrapEnabled = true
+        legend.form = Legend.LegendForm.CIRCLE
+        legend.formSize = 12f
+        legend.xEntrySpace = 12f
+        legend.yEntrySpace = 4f
+
+        pieChart.setUsePercentValues(true)
+        pieChart.description.isEnabled = false
+        pieChart.setHoleColor(backgroundColor.data)
+        pieChart.setDrawEntryLabels(false)
+//        pieChart.setEntryLabelColor(Color.BLACK)
+
+        pieChart.data = lineData
+        pieChart.invalidate() // refresh
     }
 
-    private fun calculateCompatibility(selected: ArrayList<Int>): Int{
+    private fun calculateCompatibility(selected: ArrayList<Int>): Float{
         var common = 0.0
         selected.forEachIndexed { index, answerIdx ->
             common += if(this.selected.selected[index] == answerIdx) 1 else 0
         }
-        return (common / selected.size * 100).toInt()
+        return (common / selected.size * 100).toFloat()
     }
 
     private fun configureVisibility(first: Boolean){
         QuestionsRecyclerView.visibility = if (first) View.VISIBLE else View.INVISIBLE
-        aaChartView.visibility = if (first) View.INVISIBLE else View.VISIBLE
+        pieChart.visibility = if (first) View.INVISIBLE else View.VISIBLE
         fab.visibility = if (first) View.VISIBLE else View.GONE
         reSurvey.visibility = if (first) View.INVISIBLE else View.VISIBLE
         surveyTitle.visibility = if (first) View.VISIBLE else View.INVISIBLE

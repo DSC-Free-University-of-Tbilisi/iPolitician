@@ -1,39 +1,38 @@
 package com.example.ipolitician.nav.publics
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import com.anychart.AnyChart
-import com.anychart.AnyChartView
-import com.anychart.chart.common.dataentry.DataEntry
-import com.anychart.chart.common.dataentry.ValueDataEntry
-import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
-import com.example.ipolitician.structures.Party
-import com.example.ipolitician.structures.QA
-import com.example.ipolitician.structures.Selected
-import com.example.ipolitician.structures.User
+import com.example.ipolitician.textColor
 import com.github.aachartmodel.aainfographics.aachartcreator.*
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
-import java.lang.Math.round
-import java.util.concurrent.CountDownLatch
+import kotlin.random.Random
 
 
 class PublicFragment : Fragment() {
 
-//    private lateinit var anyChartView : AnyChartView
-    private lateinit var aaChartView: AAChartView
+
+    private lateinit var barView: BarChart
     private lateinit var spinner1 : Spinner
     private lateinit var spinner2 : Spinner
     private val DB = DataAPI.instance
@@ -51,8 +50,10 @@ class PublicFragment : Fragment() {
         ages.addAll(ProfileFragment.ages)
         genders.addAll(ProfileFragment.genders)
 
-//        anyChartView = root.findViewById(R.id.any_chart_view) as AnyChartView
-        aaChartView = root.findViewById(R.id.aa_chart_view)
+        dialog.show()
+
+        barView = root.findViewById(R.id.bar_view)
+
         spinner1 = root.findViewById<Spinner>(R.id.spinner4)
         spinner2 = root.findViewById<Spinner>(R.id.spinner5)
         ProfileFragment.setSpinner(
@@ -104,15 +105,42 @@ class PublicFragment : Fragment() {
 
         var sorted = parties.map { it }.sortedBy { -it.value }
         val sum = sorted.map { it.value }.sum()
-        val aaChartModel : AAChartModel = AAChartModel()
-            .chartType(AAChartType.Column)
-            .title("Find out how the public thinks")
-            .subtitle("total votes: $sum")
-            .backgroundColor("#ffffff")
-            .series(sorted.map { AASeriesElement().name(it.key).data(arrayOf("%.${2}f".format(it.value.toDouble() / sum * 100).toDouble()))}.toTypedArray())
-            .stacking(AAChartStackingType.False)
-            .dataLabelsEnabled(true)
 
-        aaChartView.aa_drawChartWithChartModel(aaChartModel)
+
+
+
+        val datasets = sorted.mapIndexed { index, entry -> BarDataSet(mutableListOf(BarEntry(index.toFloat(), entry.value.toFloat() / sum * 100)), entry.key) }
+        datasets.forEachIndexed { index, barDataSet ->
+            barDataSet.valueTextSize = 16f
+            barDataSet.valueTextColor = textColor.data
+            barDataSet.colors = listOf(ColorTemplate.VORDIPLOM_COLORS[index])
+        }
+        val lineData = BarData(datasets)
+        lineData.setValueFormatter(PercentFormatter())
+
+        barView.xAxis.setDrawGridLines(false)
+        barView.axisLeft.setDrawGridLines(false)
+        barView.axisRight.setDrawGridLines(false)
+        barView.axisRight.setDrawLabels(false)
+        barView.xAxis.setDrawLabels(false)
+        barView.axisLeft.textColor = textColor.data
+
+        val legend = barView.legend
+        legend.textSize = 16f
+        legend.textColor = textColor.data
+        legend.isWordWrapEnabled = true
+        legend.form = Legend.LegendForm.CIRCLE
+        legend.formSize = 12f
+        legend.xEntrySpace = 12f
+        legend.yEntrySpace = 4f
+
+
+        barView.description.isEnabled = false
+        barView.isScaleXEnabled = false
+        barView.isScaleYEnabled = false
+        barView.data = lineData
+        barView.setFitBars(true)
+        barView.invalidate() // refresh
+        dialog.dismiss()
     }
 }

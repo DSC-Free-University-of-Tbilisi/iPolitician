@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundClr"
     tools:context=".nav.survey.SurveyFragment">
 
     <Button
         android:id="@+id/add_post"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/plus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SearchView
+    <com.example.ipolitician.search.SearchComponent
         android:id="@+id/problemsSearch"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:queryHint="app feature"
         app:layout_constraintEnd_toStartOf="@+id/add_post"
@@ -32,22 +33,24 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/componentClr"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/problemsSearch"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/problemsSearch">
 
         <Button
             android:id="@+id/sort_by_up_votes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#000000"
-            android:drawableLeft="@drawable/arrow_up_and_down"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/arrow_up_down"
 
             android:padding="16dp"
             android:text="Positive"
-            android:textColor="#FFFFFF"
+            android:textColor="?attr/textClr"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -56,12 +59,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#000000"
-            android:drawableLeft="@drawable/arrow_up_and_down"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/arrow_up_down"
 
             android:padding="16dp"
             android:text="Negative"
-            android:textColor="#FFFFFF"
+            android:textColor="?attr/textClr"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -70,12 +73,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#000000"
-            android:drawableLeft="@drawable/arrow_up_and_down"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/arrow_up_down"
 
             android:padding="16dp"
             android:text="Votes"
-            android:textColor="#FFFFFF"
+            android:textColor="?attr/textClr"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -84,7 +87,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/problems_recyclerview"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />

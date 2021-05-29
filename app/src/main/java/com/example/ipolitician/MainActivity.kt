@@ -2,6 +2,7 @@ package com.example.ipolitician
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -15,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.anychart.ui.contextmenu.Item
 import com.example.ipolitician.Auth.Authenticate
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
@@ -58,8 +60,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(getMode())
         setContentView(R.layout.activity_main)
 
+        theme.resolveAttribute(R.attr.textClr, textColor, true)
+        theme.resolveAttribute(R.attr.backgroundClr, backgroundColor, true)
+        theme.resolveAttribute(R.attr.componentClr, componentColor, true)
 //        authenticate.startPhoneNumberVerification("+995568552663")
 
         val id = id(context = this)
@@ -71,6 +77,9 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
 
         navView.itemIconTintList = null
+        navView.backgroundTintList = ColorStateList.valueOf(componentColor.data)
+        navView.itemTextColor = ColorStateList.valueOf(textColor.data)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -93,13 +102,14 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
 
         val switch = findViewById<View>(R.id.switch_theme) as SwitchCompat
-
+        switch.isChecked = getMode() == R.style.DarkMode_NoActionBar
         switch.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 applicationContext,
                 if (switch.isChecked) "Dark Mode" else "Light Mode",
                 Toast.LENGTH_SHORT
             ).show()
+            switchMode()
         })
         return true
     }

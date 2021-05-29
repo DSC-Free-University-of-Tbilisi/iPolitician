@@ -3,31 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/breakline"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="12dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/rounded_background">
 
     <TextView
         android:id="@+id/problem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="some problem here"
-        android:textColor="#000000"
+        android:textColor="?attr/textClr"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/breakline" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
@@ -36,7 +28,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/problem">
@@ -46,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/design_default_color_secondary_variant"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_up_arrow"
             android:padding="8dp"
             android:text="0"
@@ -59,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/design_default_color_secondary_variant"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_down_arrow"
             android:padding="8dp"
             android:text="0"
@@ -72,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/design_default_color_secondary_variant"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/sum"
             android:padding="8dp"
             android:text="0"

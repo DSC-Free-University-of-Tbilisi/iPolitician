@@ -5,6 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundClr"
     tools:context=".nav.publics.PublicFragment">
 
     <ScrollView
@@ -18,27 +19,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-<!--            <com.anychart.AnyChartView-->
-<!--                android:id="@+id/any_chart_view"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="350dp">-->
-<!--            </com.anychart.AnyChartView>-->
+            <!--            <com.anychart.AnyChartView-->
+            <!--                android:id="@+id/any_chart_view"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="350dp">-->
+            <!--            </com.anychart.AnyChartView>-->
 
-            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
-                android:id="@+id/aa_chart_view"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/bar_view"
                 android:layout_width="match_parent"
-                android:layout_height="350dp">
-            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
+                android:layout_height="350dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <!--            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView-->
+            <!--                android:id="@+id/aa_chart_view"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="350dp">-->
+            <!--            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>-->
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginBottom="12dp"
                 android:text="Age"
-                android:textColor="@color/design_default_color_on_secondary"
+                android:textColor="?attr/textClr"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -46,15 +57,19 @@
                 android:id="@+id/spinner4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_background" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginBottom="12dp"
                 android:text="Gender"
-                android:textColor="@color/design_default_color_on_secondary"
+                android:textColor="?attr/textClr"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -62,23 +77,26 @@
                 android:id="@+id/spinner5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/rounded_background" />
 
             <Button
                 android:id="@+id/filterBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/corner_radius"
                 android:text="FILTER"
                 android:textSize="18sp" />
 
             <!--            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView-->
-<!--                android:id="@+id/aa_chart_view2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="350dp">-->
-<!--            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>-->
+            <!--                android:id="@+id/aa_chart_view2"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="350dp">-->
+            <!--            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>-->
         </LinearLayout>
     </ScrollView>
 

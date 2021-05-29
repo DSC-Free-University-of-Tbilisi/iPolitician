@@ -58,7 +58,6 @@ class ProfileFragment : Fragment() {
                 DB.setUser(it1, usr)
             }
         })
-
         return root
     }
 
@@ -71,7 +70,8 @@ class ProfileFragment : Fragment() {
             if (spinner != null) {
                 val adapter = ArrayAdapter(
                     context,
-                    android.R.layout.simple_spinner_dropdown_item, arr
+                    R.layout.spinner_item,
+                    arr
                 )
                 spinner.adapter = adapter
                 spinner.setSelection(position)

@@ -30,8 +30,6 @@
                     android:id="@+id/nav_election"
                     android:icon="@drawable/ic_nav_vote"
                     android:title="Election" />
-
-
             </group>
         </menu>
     </item>
@@ -44,6 +42,4 @@
                 android:title="Theme"/>
         </menu>
     </item>
-
-
 </menu>

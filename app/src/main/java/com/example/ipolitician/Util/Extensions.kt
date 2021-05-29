@@ -15,13 +15,12 @@ var Fragment.dialog : AlertDialog
     get() = externalMap[this] ?: createDialog()
     set(value:AlertDialog) { externalMap[this] = value }
 
-
-
 fun Fragment.createDialog() : AlertDialog{
     val builder: AlertDialog.Builder = AlertDialog.Builder(context!!)
     val customLayout: View =
         layoutInflater.inflate(R.layout.custom_loading, null)
     val dialog = builder.setView(customLayout).create()
+    dialog.setCanceledOnTouchOutside(false)
     externalMap[this] = dialog
     return dialog
 }

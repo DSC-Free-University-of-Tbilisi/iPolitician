@@ -1,11 +1,17 @@
 package com.example.ipolitician.recycler
 
 
+import android.app.ActionBar
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.RadioButton
+import androidx.annotation.RequiresApi
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
@@ -14,6 +20,7 @@ import com.example.ipolitician.structures.EV
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.Voted
+import com.example.ipolitician.textColor
 import kotlinx.android.synthetic.main.election_holder.view.*
 
 
@@ -41,6 +48,7 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onBindViewHolder(holder: ElectionRecyclerViewHolder, position: Int) {
         clearHolder(holder)
 
@@ -49,6 +57,8 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
         for (candidate in elections[position].candidates.toList().sortedBy { (_, value) -> -value}.toMap()){
             var cand = RadioButton(holder.candidates.context)
             cand.text = candidate.key + " -> ${candidate.value}"
+            cand.setTextColor(textColor.data)
+            cand.buttonTintList = ColorStateList.valueOf(textColor.data)
             holder.candidates.addView(cand)
         }
 
@@ -72,6 +82,4 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
                 notifyDataSetChanged()
         }
     }
-
-
 }

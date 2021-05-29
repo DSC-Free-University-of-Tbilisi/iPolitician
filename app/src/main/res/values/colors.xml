@@ -9,4 +9,11 @@
     <color name="lightComponentColor">#FFFFFF</color>
     <color name="darkTextColor">#f7f7f7</color>
     <color name="lightTextColor">#0C0C0C</color>
+
+<!--    graphic colors-->
+    <color name="red">#FF0000</color>
+    <color name="blue">#002AFF</color>
+    <color name="green">#64DD17</color>
+    <color name="violet">#AA00FF</color>
+    <color name="orange">#FF6D00</color>
 </resources>
