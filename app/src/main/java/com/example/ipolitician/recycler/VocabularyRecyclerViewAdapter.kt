@@ -1,15 +1,10 @@
 package com.example.ipolitician.recycler
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filterable
-import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
-import com.example.ipolitician.structures.QA
-import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.VocabData
 
 class VocabularyRecyclerViewAdapter(
@@ -21,7 +16,7 @@ class VocabularyRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VocabularyRecyclerViewHolder {
         return VocabularyRecyclerViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.vocabulary_holder,
+                R.layout.holder_vocabulary,
                 parent,
                 false
             )

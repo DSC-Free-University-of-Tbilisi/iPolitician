@@ -1,18 +1,14 @@
 package com.example.ipolitician.recycler
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.PV
-import com.example.ipolitician.structures.Selected
-import com.example.ipolitician.structures.VocabData
 import com.example.ipolitician.structures.Voted
 
 
@@ -21,7 +17,7 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
     private var DB = DataAPI.instance
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProblemsRecyclerViewHolder {
-        return ProblemsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.problem_holder, parent, false))
+        return ProblemsRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.holder_problem, parent, false))
     }
 
     override fun getItemCount(): Int {

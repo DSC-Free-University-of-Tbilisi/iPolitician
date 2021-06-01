@@ -1,27 +1,19 @@
 package com.example.ipolitician.recycler
 
 
-import android.app.ActionBar
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.RadioButton
 import androidx.annotation.RequiresApi
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.EV
-import com.example.ipolitician.structures.PV
-import com.example.ipolitician.structures.Selected
 import com.example.ipolitician.structures.Voted
 import com.example.ipolitician.textColor
-import kotlinx.android.synthetic.main.election_holder.view.*
 
 
 class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private var voted: Voted) : RecyclerView.Adapter<ElectionRecyclerViewHolder>() {
@@ -29,7 +21,7 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
     private var DB = DataAPI.instance
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElectionRecyclerViewHolder {
-        return ElectionRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.election_holder, parent, false))
+        return ElectionRecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.holder_election, parent, false))
     }
 
     override fun getItemCount(): Int {

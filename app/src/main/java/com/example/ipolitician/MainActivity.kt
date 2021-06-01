@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -63,9 +65,8 @@ class MainActivity : AppCompatActivity() {
         setTheme(getMode())
         setContentView(R.layout.activity_main)
 
-        theme.resolveAttribute(R.attr.textClr, textColor, true)
-        theme.resolveAttribute(R.attr.backgroundClr, backgroundColor, true)
-        theme.resolveAttribute(R.attr.componentClr, componentColor, true)
+        retreiveThemeAttrs()
+
 //        authenticate.startPhoneNumberVerification("+995568552663")
 
         val id = id(context = this)
@@ -80,6 +81,17 @@ class MainActivity : AppCompatActivity() {
         navView.backgroundTintList = ColorStateList.valueOf(componentColor.data)
         navView.itemTextColor = ColorStateList.valueOf(textColor.data)
 
+
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+            if (nd.id == R.id.nav_login) {
+//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                supportActionBar?.hide()
+            } else {
+                supportActionBar?.show()
+//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            }
+        }
+//        navController.navigate(R.id.nav_login)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -93,7 +105,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        setUpUser()
+
+//        setUpUser()
     }
 
 
@@ -196,5 +209,9 @@ class MainActivity : AppCompatActivity() {
         pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
     }
 
-
+    private fun retreiveThemeAttrs(){
+        theme.resolveAttribute(R.attr.textClr, textColor, true)
+        theme.resolveAttribute(R.attr.backgroundClr, backgroundColor, true)
+        theme.resolveAttribute(R.attr.componentClr, componentColor, true)
+    }
 }

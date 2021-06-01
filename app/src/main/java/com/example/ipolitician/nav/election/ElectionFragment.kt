@@ -1,7 +1,5 @@
 package com.example.ipolitician.nav.election
 
-import android.opengl.Visibility
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +13,6 @@ import com.example.ipolitician.R
 import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.recycler.ElectionRecyclerViewAdapter
-import com.example.ipolitician.structures.EV
 
 class ElectionFragment : Fragment() {
 
@@ -24,7 +21,7 @@ class ElectionFragment : Fragment() {
     private var DB = DataAPI.instance
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.election_fragment, container, false)
+        val root = inflater.inflate(R.layout.fragment_election, container, false)
 
         noData = root.findViewById(R.id.textView13)
         ElectionsRecyclerView = root.findViewById(R.id.elections_recyclerview)

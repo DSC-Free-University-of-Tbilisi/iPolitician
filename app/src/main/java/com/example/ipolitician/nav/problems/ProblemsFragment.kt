@@ -1,9 +1,7 @@
 package com.example.ipolitician.nav.problems
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupWindow
-import android.widget.SearchView
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +21,6 @@ import com.example.ipolitician.recycler.ProblemsRecyclerViewAdapter
 import com.example.ipolitician.search.SearchComponent
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.textColor
-import com.google.android.material.snackbar.Snackbar
 
 
 class ProblemsFragment : Fragment() {
@@ -46,7 +41,7 @@ class ProblemsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.problems_fragment, container, false)
+        val root = inflater.inflate(R.layout.fragment_problems, container, false)
 //        root.foreground.alpha = 0
 
         ProblemsRecyclerView = root.findViewById(R.id.problems_recyclerview)
@@ -58,7 +53,7 @@ class ProblemsFragment : Fragment() {
         setFromFireStore()
 
         root.findViewById<Button>(R.id.add_post).setOnClickListener {
-            val pw = PopupWindow(inflater.inflate(R.layout.problem_post_fragment, null, false), 700, 400, true)
+            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 700, 400, true)
             pw.animationStyle = R.style.Animation
             pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
 //            root.foreground.alpha = 220
