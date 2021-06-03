@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.Util.dialog
+import com.example.ipolitician.Util.externalMap
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.recycler.ElectionRecyclerViewAdapter
 
@@ -35,9 +37,11 @@ class ElectionFragment : Fragment() {
     private fun setData() {
         DB.getElections { elections ->
             DB.getUserElections(MainActivity.uniqueID!!) { voted ->
-                ElectionsRecyclerView.adapter = ElectionRecyclerViewAdapter(elections, voted)
-                noData.visibility = if (elections.isNotEmpty()) View.INVISIBLE else View.VISIBLE
-                dialog.dismiss()
+                DB.getElectionVotes() { votes ->
+                    ElectionsRecyclerView.adapter = ElectionRecyclerViewAdapter(elections, votes, voted)
+                    noData.visibility = if (elections.isNotEmpty()) View.INVISIBLE else View.VISIBLE
+                    dialog.dismiss()
+                }
             }
         }
     }

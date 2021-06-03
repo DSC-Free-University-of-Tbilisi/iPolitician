@@ -4,11 +4,17 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#6200EE</color>
     <color name="darkBackground">#081016</color>
-    <color name="lightBackground">#ECECEC</color>
+    <color name="lightBackground">#f3f3f3</color>
     <color name="darkComponentColor">#21282d</color>
     <color name="lightComponentColor">#FFFFFF</color>
     <color name="darkTextColor">#f7f7f7</color>
     <color name="lightTextColor">#0C0C0C</color>
+
+    <color name="darkButtonColorStart">#F35A43</color>
+    <color name="darkButtonColorEnd">#EC3549</color>
+    <color name="lightButtonColorStart">#FFC636</color>
+    <color name="lightButtonColorEnd">#FF830A</color>
+
 
 <!--    graphic colors-->
     <color name="red">#FF0000</color>

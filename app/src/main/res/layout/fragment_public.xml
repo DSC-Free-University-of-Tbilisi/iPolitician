@@ -88,7 +88,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/corner_radius"
+                android:background="@drawable/button_background_shape"
                 android:text="FILTER"
                 android:textSize="18sp" />
 

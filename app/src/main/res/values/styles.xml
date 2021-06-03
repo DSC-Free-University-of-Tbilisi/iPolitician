@@ -9,7 +9,8 @@
         <item name="backgroundClr">@color/lightBackground</item>
         <item name="componentClr">@color/lightComponentColor</item>
         <item name="textClr">@color/lightTextColor</item>
-
+        <item name="buttonColorStart">@color/lightButtonColorStart </item>
+        <item name="buttonColorEnd">@color/lightButtonColorEnd </item>
     </style>
 
     <style name="DarkMode" parent="LightMode">
@@ -17,6 +18,9 @@
         <item name="backgroundClr">@color/darkBackground</item>
         <item name="componentClr">@color/darkComponentColor</item>
         <item name="textClr">@color/darkTextColor</item>
+
+        <item name="buttonColorStart">@color/darkButtonColorStart </item>
+        <item name="buttonColorEnd">@color/darkButtonColorEnd </item>
     </style>
 
     <style name="LightMode.NoActionBar">

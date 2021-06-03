@@ -5,6 +5,7 @@ import com.example.ipolitician.structures.*
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.security.KeyPair
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -267,5 +268,38 @@ class DataAPI : DataAPInterface {
             }.addOnFailureListener {
                 callback(Voted())
             }
+    }
+
+    @Synchronized
+    override fun getElectionVotes(callback: (Vote) -> Unit) {
+        val votes = Vote()
+        FS.collection("votes").get()
+            .addOnSuccessListener { documents ->
+                Log.d("listener", "getElectionVotes" + documents.toString())
+                for(dc in documents) {
+                    votes.votes[dc.id] = (dc["votes"] as Long).toInt()
+                }
+                callback(votes)
+                Log.d("listener", "getElectionVotes success")
+            }.addOnFailureListener {
+                callback(votes)
+                Log.d("listener", "getElectionVotes fail")
+            }
+    }
+
+    @Synchronized
+    override fun voteElection(id: String) {
+        FS.collection("votes").document(id)
+            .update("votes", FieldValue.increment(1))
+            .addOnSuccessListener { Log.d("listener", "setUserProblems success") }
+            .addOnFailureListener { Log.d("listener", "setUserProblems fail") }
+    }
+
+    @Synchronized
+    override fun unvoteElection(id: String) {
+        FS.collection("votes").document(id)
+            .update("votes", FieldValue.increment(-1))
+            .addOnSuccessListener { Log.d("listener", "setUserProblems success") }
+            .addOnFailureListener { Log.d("listener", "setUserProblems fail") }
     }
 }

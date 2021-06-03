@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="12dp" />
+    <gradient
+        android:startColor="?attr/buttonColorStart"
+        android:endColor="?attr/buttonColorEnd"
+        android:angle="180"/>
+</shape>
+
+<!--    android:startColor="#F35A43"-->
+<!--    android:endColor="#EC3549"-->
+
+<!--    android:startColor="#FFC636"-->
+<!--    android:endColor="#FF830A"-->

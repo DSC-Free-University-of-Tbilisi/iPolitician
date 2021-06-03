@@ -31,6 +31,10 @@ interface DataAPInterface {
     fun getElections(callback: (ArrayList<EV>) -> Unit)
     fun setElections(elections: EV)
 
+    fun voteElection(id: String)
+    fun unvoteElection(id: String)
+    fun getElectionVotes(callback: (Vote) -> Unit)
+
     fun setUserElections(user_id: String, voted: Voted)
     fun getUserElections(user_id: String, callback: (Voted) -> Unit)
 
