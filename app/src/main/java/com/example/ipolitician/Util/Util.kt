@@ -5,7 +5,10 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.example.ipolitician.Util.dialog
+import com.example.ipolitician.Util.externalMap
 
 var backgroundColor = TypedValue()
 var componentColor = TypedValue()

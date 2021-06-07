@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private val authenticate = Authenticate(this)
     private val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
     private val DB = DataAPI()
 
@@ -64,10 +63,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(getMode())
         setContentView(R.layout.activity_main)
-
         retreiveThemeAttrs()
-
-//        authenticate.startPhoneNumberVerification("+995568552663")
 
         val id = id(context = this)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -157,56 +153,57 @@ class MainActivity : AppCompatActivity() {
             if(user != null) {
                 Companion.user = user
             } else {
-                loadProfilePopUp(getString(R.string.welcome))
+
+//                loadProfilePopUp(getString(R.string.welcome))
             }
         }
     }
 
     private fun loadProfilePopUp(button_text: String) {
-        val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val pw = PopupWindow(
-            inflater.inflate(R.layout.fragment_profile, null, false),
-            window.decorView.width,
-            window.decorView.height - 150,
-            true
-        )
-        pw.animationStyle = R.style.Animation
-        val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
-        val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
-        val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
-        pw.contentView.findViewById<Button>(R.id.save).text = button_text
-        pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
-
-        val age_idx = if(user != null) user!!.age else 0
-        val gender_idx = if(user != null) user!!.gender else 0
-
-        ProfileFragment.setSpinner(
-            spinner1,
-            context = baseContext,
-            ProfileFragment.ages,
-            age_idx
-        )
-        ProfileFragment.setSpinner(
-            spinner2,
-            context = baseContext,
-            ProfileFragment.genders,
-            gender_idx
-        )
-        ProfileFragment.setSpinner(
-            spinner3,
-            context = baseContext,
-            ProfileFragment.regions
-        )
-        pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
-            val usr = User(
-                age = spinner1.selectedItemPosition,
-                gender = spinner2.selectedItemPosition
-            )
-            Companion.user = usr
-            DB.setUser(uniqueID!!, usr)
-            pw.dismiss()
-        }
-        pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
+//        val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//        val pw = PopupWindow(
+//            inflater.inflate(R.layout.fragment_profile, null, false),
+//            window.decorView.width,
+//            window.decorView.height - 150,
+//            true
+//        )
+//        pw.animationStyle = R.style.Animation
+//        val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
+//        val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
+//        val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
+//        pw.contentView.findViewById<Button>(R.id.save).text = button_text
+//        pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
+//
+//        val age_idx = if(user != null) user!!.age else 0
+//        val gender_idx = if(user != null) user!!.gender else 0
+//
+//        ProfileFragment.setSpinner(
+//            spinner1,
+//            context = baseContext,
+//            ProfileFragment.ages,
+//            age_idx
+//        )
+//        ProfileFragment.setSpinner(
+//            spinner2,
+//            context = baseContext,
+//            ProfileFragment.genders,
+//            gender_idx
+//        )
+//        ProfileFragment.setSpinner(
+//            spinner3,
+//            context = baseContext,
+//            ProfileFragment.regions
+//        )
+//        pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
+//            val usr = User(
+//                age = spinner1.selectedItemPosition,
+//                gender = spinner2.selectedItemPosition
+//            )
+//            Companion.user = usr
+//            DB.setUser(uniqueID!!, usr)
+//            pw.dismiss()
+//        }
+//        pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
     }
 
     private fun retreiveThemeAttrs(){

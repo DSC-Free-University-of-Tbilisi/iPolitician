@@ -1,13 +1,13 @@
 package com.example.ipolitician.Util
 
 import android.app.Activity
-import android.content.Context
+import android.os.Handler
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.ipolitician.R
-import com.example.ipolitician.hideKeyboard
+import java.security.MessageDigest
+
 
 val externalMap = mutableMapOf<Fragment, AlertDialog>()
 
@@ -23,4 +23,36 @@ fun Fragment.createDialog() : AlertDialog{
     dialog.setCanceledOnTouchOutside(false)
     externalMap[this] = dialog
     return dialog
+}
+
+fun Activity.showAlertDialogWithAutoDismiss(message: String) {
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Alert")
+        .setMessage(message)
+        .setCancelable(false)
+        .setPositiveButton("OK") { dialog, _ -> //this for skip dialog
+            dialog.cancel()
+        }
+    val alertDialog = builder.create()
+    alertDialog.show()
+    Handler().postDelayed(Runnable {
+        if (alertDialog.isShowing) {
+            alertDialog.dismiss()
+        }
+    }, 5000) //change 5000 with a specific time you want
+}
+
+fun String.md5(): String {
+    return hashString(this, "MD5")
+}
+
+fun String.sha256(): String {
+    return hashString(this, "SHA-256")
+}
+
+private fun hashString(input: String, algorithm: String): String {
+    return MessageDigest
+        .getInstance(algorithm)
+        .digest(input.toByteArray())
+        .fold("", { str, it -> str + "%02x".format(it) })
 }

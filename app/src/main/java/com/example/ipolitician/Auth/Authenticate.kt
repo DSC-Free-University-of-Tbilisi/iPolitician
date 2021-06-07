@@ -4,15 +4,19 @@ import android.app.Activity
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ipolitician.MainActivity
+import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
+import com.example.ipolitician.nav.auth.LoginFragment
+import com.google.android.gms.safetynet.SafetyNet
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
-class Authenticate(activity: MainActivity) {
+class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
     // [START declare_auth]
-    private val activity: MainActivity = activity
+    private val activity: AppCompatActivity = activity
+    private val fragment: LoginFragment = fragment
     private val TAG = "PhoneAuthActivity"
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var storedVerificationId: String? = ""
@@ -43,8 +47,8 @@ class Authenticate(activity: MainActivity) {
                 } else if (e is FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
                 }
-
                 // Show a message and update the UI
+                activity.showAlertDialogWithAutoDismiss("Wrong phone number format!")
             }
 
             override fun onCodeSent(
@@ -56,10 +60,9 @@ class Authenticate(activity: MainActivity) {
                 // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:$verificationId")
 
-                // Save verification ID and resending token so we can use them later
                 storedVerificationId = verificationId
                 resendToken = token
-//                verifyPhoneNumberWithCode(verificationId, "654321")
+                fragment.configureVisibility(true,true)
             }
         }
     }
@@ -109,14 +112,17 @@ class Authenticate(activity: MainActivity) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
 
-                    val user = task.result?.user
+                    fragment.authenticationComplete()
+//                    val user = task.result?.user
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
+                        activity.showAlertDialogWithAutoDismiss("Verification code entered incorrect!")
+                    } else {
+                        activity.showAlertDialogWithAutoDismiss("Personal number or password incorrect!")
                     }
-                    // Update UI
                 }
             }
     }
