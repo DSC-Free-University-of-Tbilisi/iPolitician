@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.Util.md5
@@ -81,6 +82,8 @@ class ProfileFragment : Fragment() {
                 )
                 MainActivity.user = usr
                 DB.setUser(it1, usr)
+                findNavController().navigateUp()
+                findNavController().navigate(R.id.nav_public)
             }
         })
         return root

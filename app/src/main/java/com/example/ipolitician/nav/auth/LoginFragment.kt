@@ -17,15 +17,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.Auth.Authenticate
+import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.Util.dialog
+import com.example.ipolitician.Util.md5
+import com.example.ipolitician.Util.sha256
 import com.example.ipolitician.backgroundColor
 import com.example.ipolitician.componentColor
 import com.example.ipolitician.firebase.DataAPI
+import com.example.ipolitician.structures.User
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginFragment: Fragment() {
 
     private lateinit var authenticate: Authenticate
+    private lateinit var personId: EditText
+    private lateinit var password: TextInputLayout
     private lateinit var phoneText: TextView
     private lateinit var phoneEdit: EditText
     private lateinit var codeText: TextView
@@ -33,6 +40,7 @@ class LoginFragment: Fragment() {
     private lateinit var logIn: Button
     private lateinit var signUp: Button
     private lateinit var submit: Button
+    private val DB = DataAPI()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
@@ -64,6 +72,14 @@ class LoginFragment: Fragment() {
     }
 
     fun authenticationComplete(){
+        val usr = User(
+            password = password.editText.toString().md5(),
+            phoneNumber = phoneEdit.text.toString()
+        )
+        DB.setUser(personId.text.toString().sha256(), usr)
+        MainActivity.uniqueID = personId.text.toString().sha256()
+        MainActivity.user = usr
+        findNavController().navigateUp()
         findNavController().navigate(R.id.nav_profile)
 //        findNavController().navigateUp()
 //        findNavController().navigate(R.id.nav_public)
@@ -84,6 +100,8 @@ class LoginFragment: Fragment() {
     private fun retrieveViews(root: View){
         logIn = root.findViewById(R.id.loginBtn)
         signUp = root.findViewById(R.id.signUpBtn)
+        personId = root.findViewById(R.id.editTextTextPersonName)
+        password = root.findViewById(R.id.editTextTextPersonName2)
         phoneText = root.findViewById(R.id.textView21)
         phoneEdit = root.findViewById(R.id.editTextPhone)
         codeText = root.findViewById(R.id.textView22)

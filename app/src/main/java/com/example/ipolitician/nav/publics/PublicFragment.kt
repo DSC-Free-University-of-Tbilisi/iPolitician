@@ -86,7 +86,10 @@ class PublicFragment : Fragment() {
             load = users.size
             for (id in ids){
                 DB.getSubmission(id) { sel ->
-                    if(sel.selected.isEmpty() || sel.party == "") return@getSubmission
+                    if(sel.selected.isEmpty() || sel.party == "") {
+                        dialog.dismiss()
+                        return@getSubmission
+                    }
 
                     if (parties.containsKey(sel.party)){
                         parties[sel.party] = parties[sel.party]!! + 1

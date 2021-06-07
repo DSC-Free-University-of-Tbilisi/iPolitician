@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
-            if (nd.id == R.id.nav_login) {
+            if (nd.id == R.id.nav_login || nd.id == R.id.nav_profile) {
 //                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 supportActionBar?.hide()
             } else {
@@ -124,10 +124,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val bool = super.onOptionsItemSelected(item)
         when (item.itemId) {
-            R.id.action_settings -> loadProfilePopUp(getString(R.string.save))
+            R.id.action_settings -> findNavController(R.id.nav_profile)
         }
-        return super.onOptionsItemSelected(item)
+        return bool
     }
 
     override fun onSupportNavigateUp(): Boolean {
