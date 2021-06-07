@@ -65,7 +65,7 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
             var cand = RadioButton(holder.candidates.context)
             val key = candidate + "+" + elections[position].title
 
-            cand.text = candidate + "-> ${votes.votes[key]}"
+            cand.text = candidate + ": ${votes.votes[key]}"
 
             cand.setTextColor(textColor.data)
             cand.buttonTintList = ColorStateList.valueOf(textColor.data)
@@ -80,7 +80,7 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
             val radio = holder.candidates
 
             if(voted.voted.containsKey(elections[position].id)) {
-                var oldId = (holder.candidates.getChildAt(voted.voted[elections[position].id]!!) as RadioButton).text.split("->")[0]
+                var oldId = (holder.candidates.getChildAt(voted.voted[elections[position].id]!!) as RadioButton).text.split(":")[0]
                 oldId += "+" + elections[holder.adapterPosition].title
                 DB.unvoteElection(oldId)
             }
@@ -92,7 +92,7 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
             )
             DB.setUserElections(MainActivity.uniqueID!!, voted)
 
-            var newId = (holder.candidates.getChildAt(voted.voted[elections[position].id]!!) as RadioButton).text.split("->")[0]
+            var newId = (holder.candidates.getChildAt(voted.voted[elections[position].id]!!) as RadioButton).text.split(":")[0]
             newId += "+" + elections[holder.adapterPosition].title
             DB.voteElection(newId)
 

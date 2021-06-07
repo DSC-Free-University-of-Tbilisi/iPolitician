@@ -133,19 +133,11 @@ class DataAPI : DataAPInterface {
     }
 
     @Synchronized
-    override fun voteProblem(problem_id: String, upvote: Int, downvote: Int) {
-        getProblem(problem_id) { prob ->
-            if(prob != null) {
-                setProblem(
-                    PV(
-                        problem = prob.problem,
-                        upvotes = prob.upvotes + upvote,
-                        downvotes = prob.downvotes + downvote,
-                        id = prob.id
-                    )
-                )
-            }
-        }
+    override fun voteProblem(problem_id: String, upvote: Long, downvote: Long) {
+        FS.collection("problems").document(problem_id)
+            .update("upvotes", FieldValue.increment(upvote), "downvotes", FieldValue.increment(downvote))
+            .addOnSuccessListener { Log.d("listener", "setUserProblems success") }
+            .addOnFailureListener { Log.d("listener", "setUserProblems fail") }
     }
 
     @Synchronized
@@ -275,7 +267,6 @@ class DataAPI : DataAPInterface {
         val votes = Vote()
         FS.collection("votes").get()
             .addOnSuccessListener { documents ->
-                Log.d("listener", "getElectionVotes" + documents.toString())
                 for(dc in documents) {
                     votes.votes[dc.id] = (dc["votes"] as Long).toInt()
                 }
