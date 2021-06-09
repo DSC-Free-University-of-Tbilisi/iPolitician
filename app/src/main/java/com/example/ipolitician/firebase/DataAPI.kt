@@ -53,24 +53,7 @@ class DataAPI : DataAPInterface {
             .addOnSuccessListener {
                 setSubmission(
                     user_id, Selected(
-                        selected = arrayListOf(
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1,
-                            -1
-                        )
+                        selected = (IntArray(30) {-1}).toList() as ArrayList<Int>
                     )
                 )
                 setUserProblems(user_id, Voted(voted = mutableMapOf()))
@@ -186,6 +169,14 @@ class DataAPI : DataAPInterface {
             }.addOnFailureListener {
                 callback(ArrayList())
             }
+    }
+
+    @Synchronized
+    override fun setQuestion(id: String, question: QA) {
+        FS.collection("questions").document(id)
+            .set(question)
+            .addOnSuccessListener { Log.d("listener", "setUserProblems success") }
+            .addOnFailureListener { Log.d("listener", "setUserProblems fail") }
     }
 
     @Synchronized

@@ -1,5 +1,6 @@
 package com.example.ipolitician.recycler
 
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
 import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.Selected
+import com.example.ipolitician.textColor
 
 
 class QuestionsRecyclerViewAdapter(
@@ -47,6 +49,8 @@ class QuestionsRecyclerViewAdapter(
         for (answer in questions[position].answers){
             var ans = RadioButton(holder.answers.context)
             ans.text = answer
+            ans.setTextColor(textColor.data)
+            ans.buttonTintList = ColorStateList.valueOf(textColor.data)
             holder.answers.addView(ans)
         }
         Log.d("aeeee", selected.selected[position].toString() + " " + position.toString())

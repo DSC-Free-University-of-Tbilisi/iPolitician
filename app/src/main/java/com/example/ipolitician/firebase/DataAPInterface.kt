@@ -9,6 +9,7 @@ interface DataAPInterface {
     fun setUser(user_id: String, user: User)
 
     fun getQuestions(callback: (ArrayList<QA>) -> Unit)
+    fun setQuestion(id: String, question: QA)
 
     fun getSubmission(user_id: String, callback: (Selected) -> Unit)
     fun setSubmission(user_id: String, selected: Selected)

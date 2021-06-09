@@ -23,6 +23,7 @@ import com.example.ipolitician.Auth.Authenticate
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
 import com.example.ipolitician.structures.EV
+import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.User
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.*
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val bool = super.onOptionsItemSelected(item)
         when (item.itemId) {
-            R.id.action_settings -> findNavController(R.id.nav_profile)
+            R.id.action_settings -> loadProfilePopUp(getString(R.string.save))
         }
         return bool
     }
@@ -154,62 +155,61 @@ class MainActivity : AppCompatActivity() {
             if(user != null) {
                 Companion.user = user
             } else {
-
 //                loadProfilePopUp(getString(R.string.welcome))
             }
         }
-    }
-
-    private fun loadProfilePopUp(button_text: String) {
-//        val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//        val pw = PopupWindow(
-//            inflater.inflate(R.layout.fragment_profile, null, false),
-//            window.decorView.width,
-//            window.decorView.height - 150,
-//            true
-//        )
-//        pw.animationStyle = R.style.Animation
-//        val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
-//        val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
-//        val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
-//        pw.contentView.findViewById<Button>(R.id.save).text = button_text
-//        pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
-//
-//        val age_idx = if(user != null) user!!.age else 0
-//        val gender_idx = if(user != null) user!!.gender else 0
-//
-//        ProfileFragment.setSpinner(
-//            spinner1,
-//            context = baseContext,
-//            ProfileFragment.ages,
-//            age_idx
-//        )
-//        ProfileFragment.setSpinner(
-//            spinner2,
-//            context = baseContext,
-//            ProfileFragment.genders,
-//            gender_idx
-//        )
-//        ProfileFragment.setSpinner(
-//            spinner3,
-//            context = baseContext,
-//            ProfileFragment.regions
-//        )
-//        pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
-//            val usr = User(
-//                age = spinner1.selectedItemPosition,
-//                gender = spinner2.selectedItemPosition
-//            )
-//            Companion.user = usr
-//            DB.setUser(uniqueID!!, usr)
-//            pw.dismiss()
-//        }
-//        pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
     }
 
     private fun retreiveThemeAttrs(){
         theme.resolveAttribute(R.attr.textClr, textColor, true)
         theme.resolveAttribute(R.attr.backgroundClr, backgroundColor, true)
         theme.resolveAttribute(R.attr.componentClr, componentColor, true)
+    }
+
+    private fun loadProfilePopUp(button_text: String) {
+        val inflater = this.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val pw = PopupWindow(
+            inflater.inflate(R.layout.fragment_profile, null, false),
+            window.decorView.width,
+            window.decorView.height - 150,
+            true
+        )
+        pw.animationStyle = R.style.Animation
+        val spinner1 = pw.contentView.findViewById<Spinner>(R.id.spinner)
+        val spinner2 = pw.contentView.findViewById<Spinner>(R.id.spinner2)
+        val spinner3 = pw.contentView.findViewById<Spinner>(R.id.spinner3)
+        pw.contentView.findViewById<Button>(R.id.save).text = button_text
+        pw.contentView.findViewById<TextView>(R.id.intro).text = getString(R.string.intro)
+
+        val age_idx = if(user != null) user!!.age else 0
+        val gender_idx = if(user != null) user!!.gender else 0
+
+        ProfileFragment.setSpinner(
+            spinner1,
+            context = baseContext,
+            ProfileFragment.ages,
+            age_idx
+        )
+        ProfileFragment.setSpinner(
+            spinner2,
+            context = baseContext,
+            ProfileFragment.genders,
+            gender_idx
+        )
+        ProfileFragment.setSpinner(
+            spinner3,
+            context = baseContext,
+            ProfileFragment.regions
+        )
+        pw.contentView.findViewById<Button>(R.id.save).setOnClickListener {
+            val usr = User(
+                age = spinner1.selectedItemPosition,
+                gender = spinner2.selectedItemPosition
+            )
+            Companion.user = usr
+            DB.setUser(uniqueID!!, usr)
+            pw.dismiss()
+        }
+        pw.showAtLocation(findViewById(R.id.nav_view), Gravity.CENTER, 0, 0)
     }
 }

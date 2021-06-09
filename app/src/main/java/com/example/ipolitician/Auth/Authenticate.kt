@@ -68,6 +68,7 @@ class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
     }
 
     fun startPhoneNumberVerification(phoneNumber: String) {
+        if(phoneNumber.isEmpty()) return
         // [START start_phone_auth]
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
@@ -80,6 +81,7 @@ class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
     }
 
     fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
+        if(code.length != 6) return
         // [START verify_with_code]
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
         // [END verify_with_code]

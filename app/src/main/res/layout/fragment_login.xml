@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00BFA5"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    android:background="?attr/backgroundClr">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -54,8 +54,8 @@
             android:layout_marginTop="16dp"
             android:paddingLeft="8dp"
             android:text="Personal Number"
-            android:textSize="15sp"
             android:textColor="?attr/textClr"
+            android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             tools:layout_editor_absoluteX="0dp" />
 
@@ -69,7 +69,7 @@
             android:background="@drawable/rounded_background"
             android:backgroundTint="?attr/backgroundClr"
             android:ems="10"
-            android:hint="01001234567"
+            android:hint="e.g. 01001234567"
             android:inputType="textPersonName"
             android:padding="8dp"
             android:textSize="16sp"
@@ -84,8 +84,8 @@
             android:layout_marginTop="8dp"
             android:paddingStart="8dp"
             android:text="Password"
-            android:textSize="15sp"
             android:textColor="?attr/textClr"
+            android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
             tools:layout_editor_absoluteX="-16dp" />
 
@@ -95,38 +95,38 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            app:passwordToggleEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" >
+            app:layout_constraintTop_toBottomOf="@+id/textView17"
+            app:passwordToggleEnabled="true">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:hint="a-z,A-Z,1-9"
-                android:padding="8dp"
-                android:inputType="textPassword"
                 android:background="@drawable/rounded_background"
                 android:backgroundTint="?attr/backgroundClr"
-                />
+                android:hint="a-z, A-Z, 1-9"
+                android:inputType="textPassword"
+                android:padding="8dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <EditText-->
-<!--            android:id="@+id/editTextTextPersonName2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="4dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:background="@drawable/rounded_background"-->
-<!--            android:backgroundTint="?attr/backgroundClr"-->
-<!--            android:ems="10"-->
-<!--            android:hint="a-z,A-Z,1-9"-->
-<!--            android:inputType="textPassword"-->
-<!--            android:padding="8dp"-->
-<!--            android:textSize="16sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textView17" />-->
+        <!--        <EditText-->
+        <!--            android:id="@+id/editTextTextPersonName2"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:layout_marginTop="4dp"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:background="@drawable/rounded_background"-->
+        <!--            android:backgroundTint="?attr/backgroundClr"-->
+        <!--            android:ems="10"-->
+        <!--            android:hint="a-z,A-Z,1-9"-->
+        <!--            android:inputType="textPassword"-->
+        <!--            android:padding="8dp"-->
+        <!--            android:textSize="16sp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/textView17" />-->
 
 
         <TextView
@@ -136,14 +136,13 @@
             android:layout_marginTop="8dp"
             android:paddingStart="8dp"
             android:text="Phone Number"
-            android:textSize="15sp"
             android:textColor="?attr/textClr"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
 
 
-        
         <EditText
             android:id="@+id/editTextPhone"
             android:layout_width="0dp"
@@ -169,8 +168,8 @@
             android:layout_marginTop="8dp"
             android:paddingStart="8dp"
             android:text="Enter Code"
-            android:textSize="15sp"
             android:textColor="?attr/textClr"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
@@ -201,8 +200,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/red"
+            android:background="@drawable/button_background_shape"
             android:text="submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

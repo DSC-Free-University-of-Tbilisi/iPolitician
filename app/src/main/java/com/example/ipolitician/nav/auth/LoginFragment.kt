@@ -3,6 +3,7 @@ package com.example.ipolitician.nav.auth
 import android.content.res.ColorStateList
 import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,9 +61,11 @@ class LoginFragment: Fragment() {
 
         submit.setOnClickListener {
             if (phoneEdit.isVisible && codeEdit.isVisible) {
-                authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
+                var au = authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
+                Log.d("HERE", au.toString())
             } else if (phoneEdit.isVisible){
-                authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
+                var au = authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
+                Log.d("HERE", au.toString())
             } else {
 //                findNavController().navigateUp()
 //                findNavController().navigate(R.id.nav_public)
