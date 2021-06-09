@@ -75,7 +75,7 @@ class ProfileFragment : Fragment() {
         setBtnListener(but, onClick = {
             MainActivity.uniqueID?.let { it1 ->
                 val usr = User(
-                    password = MainActivity.user!!.password.md5(),
+                    password = MainActivity.user!!.password,
                     phoneNumber = MainActivity.user!!.phoneNumber,
                     age = spinner1.selectedItemPosition,
                     gender = spinner2.selectedItemPosition,

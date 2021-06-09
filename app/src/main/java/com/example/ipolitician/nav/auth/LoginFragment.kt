@@ -17,14 +17,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ipolitician.*
 import com.example.ipolitician.Auth.Authenticate
-import com.example.ipolitician.MainActivity
-import com.example.ipolitician.R
 import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.Util.md5
 import com.example.ipolitician.Util.sha256
-import com.example.ipolitician.backgroundColor
-import com.example.ipolitician.componentColor
+import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
 import com.google.android.material.textfield.TextInputLayout
@@ -60,23 +58,38 @@ class LoginFragment: Fragment() {
         }
 
         submit.setOnClickListener {
-            if (phoneEdit.isVisible && codeEdit.isVisible) {
-                var au = authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
-                Log.d("HERE", au.toString())
+            if (!validatePersonId()) {
+                activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
+            } else if (phoneEdit.isVisible && codeEdit.isVisible) {
+                authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
             } else if (phoneEdit.isVisible){
-                var au = authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
-                Log.d("HERE", au.toString())
+                authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
             } else {
-//                findNavController().navigateUp()
-//                findNavController().navigate(R.id.nav_public)
+                loginAttempt()
             }
+            hideKeyboard()
         }
         return root
     }
 
+    fun loginAttempt(){
+        DB.getUser(personId.text.toString().sha256()) {
+            if (it?.password == password.editText?.text?.toString()?.md5()) {
+                MainActivity.uniqueID = personId.text.toString().sha256()
+                MainActivity.user = it
+                findNavController().navigateUp()
+                findNavController().navigate(R.id.nav_public)
+            }
+        }
+    }
+
+    private fun validatePersonId(): Boolean {
+        return personId.text.toString().length == 3
+    }
+
     fun authenticationComplete(){
         val usr = User(
-            password = password.editText.toString().md5(),
+            password = password.editText?.text.toString().md5(),
             phoneNumber = phoneEdit.text.toString()
         )
         DB.setUser(personId.text.toString().sha256(), usr)
@@ -84,8 +97,6 @@ class LoginFragment: Fragment() {
         MainActivity.user = usr
         findNavController().navigateUp()
         findNavController().navigate(R.id.nav_profile)
-//        findNavController().navigateUp()
-//        findNavController().navigate(R.id.nav_public)
     }
 
     private fun setBtnColors(active: Button, disabled: Button){

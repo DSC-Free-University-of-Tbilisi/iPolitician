@@ -68,7 +68,7 @@ class PublicFragment : Fragment() {
         )
 
         root.findViewById<Button>(R.id.filterBtn).setOnClickListener {
-            repaintGraph()
+            repaintGraph(spinner1.selectedItemPosition - 1, spinner2.selectedItemPosition - 1)
             if(load == -1) {
                 Snackbar.make(it, "No such data found", Snackbar.LENGTH_LONG).setAction(
                     "Action",
@@ -81,15 +81,14 @@ class PublicFragment : Fragment() {
         return root
     }
 
-    private fun repaintGraph(){
+    private fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1){
+        parties.clear()
         DB.getUsers() { users, ids ->
-            load = users.size
-            for (id in ids){
+            val idxs = ids.filterIndexed { index, _ -> (ageIdx == -1 || users[index].age == ageIdx) && (genderIdx == -1 || users[index].gender == genderIdx) }
+            load = idxs.size
+            for (id in idxs){
                 DB.getSubmission(id) { sel ->
-                    if(sel.selected.isEmpty() || sel.party == "") {
-                        dialog.dismiss()
-                        return@getSubmission
-                    }
+                    if(sel.selected.isEmpty() || sel.party == "") { return@getSubmission }
 
                     if (parties.containsKey(sel.party)){
                         parties[sel.party] = parties[sel.party]!! + 1
@@ -99,7 +98,11 @@ class PublicFragment : Fragment() {
                     tryDraw()
                 }
             }
-            if(parties.isEmpty()) { load = -1 }
+            dialog.dismiss()
+            if(parties.isEmpty()) {
+                tryDraw()
+                load = -1
+            }
         }
     }
 
@@ -108,9 +111,6 @@ class PublicFragment : Fragment() {
 
         var sorted = parties.map { it }.sortedBy { -it.value }
         val sum = sorted.map { it.value }.sum()
-
-
-
 
         val datasets = sorted.mapIndexed { index, entry -> BarDataSet(mutableListOf(BarEntry(index.toFloat(), entry.value.toFloat() / sum * 100)), entry.key) }
         datasets.forEachIndexed { index, barDataSet ->

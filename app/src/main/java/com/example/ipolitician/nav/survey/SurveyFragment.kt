@@ -100,7 +100,12 @@ class SurveyFragment : Fragment() {
     private fun configureChart(root: View) {
         chartArray.sortBy { -calculateCompatibility(it.selected) }
 
-        val entries = chartArray.map { PieEntry(calculateCompatibility(it.selected), it.displayName) }
+        val entries = chartArray.mapNotNull {
+            if(calculateCompatibility(it.selected) == 0f){
+                null
+            } else
+                PieEntry(calculateCompatibility(it.selected), it.displayName)
+        }
 
         val dataset = PieDataSet(entries, "")
         dataset.valueTextSize = 12f
