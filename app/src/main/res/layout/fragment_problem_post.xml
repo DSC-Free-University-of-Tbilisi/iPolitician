@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_background"
-    android:backgroundTint="?attr/componentClr">
+    android:backgroundTint="?attr/backgroundClr">
 
     <EditText
         android:id="@+id/problem_post"
@@ -14,6 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="?attr/textClr"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"

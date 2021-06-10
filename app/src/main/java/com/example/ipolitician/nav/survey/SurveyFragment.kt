@@ -84,16 +84,24 @@ class SurveyFragment : Fragment() {
         fab.setOnClickListener {
             selected = (QuestionsRecyclerView.adapter as QuestionsRecyclerViewAdapter).getSelected()
 
-            configureFragment(root, false)
+            var done = selected.selected.count { x -> x != -1 }
+            if(done < questions.size) {
+                Snackbar.make(it, "Please complete the survey, you have $done/${questions.size}", Snackbar.LENGTH_LONG).setAction(
+                    "Action",
+                    null
+                ).show()
+            } else {
+                configureFragment(root, false)
 
-            Snackbar.make(it, "Survey submitted successfully.", Snackbar.LENGTH_LONG).setAction(
-                "Action",
-                null
-            ).show()
+                Snackbar.make(it, "Survey submitted successfully.", Snackbar.LENGTH_LONG).setAction(
+                    "Action",
+                    null
+                ).show()
 
-            selected.party = chartArray[0].displayName
+                selected.party = chartArray[0].displayName
 
-            DB.setSubmission(MainActivity.uniqueID!!, selected)
+                DB.setSubmission(MainActivity.uniqueID!!, selected)
+            }
         }
     }
 

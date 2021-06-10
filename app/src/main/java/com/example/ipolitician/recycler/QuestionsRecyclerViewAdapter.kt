@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
 import com.example.ipolitician.structures.QA
@@ -51,6 +52,14 @@ class QuestionsRecyclerViewAdapter(
             ans.text = answer
             ans.setTextColor(textColor.data)
             ans.buttonTintList = ColorStateList.valueOf(textColor.data)
+
+            val params = RadioGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(0, 5, 0, 5)
+            ans.layoutParams = params
+
             holder.answers.addView(ans)
         }
         Log.d("aeeee", selected.selected[position].toString() + " " + position.toString())

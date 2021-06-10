@@ -1,6 +1,8 @@
 package com.example.ipolitician.nav.problems
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupWindow
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +39,7 @@ class ProblemsFragment : Fragment() {
     val sortBstate = mutableMapOf<Int,Int>()
     val sortBcolor = mutableMapOf<Int,String>()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,9 +57,10 @@ class ProblemsFragment : Fragment() {
         setFromFireStore()
 
         root.findViewById<Button>(R.id.add_post).setOnClickListener {
-            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 700, 400, true)
+            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 800, 400, true)
             pw.animationStyle = R.style.Animation
             pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
+            pw.setBackgroundDrawable(ColorDrawable(Color.BLACK))
 //            root.foreground.alpha = 220
 
             pw.contentView.findViewById<Button>(R.id.post_button).setOnClickListener {
@@ -66,7 +71,7 @@ class ProblemsFragment : Fragment() {
                         (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
                     }
                 }
-                //        root.foreground.alpha = 0
+//                root.foreground.alpha = 0
                 pw.dismiss()
             }
         }

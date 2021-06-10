@@ -42,4 +42,8 @@
         <item name="android:windowExitAnimation">@anim/popup_exit</item>
     </style>
 
+    <style name="SwitchCompatTheme" >
+        <item name="colorControlActivated"> @color/darkButtonColorStart </item>
+    </style>
+
 </resources>
