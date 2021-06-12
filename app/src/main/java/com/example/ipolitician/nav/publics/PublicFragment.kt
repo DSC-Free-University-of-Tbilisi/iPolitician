@@ -3,6 +3,7 @@ package com.example.ipolitician.nav.publics
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.ipolitician.R
 import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.firebase.DataAPI
@@ -31,7 +35,44 @@ import kotlin.random.Random
 
 class PublicFragment : Fragment() {
 
+    private lateinit var demoCollectionAdapter: DemoCollectionAdapter
+    private lateinit var viewPager: ViewPager2
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_public_pager, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        demoCollectionAdapter = DemoCollectionAdapter(this)
+        viewPager = view.findViewById(R.id.viewPager)
+        viewPager.adapter = demoCollectionAdapter
+    }
+}
+
+class DemoCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+    override fun getItemCount(): Int = 5
+
+    override fun createFragment(position: Int): Fragment {
+        // Return a NEW fragment instance in createFragment(int)
+        val fragment = PublicFragmentPage()
+        fragment.arguments = Bundle().apply {
+            // Our object is just an integer :-P
+            putInt(ARG_OBJECT, position + 1)
+        }
+        return fragment
+    }
+}
+
+
+private const val ARG_OBJECT = "object"
+
+class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
+    private lateinit var swipe: SwipeRefreshLayout
     private lateinit var barView: BarChart
     private lateinit var spinner1 : Spinner
     private lateinit var spinner2 : Spinner
@@ -50,10 +91,9 @@ class PublicFragment : Fragment() {
         ages.addAll(ProfileFragment.ages)
         genders.addAll(ProfileFragment.genders)
 
-        dialog.show()
-
         barView = root.findViewById(R.id.bar_view)
-
+        swipe = root.findViewById(R.id.home)
+        swipe.setOnRefreshListener(this)
         spinner1 = root.findViewById<Spinner>(R.id.spinner4)
         spinner2 = root.findViewById<Spinner>(R.id.spinner5)
         ProfileFragment.setSpinner(
@@ -77,11 +117,11 @@ class PublicFragment : Fragment() {
             }
         }
 
-        repaintGraph()
         return root
     }
 
     private fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1){
+        dialog.show()
         parties.clear()
         DB.getUsers() { users, ids ->
             val idxs = ids.filterIndexed { index, _ -> (ageIdx == -1 || users[index].age == ageIdx) && (genderIdx == -1 || users[index].gender == genderIdx) }
@@ -145,5 +185,18 @@ class PublicFragment : Fragment() {
         barView.setFitBars(true)
         barView.invalidate() // refresh
         dialog.dismiss()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
+//            val textView: TextView = view.findViewById(android.R.id.text1)
+//            textView.text = getInt(ARG_OBJECT).toString()
+            repaintGraph()
+        }
+    }
+
+    override fun onRefresh() {
+        repaintGraph()
+        swipe.isRefreshing = false
     }
 }

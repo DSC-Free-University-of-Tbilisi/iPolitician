@@ -131,16 +131,16 @@ class MainActivity : AppCompatActivity() {
 //
 //    }
 
-    private fun setUpUser() {
-        DB.getUser(uniqueID!!) { user ->
-            Log.d("CALLBACK", user.toString())
-            if(user != null) {
-                Companion.user = user
-            } else {
-//                loadProfilePopUp(getString(R.string.welcome))
-            }
-        }
-    }
+//    private fun setUpUser() {
+//        DB.getUser(uniqueID!!) { user ->
+//            Log.d("CALLBACK", user.toString())
+//            if(user != null) {
+//                Companion.user = user
+//            } else {
+////                loadProfilePopUp(getString(R.string.welcome))
+//            }
+//        }
+//    }
 
     private fun retreiveThemeAttrs(){
         theme.resolveAttribute(R.attr.textClr, textColor, true)

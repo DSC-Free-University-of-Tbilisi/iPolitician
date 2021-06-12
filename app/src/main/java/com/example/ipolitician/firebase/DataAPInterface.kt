@@ -7,6 +7,7 @@ interface DataAPInterface {
     fun getUsers(callback: (List<User>, List<String>) -> Unit)
     fun getUser(user_id: String, callback: (User?) -> Unit)
     fun setUser(user_id: String, user: User)
+    fun updateUser(user_id: String, user: User)
 
     fun getQuestions(callback: (ArrayList<QA>) -> Unit)
     fun setQuestion(id: String, question: QA)

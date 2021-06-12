@@ -63,6 +63,7 @@ class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
                 storedVerificationId = verificationId
                 resendToken = token
                 fragment.configureVisibility(true,true)
+                fragment.codeSent()
             }
         }
     }
@@ -90,7 +91,7 @@ class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
     }
 
     // [START resend_verification]
-    private fun resendVerificationCode(
+    fun resendVerificationCode(
         phoneNumber: String,
         token: PhoneAuthProvider.ForceResendingToken?
     ) {

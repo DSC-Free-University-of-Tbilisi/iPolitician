@@ -81,7 +81,7 @@ class ProfileFragment : Fragment() {
                     gender = spinner2.selectedItemPosition,
                 )
                 MainActivity.user = usr
-                DB.setUser(it1, usr)
+                DB.updateUser(it1, usr)
                 findNavController().navigateUp()
                 findNavController().navigate(R.id.nav_public)
             }

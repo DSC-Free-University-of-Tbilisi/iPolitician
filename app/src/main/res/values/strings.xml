@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="action_settings_profile">Profile</string>
-
+    <string name="action_profile">Profile</string>
 
     <string name="menu_public">Public</string>
     <string name="menu_survey">Survey</string>

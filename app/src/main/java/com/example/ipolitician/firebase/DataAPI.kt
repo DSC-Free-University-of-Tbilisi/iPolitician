@@ -63,6 +63,14 @@ class DataAPI : DataAPInterface {
     }
 
     @Synchronized
+    override fun updateUser(user_id: String, user: User) {
+        FS.collection("users").document(user_id)
+            .update("age", user.age, "gender", user.gender)
+            .addOnSuccessListener { Log.d("listener", "updateUser success") }
+            .addOnFailureListener { Log.d("listener", "updateUser fail") }
+    }
+
+    @Synchronized
     override fun getSubmission(user_id: String, callback: (Selected) -> Unit) {
         FS.collection("submissions").document(user_id).get()
             .addOnSuccessListener { document ->

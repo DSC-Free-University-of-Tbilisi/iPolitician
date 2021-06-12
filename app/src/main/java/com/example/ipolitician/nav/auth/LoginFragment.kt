@@ -1,8 +1,10 @@
 package com.example.ipolitician.nav.auth
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.opengl.Visibility
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -40,6 +43,7 @@ class LoginFragment: Fragment() {
     private lateinit var signUp: Button
     private lateinit var submit: Button
     private val DB = DataAPI()
+    private var time = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
@@ -61,7 +65,12 @@ class LoginFragment: Fragment() {
             if (!validatePersonId()) {
                 activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
             } else if (phoneEdit.isVisible && codeEdit.isVisible) {
-                authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
+                if (time != 0){
+                    authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
+                } else {
+                    authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
+                    submit.text = "SUBMIT"
+                }
             } else if (phoneEdit.isVisible){
                 authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
             } else {
@@ -73,14 +82,32 @@ class LoginFragment: Fragment() {
     }
 
     fun loginAttempt(){
+        dialog.show()
         DB.getUser(personId.text.toString().sha256()) {
+            dialog.dismiss()
             if (it?.password == password.editText?.text?.toString()?.md5()) {
                 MainActivity.uniqueID = personId.text.toString().sha256()
                 MainActivity.user = it
                 findNavController().navigateUp()
                 findNavController().navigate(R.id.nav_public)
+            } else {
+                activity?.showAlertDialogWithAutoDismiss("Personal number or password invalid!")
             }
         }
+    }
+
+    fun codeSent(){
+        time = 60
+        val value = object : CountDownTimer(60000, 1000) {
+             override fun onTick(p0: Long) {
+                 codeText.text = "Code sent. Valid for $time seconds"
+                 time--
+             }
+             override fun onFinish() {
+                 codeText.text = "Try again"
+                 submit.text = "RESEND THE CODE"
+             }
+         }.start()
     }
 
     private fun validatePersonId(): Boolean {
@@ -100,8 +127,8 @@ class LoginFragment: Fragment() {
     }
 
     private fun setBtnColors(active: Button, disabled: Button){
-        active.backgroundTintList = ColorStateList.valueOf(componentColor.data)
-        disabled.backgroundTintList = ColorStateList.valueOf(backgroundColor.data)
+        active.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+        disabled.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#f3f3f3"))
     }
 
     fun configureVisibility(phone: Boolean, code: Boolean){
