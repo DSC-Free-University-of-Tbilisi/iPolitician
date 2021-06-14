@@ -103,10 +103,11 @@
             android:background="@drawable/rounded_background"
             android:backgroundTint="@color/lightBackground"
             android:ems="10"
+            android:fontFamily="monospace"
             android:hint="e.g. 01001234567"
             android:inputType="textPersonName"
             android:padding="8dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -139,9 +140,11 @@
                 android:layout_height="40dp"
                 android:background="@drawable/rounded_background"
                 android:backgroundTint="@color/lightBackground"
+                android:fontFamily="monospace"
                 android:hint="a-z, A-Z, 1-9"
                 android:inputType="textPassword"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--        <EditText-->
@@ -187,10 +190,11 @@
             android:background="@drawable/rounded_background"
             android:backgroundTint="@color/lightBackground"
             android:ems="10"
+            android:fontFamily="monospace"
             android:hint="e.g. +995597555555"
             android:inputType="phone"
             android:padding="8dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView21" />
@@ -218,10 +222,11 @@
             android:background="@drawable/rounded_background"
             android:backgroundTint="@color/lightBackground"
             android:ems="10"
+            android:fontFamily="monospace"
             android:hint="e.g. 123456"
             android:inputType="phone"
             android:padding="8dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView22" />

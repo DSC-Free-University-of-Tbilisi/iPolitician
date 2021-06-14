@@ -57,7 +57,7 @@ class ProblemsFragment : Fragment() {
         setFromFireStore()
 
         root.findViewById<Button>(R.id.add_post).setOnClickListener {
-            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 800, 400, true)
+            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 800, 800, true)
             pw.animationStyle = R.style.Animation
             pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
             pw.setBackgroundDrawable(ColorDrawable(Color.BLACK))

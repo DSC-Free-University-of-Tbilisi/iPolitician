@@ -56,7 +56,6 @@ class DataAPI : DataAPInterface {
                         selected = (IntArray(30) {-1}).toList() as ArrayList<Int>
                     )
                 )
-                setUserProblems(user_id, Voted(voted = mutableMapOf()))
                 Log.d("listener", "USER SET success")
             }
             .addOnFailureListener { Log.d("listener", "USER SET fail") }

@@ -13,23 +13,25 @@
             android:id="@+id/nav_survey"
             android:icon="@drawable/checking"
             android:title="@string/menu_survey" />
-        <item
-            android:id="@+id/nav_problems"
-            android:icon="@drawable/ic_nav_problems"
-            android:title="@string/menu_problems" />
-        <item
-            android:id="@+id/nav_vocab"
-            android:icon="@drawable/ic_nav_vocab"
-            android:title="Vocabulary" />
     </group>
 
-    <item android:title="App Features">
+    <item android:title="Tribune">
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:id="@+id/nav_problems"
+                    android:icon="@drawable/ic_nav_problems"
+                    android:title="@string/menu_problems" />
+
+                <item
                     android:id="@+id/nav_election"
                     android:icon="@drawable/ic_nav_vote"
-                    android:title="Election" />
+                    android:title="Elections" />
+
+                <item
+                    android:id="@+id/nav_vocab"
+                    android:icon="@drawable/ic_nav_vocab"
+                    android:title="Vocabulary" />
             </group>
         </menu>
     </item>

@@ -1,10 +1,9 @@
 package com.example.ipolitician.nav.publics
 
-import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,25 +17,26 @@ import com.example.ipolitician.R
 import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
+import com.example.ipolitician.structures.EV
+import com.example.ipolitician.structures.Voted
 import com.example.ipolitician.textColor
 import com.github.aachartmodel.aainfographics.aachartcreator.*
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.*
-import kotlin.random.Random
 
 
 class PublicFragment : Fragment() {
 
     private lateinit var demoCollectionAdapter: DemoCollectionAdapter
     private lateinit var viewPager: ViewPager2
+    private val DB = DataAPI()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,29 +47,39 @@ class PublicFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        demoCollectionAdapter = DemoCollectionAdapter(this)
-        viewPager = view.findViewById(R.id.viewPager)
-        viewPager.adapter = demoCollectionAdapter
+        DB.getElections { elections ->
+            demoCollectionAdapter = DemoCollectionAdapter(this, elections)
+            viewPager = view.findViewById(R.id.viewPager)
+            viewPager.adapter = demoCollectionAdapter
+
+            val tabLayout = view.findViewById<TabLayout>(R.id.public_tablayout)
+
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab
+                tab.text = demoCollectionAdapter.getTabTitle(position)
+            }.attach()
+        }
+
+
     }
 }
 
-class DemoCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class DemoCollectionAdapter(fragment: Fragment, private var elections: ArrayList<EV>) : FragmentStateAdapter(fragment) {
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = elections.size + 1
 
     override fun createFragment(position: Int): Fragment {
-        // Return a NEW fragment instance in createFragment(int)
-        val fragment = PublicFragmentPage()
-        fragment.arguments = Bundle().apply {
-            // Our object is just an integer :-P
-            putInt(ARG_OBJECT, position + 1)
-        }
-        return fragment
+        return PublicFragmentPage.newInstance(position, if(position == 0) null else elections[position-1])
+    }
+
+    fun getTabTitle(position: Int) : String {
+        return if(position == 0) "მოსახლეობის მოსაზრება" else elections[position-1].title
     }
 }
 
 
-private const val ARG_OBJECT = "object"
+private const val ARG_OBJECT = "election_data"
+private const val ARG_POSITION = "position_data"
 
 class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var swipe: SwipeRefreshLayout
@@ -77,10 +87,26 @@ class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var spinner1 : Spinner
     private lateinit var spinner2 : Spinner
     private val DB = DataAPI.instance
-    private var parties : MutableMap<String, Int> = mutableMapOf()
+    private var chartData : MutableMap<String, Int> = mutableMapOf()
+    private var chartElection : EV? = null
+    private var chartPosition: Int = 0
     private var ages = arrayListOf("All")
     private var genders = arrayListOf("All")
     private var load = 0
+
+    companion object {
+        fun newInstance(position: Int, election: EV?) : PublicFragmentPage {
+            val fragment = PublicFragmentPage()
+            fragment.arguments = Bundle().apply {
+                // Our object is just an integer :-P
+                putInt(ARG_POSITION, position)
+                putParcelable(ARG_OBJECT, election)
+            }
+            return fragment
+        }
+
+        val COLORS = listOf(ColorTemplate.LIBERTY_COLORS, ColorTemplate.JOYFUL_COLORS, ColorTemplate.PASTEL_COLORS, ColorTemplate.VORDIPLOM_COLORS)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -122,24 +148,42 @@ class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1){
         dialog.show()
-        parties.clear()
+        chartData.clear()
         DB.getUsers() { users, ids ->
             val idxs = ids.filterIndexed { index, _ -> (ageIdx == -1 || users[index].age == ageIdx) && (genderIdx == -1 || users[index].gender == genderIdx) }
             load = idxs.size
             for (id in idxs){
-                DB.getSubmission(id) { sel ->
-                    if(sel.selected.isEmpty() || sel.party == "") { return@getSubmission }
+                if(chartElection == null) {
+                    DB.getSubmission(id) { sel ->
+                        if(sel.selected.isEmpty() || sel.party == "") { return@getSubmission }
 
-                    if (parties.containsKey(sel.party)){
-                        parties[sel.party] = parties[sel.party]!! + 1
-                    } else {
-                        parties[sel.party] = 1
+                        if (chartData.containsKey(sel.party)){
+                            chartData[sel.party] = chartData[sel.party]!! + 1
+                        } else {
+                            chartData[sel.party] = 1
+                        }
+                        tryDraw()
                     }
-                    tryDraw()
+                } else {
+                    DB.getUserElections(id) { voted ->
+                        if(voted.voted.isEmpty()) { return@getUserElections }
+
+                        if(voted.voted.containsKey(chartElection!!.id)) {
+                            val candidate = chartElection!!.candidates[voted.voted[chartElection!!.id]!!]
+                            if (chartData.containsKey(candidate)){
+                                chartData[candidate] = chartData[candidate]!! + 1
+                            } else {
+                                chartData[candidate] = 1
+                            }
+                            Log.d("CHART", chartData.toString())
+                            tryDraw()
+                        }
+                    }
                 }
+
             }
             dialog.dismiss()
-            if(parties.isEmpty()) {
+            if(chartData.isEmpty()) {
                 tryDraw()
                 load = -1
             }
@@ -149,14 +193,14 @@ class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun tryDraw() {
         if(--load > 0) return
 
-        var sorted = parties.map { it }.sortedBy { -it.value }
+        var sorted = chartData.map { it }.sortedBy { -it.value }
         val sum = sorted.map { it.value }.sum()
 
         val datasets = sorted.mapIndexed { index, entry -> BarDataSet(mutableListOf(BarEntry(index.toFloat(), entry.value.toFloat() / sum * 100)), entry.key) }
         datasets.forEachIndexed { index, barDataSet ->
             barDataSet.valueTextSize = 16f
             barDataSet.valueTextColor = textColor.data
-            barDataSet.colors = listOf(ColorTemplate.VORDIPLOM_COLORS[index])
+            barDataSet.colors = listOf(COLORS[chartPosition % COLORS.size][index % ColorTemplate.LIBERTY_COLORS.size])
         }
         val lineData = BarData(datasets)
         lineData.setValueFormatter(PercentFormatter())
@@ -188,9 +232,10 @@ class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
-//            val textView: TextView = view.findViewById(android.R.id.text1)
-//            textView.text = getInt(ARG_OBJECT).toString()
+        arguments?.takeIf { it.containsKey(ARG_OBJECT)}?.apply {
+            chartElection = getParcelable(ARG_OBJECT)
+            chartPosition = getInt(ARG_POSITION)
+            Log.d("BUNDLE", "load" + chartElection.toString())
             repaintGraph()
         }
     }

@@ -78,22 +78,22 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
 
         holder.vote.setOnClickListener { it ->
             val radio = holder.candidates
-
-            if(voted.voted.containsKey(elections[position].id)) {
-                var oldId = (holder.candidates.getChildAt(voted.voted[elections[position].id]!!) as RadioButton).text.split(":")[0]
-                oldId += "+" + elections[holder.adapterPosition].title
+            val pos = holder.adapterPosition
+            if(voted.voted.containsKey(elections[pos].id)) {
+                var oldId = (holder.candidates.getChildAt(voted.voted[elections[pos].id]!!) as RadioButton).text.split(":")[0]
+                oldId += "+" + elections[pos].title
                 DB.unvoteElection(oldId)
             }
 
-            voted.voted[elections[holder.adapterPosition].id] = radio.indexOfChild(
+            voted.voted[elections[pos].id] = radio.indexOfChild(
                 radio.findViewById(
                     radio.checkedRadioButtonId
                 )
             )
             DB.setUserElections(MainActivity.uniqueID!!, voted)
 
-            var newId = (holder.candidates.getChildAt(voted.voted[elections[position].id]!!) as RadioButton).text.split(":")[0]
-            newId += "+" + elections[holder.adapterPosition].title
+            var newId = (holder.candidates.getChildAt(voted.voted[elections[pos].id]!!) as RadioButton).text.split(":")[0]
+            newId += "+" + elections[pos].title
             DB.voteElection(newId)
 
             Toast.makeText(
