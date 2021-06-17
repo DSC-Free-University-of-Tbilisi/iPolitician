@@ -30,20 +30,64 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.*
+import java.lang.ref.WeakReference
 
 
-class PublicFragment : Fragment() {
+class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var demoCollectionAdapter: DemoCollectionAdapter
     private lateinit var viewPager: ViewPager2
     private val DB = DataAPI()
+
+    private lateinit var swipe: SwipeRefreshLayout
+    private lateinit var spinner1 : Spinner
+    private lateinit var spinner2 : Spinner
+    private var ages = arrayListOf("All")
+    private var genders = arrayListOf("All")
+
+    private var _currentPage: WeakReference<PublicFragmentPage>? = null
+    private val currentPage
+        get() = _currentPage?.get()
+    fun setCurrentPage(page: PublicFragmentPage) {
+        _currentPage = WeakReference(page)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_public_pager, container, false)
+        val root = inflater.inflate(R.layout.fragment_public_pager, container, false)
+        ages.addAll(ProfileFragment.ages)
+        genders.addAll(ProfileFragment.genders)
+
+        swipe = root.findViewById(R.id.home)
+        swipe.setOnRefreshListener(this)
+        spinner1 = root.findViewById<Spinner>(R.id.spinner4)
+        spinner2 = root.findViewById<Spinner>(R.id.spinner5)
+
+        ProfileFragment.setSpinner(
+            spinner1,
+            root.context,
+            ages,
+        )
+        ProfileFragment.setSpinner(
+            spinner2,
+            root.context,
+            genders,
+        )
+
+        root.findViewById<Button>(R.id.filterBtn).setOnClickListener {
+            currentPage?.repaintGraph(spinner1.selectedItemPosition - 1, spinner2.selectedItemPosition - 1)
+            if(currentPage?.load == -1) {
+                Snackbar.make(it, "No such data found", Snackbar.LENGTH_LONG).setAction(
+                    "Action",
+                    null
+                ).show()
+            }
+        }
+
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,8 +103,11 @@ class PublicFragment : Fragment() {
                 tab.text = demoCollectionAdapter.getTabTitle(position)
             }.attach()
         }
+    }
 
-
+    override fun onRefresh() {
+        currentPage?.repaintGraph()
+        swipe.isRefreshing = false
     }
 }
 
@@ -81,18 +128,15 @@ class DemoCollectionAdapter(fragment: Fragment, private var elections: ArrayList
 private const val ARG_OBJECT = "election_data"
 private const val ARG_POSITION = "position_data"
 
-class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
-    private lateinit var swipe: SwipeRefreshLayout
+class PublicFragmentPage: Fragment() {
+
     private lateinit var barView: BarChart
-    private lateinit var spinner1 : Spinner
-    private lateinit var spinner2 : Spinner
+
     private val DB = DataAPI.instance
     private var chartData : MutableMap<String, Int> = mutableMapOf()
     private var chartElection : EV? = null
     private var chartPosition: Int = 0
-    private var ages = arrayListOf("All")
-    private var genders = arrayListOf("All")
-    private var load = 0
+    var load = 0
 
     companion object {
         fun newInstance(position: Int, election: EV?) : PublicFragmentPage {
@@ -114,39 +158,11 @@ class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_public, container, false)
-        ages.addAll(ProfileFragment.ages)
-        genders.addAll(ProfileFragment.genders)
-
         barView = root.findViewById(R.id.bar_view)
-        swipe = root.findViewById(R.id.home)
-        swipe.setOnRefreshListener(this)
-        spinner1 = root.findViewById<Spinner>(R.id.spinner4)
-        spinner2 = root.findViewById<Spinner>(R.id.spinner5)
-        ProfileFragment.setSpinner(
-            spinner1,
-            root.context,
-            ages,
-        )
-        ProfileFragment.setSpinner(
-            spinner2,
-            root.context,
-            genders,
-        )
-
-        root.findViewById<Button>(R.id.filterBtn).setOnClickListener {
-            repaintGraph(spinner1.selectedItemPosition - 1, spinner2.selectedItemPosition - 1)
-            if(load == -1) {
-                Snackbar.make(it, "No such data found", Snackbar.LENGTH_LONG).setAction(
-                    "Action",
-                    null
-                ).show()
-            }
-        }
-
         return root
     }
 
-    private fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1){
+    fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1){
         dialog.show()
         chartData.clear()
         DB.getUsers() { users, ids ->
@@ -240,8 +256,8 @@ class PublicFragmentPage: Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
     }
 
-    override fun onRefresh() {
-        repaintGraph()
-        swipe.isRefreshing = false
+    override fun onResume() {
+        super.onResume()
+        (parentFragment as PublicFragment).setCurrentPage(this)
     }
 }
