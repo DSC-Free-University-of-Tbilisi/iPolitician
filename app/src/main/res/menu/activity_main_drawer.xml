@@ -13,6 +13,11 @@
             android:id="@+id/nav_survey"
             android:icon="@drawable/checking"
             android:title="@string/menu_survey" />
+
+        <item
+            android:id="@+id/blankFragment"
+            android:icon="@drawable/ic_nav_problems"
+            android:title="test" />
     </group>
 
     <item android:title="Tribune">

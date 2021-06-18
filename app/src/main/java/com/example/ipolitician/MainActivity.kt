@@ -1,12 +1,10 @@
 package com.example.ipolitician
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -19,15 +17,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.anychart.ui.contextmenu.Item
-import com.example.ipolitician.Auth.Authenticate
 import com.example.ipolitician.firebase.DataAPI
-import com.example.ipolitician.nav.profile.ProfileFragment
-import com.example.ipolitician.structures.EV
-import com.example.ipolitician.structures.QA
 import com.example.ipolitician.structures.User
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.*
+import com.richpath.RichPath
+import com.richpath.RichPathView
+import com.richpathanimator.RichPathAnimator
 import java.util.*
 
 
@@ -80,13 +77,33 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_survey,
                 R.id.nav_problems,
                 R.id.nav_vocab,
-                R.id.nav_election
+                R.id.nav_election,
+                R.id.blankFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        setUpNavHeader(navView.getHeaderView(0))
+    }
 
-//        setUpUser()
+    private fun setUpNavHeader(navHeader: View) {
+        val notificationsRichPathView = navHeader.findViewById<RichPathView>(R.id.app_nav_header_background)
+
+        notificationsRichPathView.setOnPathClickListener(RichPath.OnPathClickListener { richPath ->
+            Snackbar.make(navHeader, richPath.name, Snackbar.LENGTH_LONG).setAction(
+                "Action",
+                null
+            ).show()
+
+            RichPathAnimator.animate(richPath)
+                .interpolator(DecelerateInterpolator())
+                .rotation(0f, 1f, -1f, 1f, -1f, 1f, -1f, 1f, -1f, 0f)
+                .strokeColor(Color.RED)
+                .duration(4000)
+                .startDelay(50)
+                .duration(4000)
+                .start()
+        })
     }
 
 
