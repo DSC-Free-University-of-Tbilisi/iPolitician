@@ -1,17 +1,25 @@
 package com.example.ipolitician.nav.auth
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.opengl.Visibility
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -28,20 +36,28 @@ import com.example.ipolitician.Util.sha256
 import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.material.textfield.TextInputLayout
+import org.json.JSONException
+import org.json.JSONObject
 
 class LoginFragment: Fragment() {
 
-    private lateinit var authenticate: Authenticate
-    private lateinit var personId: EditText
-    private lateinit var password: TextInputLayout
-    private lateinit var phoneText: TextView
-    private lateinit var phoneEdit: EditText
-    private lateinit var codeText: TextView
-    private lateinit var codeEdit: EditText
-    private lateinit var logIn: Button
-    private lateinit var signUp: Button
-    private lateinit var submit: Button
+    companion object{
+        lateinit var webView: WebView
+    }
+    lateinit var authenticate: Authenticate
+    lateinit var personId: EditText
+    lateinit var password: TextInputLayout
+    lateinit var phoneText: TextView
+    lateinit var phoneEdit: EditText
+    lateinit var codeText: TextView
+    lateinit var codeEdit: EditText
+    lateinit var logIn: Button
+    lateinit var signUp: Button
+    lateinit var submit: Button
     private val DB = DataAPI()
     private var time = 0
 
@@ -61,24 +77,103 @@ class LoginFragment: Fragment() {
             configureVisibility(true,false)
         }
 
-        submit.setOnClickListener {
-            if (!validatePersonId()) {
-                activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
-            } else if (phoneEdit.isVisible && codeEdit.isVisible) {
-                if (time != 0){
-                    authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
-                } else {
-                    authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
-                    submit.text = "SUBMIT"
-                }
-            } else if (phoneEdit.isVisible){
-                authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
-            } else {
-                loginAttempt()
+        webView.settings.javaScriptEnabled = true
+        webView!!.addJavascriptInterface(JsWebInterface(requireContext()), "androidApp")
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean { return true }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                val pID = "01008061140"
+                val surname = "პერტაია"
+                view?.loadUrl("javascript:(window.onload = function(){" +
+                            "document.getElementsByTagName(\"hr\")[0].remove();" +
+                            "document.getElementsByTagName(\"footer\")[0].remove();" +
+//                            "document.getElementsByTagName(\"center\").style.display=\"none\";" +
+                            "document.getElementById(\"smartbanner\").remove();" +
+                            "document.getElementById(\"status\").remove();" +
+                            "document.getElementsByClassName(\"envelope\")[0].remove();" +
+                            "document.getElementById(\"numonly\").style.display = \"none\";" +
+                            "document.getElementById(\"sn\").style.display = \"none\";" +
+                            "document.getElementById(\"submit\").style.display = \"none\";" +
+                            "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.envelope {border:none; padding: 0;} center {display:none;}</style>');" +
+                            "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>#votersform {margin: 0 0; width: auto;}</style>');" +
+                            "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.g-recaptcha {display: flex; justify-content:center;} .g-recaptcha div div {border: none}</style>');" +
+
+                            "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"mobile-web-app-capable\" content=\"yes\">\');" +
+                            "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\');" +
+
+                            "document.getElementById(\"pn\").value = \"$pID\";" +
+                            "document.getElementById(\"sn\").value = \"$surname\";" +
+
+                            "var target = document.getElementById(\"page-wrap\");" +
+                            "var observer = new MutationObserver(function (mutations) {" +
+                                "mutations.forEach(function (mutation) {" +
+                                    "if(target.innerHTML != \"\"){" +
+                                        "androidApp.close();" +
+                                        "var name = document.getElementsByClassName(\"sn\")[0].innerHTML;" +
+                                        "var surname = document.getElementsByClassName(\"fn\")[0].innerHTML;" +
+                                        "var birth = document.getElementsByClassName(\"dob\")[0].innerHTML;" +
+                                        "var address = document.getElementsByClassName(\"mis\")[0].innerHTML;" +
+                                        "var lat = document.getElementById(\"lat\").innerHTML;" +
+                                        "var lng = document.getElementById(\"lng\").innerHTML;" +
+                                        "androidApp.ceskoSuccess(name, surname, birth, address, lat, lng);" +
+                                "}});" +
+                            "});"+
+                            "var config = { childList: true };" +
+                            "observer.observe(target, config);" +
+                        "})")
             }
-            hideKeyboard()
         }
+        webView.loadUrl("https://voters.cec.gov.ge/")
+
+        submit.setOnClickListener {
+
+            webView.visibility = View.VISIBLE
+            webView.loadUrl("javascript:(window.onload = function(){" +
+                        "document.getElementById(\"pn\").value = \"01008061140\";" +
+                        "document.getElementById(\"sn\").value = \"პერტაია\";" +
+
+                        "setInterval(() => {" +
+                            "if(document.getElementById(\"g-recaptcha-response\").value != \"\"){" +
+                                "document.getElementById(\"submit\").click();" +
+                        "}}, 500);" +
+
+                    "})()")
+
+//            if (!validatePersonId()) {
+//                activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
+//            } else if (phoneEdit.isVisible && codeEdit.isVisible) {
+//                if (time != 0){
+//                    authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
+//                } else {
+//                    authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
+//                    submit.text = "SUBMIT"
+//                }
+//            } else if (phoneEdit.isVisible){
+//                authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
+//            } else {
+//                loginAttempt()
+//            }
+//            hideKeyboard()
+        }
+//        CheckSafetynetreCAPTCHA()
         return root
+    }
+
+    class JsWebInterface(private val context: Context) {
+        @JavascriptInterface
+        fun ceskoSuccess(name: String, surname: String, birthDate: String, address: String, lat: String, lng: String) {
+            Toast.makeText(
+                context,
+                name,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        @JavascriptInterface
+        fun close() {
+            webView.visibility = View.INVISIBLE
+        }
     }
 
     fun loginAttempt(){
@@ -148,6 +243,6 @@ class LoginFragment: Fragment() {
         codeText = root.findViewById(R.id.textView22)
         codeEdit = root.findViewById(R.id.phoneCode)
         submit = root.findViewById(R.id.login_submit)
+        webView = root.findViewById(R.id.webView)
     }
-
 }
