@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@color/design_default_color_secondary_variant"
@@ -14,20 +15,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <ImageView
-            android:id="@+id/imageView"
+        <com.richpath.RichPathView
+            android:id="@+id/app_nav_header_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/nav_header_desc"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/geo" />
+            app:vector="@drawable/ic_georgia" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:contentDescription="@string/nav_header_desc"-->
+        <!--            android:paddingTop="@dimen/nav_header_vertical_spacing"-->
+        <!--            android:scaleType="fitCenter"-->
+        <!--            app:srcCompat="@drawable/geo" />-->
 
         <LinearLayout
             android:layout_width="match_parent"

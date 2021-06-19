@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -36,10 +37,14 @@ import com.example.ipolitician.Util.sha256
 import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.material.textfield.TextInputLayout
+import com.richpath.RichPath
+import com.richpath.RichPathView
+import com.richpathanimator.RichPathAnimator
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -58,12 +63,14 @@ class LoginFragment: Fragment() {
     lateinit var logIn: Button
     lateinit var signUp: Button
     lateinit var submit: Button
+    private lateinit var georgia: RichPathView
     private val DB = DataAPI()
     private var time = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
         retrieveViews(root)
+        animateGeorgia()
         configureVisibility(false, false)
         authenticate = Authenticate(this.requireActivity() as AppCompatActivity, this)
 
@@ -160,6 +167,27 @@ class LoginFragment: Fragment() {
         return root
     }
 
+    fun animateGeorgia() {
+        for(i in 0..11) {
+            val path = georgia.findRichPathByIndex(i)
+            if(path!!.name == "აბხაზეთი" || path!!.name == "შიდა ქართლი") {
+                RichPathAnimator.animate(path)
+                    .interpolator(DecelerateInterpolator())
+                    .fillColor(Color.RED)
+                    .duration(16000)
+                    .startDelay(50)
+                    .start()
+            }
+//            RichPathAnimator.animate(path)
+//                .interpolator(DecelerateInterpolator())
+//                .strokeColor(Color.YELLOW)
+//                .duration(16000)
+//                .startDelay(50)
+//                .start()
+        }
+
+    }
+
     class JsWebInterface(private val context: Context) {
         @JavascriptInterface
         fun ceskoSuccess(name: String, surname: String, birthDate: String, address: String, lat: String, lng: String) {
@@ -244,5 +272,6 @@ class LoginFragment: Fragment() {
         codeEdit = root.findViewById(R.id.phoneCode)
         submit = root.findViewById(R.id.login_submit)
         webView = root.findViewById(R.id.webView)
+        georgia = root.findViewById(R.id.georgia_back)
     }
 }
