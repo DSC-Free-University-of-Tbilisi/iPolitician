@@ -147,21 +147,21 @@ class LoginFragment: Fragment() {
 
                     "})()")
 
-//            if (!validatePersonId()) {
-//                activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
-//            } else if (phoneEdit.isVisible && codeEdit.isVisible) {
-//                if (time != 0){
-//                    authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
-//                } else {
-//                    authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
-//                    submit.text = "SUBMIT"
-//                }
-//            } else if (phoneEdit.isVisible){
-//                authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
-//            } else {
-//                loginAttempt()
-//            }
-//            hideKeyboard()
+            if (!validatePersonId()) {
+                activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
+            } else if (phoneEdit.isVisible && codeEdit.isVisible) {
+                if (time != 0){
+                    authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
+                } else {
+                    authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
+                    submit.text = "SUBMIT"
+                }
+            } else if (phoneEdit.isVisible){
+                authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
+            } else {
+                loginAttempt()
+            }
+            hideKeyboard()
         }
 //        CheckSafetynetreCAPTCHA()
         return root
