@@ -1,15 +1,19 @@
 package com.example.ipolitician.recycler
 
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.structures.Voted
+import kotlinx.android.synthetic.main.holder_problem.view.*
 
 
 class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var voted: Voted) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>(), FilterableRecyclerView  {
@@ -24,6 +28,7 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
         return problems.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: ProblemsRecyclerViewHolder, position: Int) {
         holder.problem.text = problems[position].problem
 
@@ -31,28 +36,25 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
         holder.down_votes.text = problems[position].downvotes.toString()
         holder.TotalVotes()
 
-        val key = problems[position].id
-        holder.setID(key)
-
-        if(voted.voted.containsKey(key)) {
-            if(voted.voted[key] == 1) {
-                holder.uvoted = true
-                holder.up_votes.setTextColor(Color.parseColor("#00ff04"))
-                holder.down_votes.setTextColor(Color.parseColor("#FFFFFF"))
-            } else if(voted.voted[key] == -1) {
-                holder.dvoted = true
-                holder.down_votes.setTextColor(Color.parseColor("#ff0000"))
-                holder.up_votes.setTextColor(Color.parseColor("#FFFFFF"))
-            }
-        }
-
+        holder.setID(problems[position].id)
+        holder.setVote(voted.voted.getOrDefault(problems[position].id, 0))
 
         holder.up_votes.setOnClickListener {
+            val reg = problems[holder.adapterPosition].region
+            if(reg.isNotEmpty() && MainActivity.user!!.region != reg) {
+                Toast.makeText(it.context, "You aren't allowed to upvote in this region", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             holder.UpVote()
             update(1, holder.getState())
         }
 
         holder.down_votes.setOnClickListener {
+            val reg = problems[holder.adapterPosition].region
+            if(reg.isNotEmpty() && MainActivity.user!!.region != reg) {
+                Toast.makeText(it.context, "You aren't allowed to downvote in this region", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             holder.DownVote()
             update(-1, holder.getState())
         }

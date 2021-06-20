@@ -15,6 +15,10 @@
     <color name="lightButtonColorStart">#FFC636</color>
     <color name="lightButtonColorEnd">#FF830A</color>
 
+    <color name="upVoteClr"> #00ff04 </color>
+    <color name="downVoteClr"> #ff0000 </color>
+    <color name="totVoteClr"> #FF9800 </color>
+    <color name="noVoteClr"> #FFFFFF </color>
 
 <!--    graphic colors-->
     <color name="red">#FF0000</color>

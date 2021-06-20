@@ -105,6 +105,32 @@ tools:context=".nav.publics.PublicFragment">
                 android:popupBackground="@drawable/rounded_background"/>
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="Region"
+            android:textColor="?attr/textClr"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="12dp">
+
+            <Spinner
+                android:id="@+id/spinner6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:popupBackground="@drawable/rounded_background"/>
+        </androidx.cardview.widget.CardView>
+
         <Button
             android:id="@+id/filterBtn"
             android:layout_width="match_parent"

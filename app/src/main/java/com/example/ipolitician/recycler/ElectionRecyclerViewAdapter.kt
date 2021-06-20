@@ -79,6 +79,16 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
         holder.vote.setOnClickListener { it ->
             val radio = holder.candidates
             val pos = holder.adapterPosition
+
+            if(elections[pos].region.isNotEmpty() && elections[pos].region != MainActivity.user!!.region) {
+                Toast.makeText(
+                    it.context,
+                    "You aren't allowed to vote in this region",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
             if(voted.voted.containsKey(elections[pos].id)) {
                 var oldId = (holder.candidates.getChildAt(voted.voted[elections[pos].id]!!) as RadioButton).text.split(":")[0]
                 oldId += "+" + elections[pos].title

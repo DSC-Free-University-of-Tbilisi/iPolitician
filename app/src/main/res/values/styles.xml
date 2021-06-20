@@ -43,6 +43,7 @@
     </style>
 
     <style name="SwitchCompatTheme" >
+        <item name="android:textColor"> @color/darkButtonColorStart </item>
         <item name="colorControlActivated"> @color/darkButtonColorStart </item>
     </style>
 

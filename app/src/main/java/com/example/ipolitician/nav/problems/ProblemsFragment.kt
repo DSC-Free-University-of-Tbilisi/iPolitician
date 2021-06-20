@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupWindow
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,8 +37,8 @@ class ProblemsFragment : Fragment() {
     private lateinit var upSort: Button
     private lateinit var downSort: Button
     private lateinit var totSort: Button
-    val sortBstate = mutableMapOf<Int,Int>()
-    val sortBcolor = mutableMapOf<Int,String>()
+    val sortByState = mutableMapOf<Int,Int>()
+    val sortByColor = mutableMapOf<Int,Int>()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -65,14 +66,15 @@ class ProblemsFragment : Fragment() {
 
             pw.contentView.findViewById<Button>(R.id.post_button).setOnClickListener {
                 val problem = pw.contentView.findViewById<EditText>(R.id.problem_post).text.toString()
+                pw.dismiss()
+
+                val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), 800, 800, true)
                 if(problem.isNotEmpty()) {
                     DB.getProblemID() { id ->
                         DB.setProblem(PV(id=id, problem = problem, upvotes = 0, downvotes = 0))
                         (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
                     }
                 }
-//                root.foreground.alpha = 0
-                pw.dismiss()
             }
         }
 
@@ -80,9 +82,9 @@ class ProblemsFragment : Fragment() {
         downSort = root.findViewById(R.id.sort_by_down_votes)
         totSort = root.findViewById(R.id.sort_by_votes)
 
-        sortBcolor[upSort.id] = "#00ff04"
-        sortBcolor[downSort.id] = "#ff0000"
-        sortBcolor[totSort.id] = "#FF9800"
+        sortByColor[upSort.id] = ContextCompat.getColor(root.context, R.color.upVoteClr)
+        sortByColor[downSort.id] = ContextCompat.getColor(root.context, R.color.downVoteClr)
+        sortByColor[totSort.id] = ContextCompat.getColor(root.context, R.color.totVoteClr)
 
         setDefaultExcept()
 
@@ -97,19 +99,19 @@ class ProblemsFragment : Fragment() {
         var type = 0
 
         if(upSort != button) {
-            sortBstate[upSort.id] = 0
+            sortByState[upSort.id] = 0
             upSort.setTextColor(df_clr)
             upSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
         } else type = 1
 
         if(downSort != button) {
-            sortBstate[downSort.id] = 0
+            sortByState[downSort.id] = 0
             downSort.setTextColor(df_clr)
             downSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
         } else type = -1
 
         if(totSort != button) {
-            sortBstate[totSort.id] = 0
+            sortByState[totSort.id] = 0
             totSort.setTextColor(df_clr)
             totSort.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
         }
@@ -121,27 +123,27 @@ class ProblemsFragment : Fragment() {
         button.setOnClickListener {
             val type = setDefaultExcept(button)
             val key = it.id
-            when(sortBstate[key]) {
+            when(sortByState[key]) {
                     0 -> {
                         button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_down,0,0,0)
-                        button.setTextColor(Color.parseColor(sortBcolor[key]))
-                        sortBstate[key] = 1
+                        button.setTextColor(sortByColor[key]!!)
+                        sortByState[key] = 1
 
                         (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, 1)
                     }
                     1 -> {
                         button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up,0,0,0)
-                        button.setTextColor(Color.parseColor(sortBcolor[key]))
-                        sortBstate[key] = -1
+                        button.setTextColor(sortByColor[key]!!)
+                        sortByState[key] = -1
 
                         (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, -1)
                     }
                     else -> {
                         button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.arrow_up_down,0,0,0)
                         button.setTextColor(textColor.data)
-                        sortBstate[key] = 0
+                        sortByState[key] = 0
 
-                        if(sortBstate[upSort.id] == 0 && sortBstate[downSort.id] == 0 &&sortBstate[totSort.id] == 0) {
+                        if(sortByState[upSort.id] == 0 && sortByState[downSort.id] == 0 && sortByState[totSort.id] == 0) {
                             (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
                         } else {
                             (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).sortBy(type, 0)

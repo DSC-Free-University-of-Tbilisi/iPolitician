@@ -42,8 +42,10 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var swipe: SwipeRefreshLayout
     private lateinit var spinner1 : Spinner
     private lateinit var spinner2 : Spinner
+    private lateinit var spinner3 : Spinner
     private var ages = arrayListOf("All")
     private var genders = arrayListOf("All")
+    private var regions = arrayListOf("All")
 
     private var _currentPage: WeakReference<PublicFragmentPage>? = null
     private val currentPage
@@ -60,11 +62,13 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         val root = inflater.inflate(R.layout.fragment_public_pager, container, false)
         ages.addAll(ProfileFragment.ages)
         genders.addAll(ProfileFragment.genders)
+        regions.addAll(ProfileFragment.regions)
 
         swipe = root.findViewById(R.id.home)
         swipe.setOnRefreshListener(this)
         spinner1 = root.findViewById<Spinner>(R.id.spinner4)
         spinner2 = root.findViewById<Spinner>(R.id.spinner5)
+        spinner3 = root.findViewById<Spinner>(R.id.spinner6)
 
         ProfileFragment.setSpinner(
             spinner1,
@@ -76,9 +80,14 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             root.context,
             genders,
         )
+        ProfileFragment.setSpinner(
+            spinner3,
+            root.context,
+            regions,
+        )
 
         root.findViewById<Button>(R.id.filterBtn).setOnClickListener {
-            currentPage?.repaintGraph(spinner1.selectedItemPosition - 1, spinner2.selectedItemPosition - 1)
+            currentPage?.repaintGraph(spinner1.selectedItemPosition - 1, spinner2.selectedItemPosition - 1, spinner3.selectedItemPosition - 1)
             if(currentPage?.load == -1) {
                 Snackbar.make(it, "No such data found", Snackbar.LENGTH_LONG).setAction(
                     "Action",
@@ -162,11 +171,12 @@ class PublicFragmentPage: Fragment() {
         return root
     }
 
-    fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1){
+    fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1, regionIdx: Int = -1){
         dialog.show()
         chartData.clear()
         DB.getUsers() { users, ids ->
-            val idxs = ids.filterIndexed { index, _ -> (ageIdx == -1 || users[index].age == ageIdx) && (genderIdx == -1 || users[index].gender == genderIdx) }
+            val idxs = ids.filterIndexed { index, _ -> (ageIdx == -1 || users[index].age == ageIdx)
+                    && (genderIdx == -1 || users[index].gender == genderIdx) && (regionIdx == -1 || users[index].region == ProfileFragment.regions[regionIdx])}
             load = idxs.size
             for (id in idxs){
                 if(chartElection == null) {

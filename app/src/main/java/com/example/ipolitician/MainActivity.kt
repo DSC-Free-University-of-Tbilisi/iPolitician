@@ -3,6 +3,8 @@ package com.example.ipolitician
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.TextAppearanceSpan
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
@@ -58,6 +60,15 @@ class MainActivity : AppCompatActivity() {
         navView.backgroundTintList = ColorStateList.valueOf(componentColor.data)
         navView.itemTextColor = ColorStateList.valueOf(textColor.data)
 
+        val tribune: MenuItem = navView.menu.findItem(R.id.tribune)
+        val ts = SpannableString(tribune.title)
+        ts.setSpan(TextAppearanceSpan(this, R.style.SwitchCompatTheme), 0, ts.length, 0)
+        tribune.title = ts
+
+        val options: MenuItem = navView.menu.findItem(R.id.options)
+        val os = SpannableString(options.title)
+        os.setSpan(TextAppearanceSpan(this, R.style.SwitchCompatTheme), 0, os.length, 0)
+        options.title = os
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             if (nd.id == R.id.nav_login || nd.id == R.id.nav_profile) {
@@ -77,8 +88,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_survey,
                 R.id.nav_problems,
                 R.id.nav_vocab,
-                R.id.nav_election,
-                R.id.blankFragment
+                R.id.nav_election
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -99,9 +109,8 @@ class MainActivity : AppCompatActivity() {
                 .interpolator(DecelerateInterpolator())
                 .rotation(0f, 1f, -1f, 1f, -1f, 1f, -1f, 1f, -1f, 0f)
                 .strokeColor(Color.RED)
-                .duration(4000)
+                .duration(32000)
                 .startDelay(50)
-                .duration(4000)
                 .start()
         })
     }

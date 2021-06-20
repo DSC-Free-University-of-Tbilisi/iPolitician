@@ -7,7 +7,8 @@ import kotlinx.android.parcel.Parcelize
 data class EV(
     val id: String = "",
     val title: String = "",
-    val candidates: List<String> = listOf()
+    val candidates: List<String> = listOf(),
+    val region: String = ""
 ) : Parcelable
 
 

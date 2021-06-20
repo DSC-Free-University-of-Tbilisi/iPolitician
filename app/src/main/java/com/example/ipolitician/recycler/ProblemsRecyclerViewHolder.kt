@@ -1,14 +1,14 @@
 package com.example.ipolitician.recycler
 
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.R
 import com.example.ipolitician.structures.PV
+
 
 class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val problem: TextView
@@ -20,6 +20,10 @@ class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     var dvoted = false
     var id: String = ""
 
+    val upVoteClr = ContextCompat.getColor(itemView.context, R.color.upVoteClr)
+    val downVoteClr = ContextCompat.getColor(itemView.context, R.color.downVoteClr)
+    val noVoteClr = ContextCompat.getColor(itemView.context, R.color.noVoteClr)
+
     init {
         problem = itemView.findViewById(R.id.problem)
         votes = itemView.findViewById(R.id.votes)
@@ -27,37 +31,39 @@ class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         down_votes = itemView.findViewById(R.id.down_vote)
     }
 
+    @Synchronized
     fun UpVote(): Int {
         if(dvoted) DownVote()
         uvoted = !uvoted
 
         var votes = up_votes.text.toString().toInt()
-        if(up_votes.currentTextColor == Color.parseColor("#FFFFFF")) {
+        if(up_votes.currentTextColor == noVoteClr) {
             votes++
             up_votes.text = votes.toString()
-            up_votes.setTextColor(Color.parseColor("#00ff04"))
+            up_votes.setTextColor(upVoteClr)
         } else {
             votes--
             up_votes.text = votes.toString()
-            up_votes.setTextColor(Color.parseColor("#FFFFFF"))
+            up_votes.setTextColor(noVoteClr)
         }
         TotalVotes()
         return votes
     }
 
+    @Synchronized
     fun DownVote(): Int {
         if(uvoted) UpVote()
         dvoted = !dvoted
 
         var votes = down_votes.text.toString().toInt()
-        if(down_votes.currentTextColor == Color.parseColor("#FFFFFF")) {
+        if(down_votes.currentTextColor == noVoteClr) {
             votes++
             down_votes.text = votes.toString()
-            down_votes.setTextColor(Color.parseColor("#ff0000"))
+            down_votes.setTextColor(downVoteClr)
         } else {
             votes--
             down_votes.text = votes.toString()
-            down_votes.setTextColor(Color.parseColor("#FFFFFF"))
+            down_votes.setTextColor(noVoteClr)
         }
         TotalVotes()
         return votes
@@ -71,6 +77,21 @@ class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     fun setID(id: String) {
         this.id = id
+    }
+
+    fun setVote(vote: Int = 0) {
+        uvoted = vote == 1
+        dvoted = vote == -1
+        if(uvoted) {
+            up_votes.setTextColor(upVoteClr)
+            down_votes.setTextColor(noVoteClr)
+        } else if(dvoted) {
+            down_votes.setTextColor(downVoteClr)
+            up_votes.setTextColor(noVoteClr)
+        } else {
+            down_votes.setTextColor(noVoteClr)
+            up_votes.setTextColor(noVoteClr)
+        }
     }
 
     fun getState() : PV {
