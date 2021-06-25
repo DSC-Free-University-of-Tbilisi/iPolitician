@@ -80,73 +80,165 @@
                 android:text="Sign Up" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="8dp"
-            android:text="Personal Number"
-            android:textColor="@color/lightTextColor"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="0dp" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/lightBackground"
-            android:ems="10"
-            android:fontFamily="monospace"
-            android:hint="e.g. 01001234567"
-            android:inputType="textPersonName"
-            android:padding="8dp"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingStart="8dp"
-            android:text="Password"
-            android:textColor="@color/lightTextColor"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
-            tools:layout_editor_absoluteX="-16dp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextTextPersonName2"
+        <LinearLayout
+            android:id="@+id/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17"
-            app:passwordToggleEnabled="true">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:id="@+id/textView14"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
+                android:text="Personal Number"
+                android:textColor="@color/lightTextColor"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/rounded_background"
                 android:backgroundTint="@color/lightBackground"
+                android:ems="10"
                 android:fontFamily="monospace"
-                android:hint="a-z, A-Z, 1-9"
-                android:inputType="textPassword"
+                android:hint="e.g. 01001234567"
+                android:inputType="numberDecimal"
                 android:padding="8dp"
                 android:textSize="15sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/surnameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="8dp"
+                android:text="Surname"
+                android:textColor="@color/lightTextColor"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/editSurname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/lightBackground"
+                android:ems="10"
+                android:fontFamily="monospace"
+                android:hint="e.g. დედალამაზიშვილი"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="8dp"
+                android:text="Password"
+                android:textColor="@color/lightTextColor"
+                android:textSize="15sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextTextPersonName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="@color/lightBackground"
+                    android:fontFamily="monospace"
+                    android:hint="a-z, A-Z, 1-9"
+                    android:inputType="textPassword"
+                    android:padding="8dp"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="8dp"
+                android:text="Phone Number"
+                android:textColor="@color/lightTextColor"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/lightBackground"
+                android:ems="10"
+                android:fontFamily="monospace"
+                android:hint="e.g. +995597555555"
+                android:inputType="phone"
+                android:padding="8dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="8dp"
+                android:text="Enter Code"
+                android:textColor="@color/lightTextColor"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/phoneCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/lightBackground"
+                android:ems="10"
+                android:fontFamily="monospace"
+                android:hint="e.g. 123456"
+                android:inputType="phone"
+                android:padding="8dp"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/login_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button_background_shape"
+                android:text="submit" />
+
+        </LinearLayout>
+
 
         <!--        <EditText-->
         <!--            android:id="@+id/editTextTextPersonName2"-->
@@ -166,86 +258,6 @@
         <!--            app:layout_constraintStart_toStartOf="parent"-->
         <!--            app:layout_constraintTop_toBottomOf="@+id/textView17" />-->
 
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingStart="8dp"
-            android:text="Phone Number"
-            android:textColor="@color/lightTextColor"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
-
-
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/lightBackground"
-            android:ems="10"
-            android:fontFamily="monospace"
-            android:hint="e.g. +995597555555"
-            android:inputType="phone"
-            android:padding="8dp"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingStart="8dp"
-            android:text="Enter Code"
-            android:textColor="@color/lightTextColor"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
-
-        <EditText
-            android:id="@+id/phoneCode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/lightBackground"
-            android:ems="10"
-            android:fontFamily="monospace"
-            android:hint="e.g. 123456"
-            android:inputType="phone"
-            android:padding="8dp"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
-
-        <Button
-            android:id="@+id/login_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/button_background_shape"
-            android:text="submit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneCode" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

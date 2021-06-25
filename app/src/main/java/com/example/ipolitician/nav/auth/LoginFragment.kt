@@ -17,10 +17,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.view.animation.DecelerateInterpolator
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -45,16 +42,22 @@ import com.google.android.material.textfield.TextInputLayout
 import com.richpath.RichPath
 import com.richpath.RichPathView
 import com.richpathanimator.RichPathAnimator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import org.json.JSONException
 import org.json.JSONObject
+import org.w3c.dom.Text
+import kotlin.properties.Delegates
 
 class LoginFragment: Fragment() {
 
-    companion object{
-        lateinit var webView: WebView
-    }
+    enum class LoginState { LOGIN, CESKOCHECK, PHONENUM, PHONECODE }
+
     lateinit var authenticate: Authenticate
     lateinit var personId: EditText
+    lateinit var surnameTxt: TextView
+    lateinit var surnameEdit: EditText
     lateinit var password: TextInputLayout
     lateinit var phoneText: TextView
     lateinit var phoneEdit: EditText
@@ -63,109 +66,133 @@ class LoginFragment: Fragment() {
     lateinit var logIn: Button
     lateinit var signUp: Button
     lateinit var submit: Button
+    lateinit var inputs: LinearLayout
+    lateinit var webView: WebView
     private lateinit var georgia: RichPathView
     private val DB = DataAPI()
     private var time = 0
+    var prevState = LoginState.CESKOCHECK
+    var currState by Delegates.observable(LoginState.LOGIN) { property, old, new ->
+        Log.d("aeeee", "$old $new")
+        CoroutineScope(Dispatchers.Main).async {
+            configureVisibility()
+            inputs.invalidate()
+        }
+        prevState = old
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
         retrieveViews(root)
         animateGeorgia()
-        configureVisibility(false, false)
+
+        currState = LoginState.LOGIN
+        prevState = LoginState.CESKOCHECK
         authenticate = Authenticate(this.requireActivity() as AppCompatActivity, this)
 
         logIn.setOnClickListener {
             setBtnColors(logIn, signUp)
-            configureVisibility(false, false)
+            currState = LoginState.LOGIN
         }
 
         signUp.setOnClickListener {
             setBtnColors(signUp, logIn)
-            configureVisibility(true,false)
+            currState = prevState
         }
 
+        configureWebView()
+        configureSubmit()
+
+        webView.loadUrl("https://voters.cec.gov.ge/")
+
+        return root
+    }
+
+    private fun configureWebView() {
         webView.settings.javaScriptEnabled = true
-        webView!!.addJavascriptInterface(JsWebInterface(requireContext()), "androidApp")
+        webView!!.addJavascriptInterface(JsWebInterface(this), "androidApp")
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean { return true }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                val pID = "01008061140"
-                val surname = "პერტაია"
                 view?.loadUrl("javascript:(window.onload = function(){" +
-                            "document.getElementsByTagName(\"hr\")[0].remove();" +
-                            "document.getElementsByTagName(\"footer\")[0].remove();" +
-//                            "document.getElementsByTagName(\"center\").style.display=\"none\";" +
-                            "document.getElementById(\"smartbanner\").remove();" +
-                            "document.getElementById(\"status\").remove();" +
-                            "document.getElementsByClassName(\"envelope\")[0].remove();" +
-                            "document.getElementById(\"numonly\").style.display = \"none\";" +
-                            "document.getElementById(\"sn\").style.display = \"none\";" +
-                            "document.getElementById(\"submit\").style.display = \"none\";" +
-                            "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.envelope {border:none; padding: 0;} center {display:none;}</style>');" +
-                            "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>#votersform {margin: 0 0; width: auto;}</style>');" +
-                            "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.g-recaptcha {display: flex; justify-content:center;} .g-recaptcha div div {border: none}</style>');" +
+                        "var bChildren = document.getElementsByTagName(\"body\")[0].children;" +
+                        "for (let element of bChildren) {" +
+                            "element.style.display = \"none\";" +
+                        "}" +
+                        "document.getElementsByClassName(\"envelope\")[1].style.display = \"block\";" +
+                        "document.getElementById(\"numonly\").style.display = \"none\";" +
+                        "document.getElementById(\"sn\").style.display = \"none\";" +
+                        "document.getElementById(\"submit\").style.display = \"none\";" +
+                        "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.envelope {border:none; padding: 0;} center {display:none;}</style>');" +
+                        "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>#votersform {margin: 0 0; width: auto;}</style>');" +
+                        "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.g-recaptcha {display: flex; justify-content:center;} .g-recaptcha div div {border: none}</style>');" +
 
-                            "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"mobile-web-app-capable\" content=\"yes\">\');" +
-                            "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\');" +
+                        "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"mobile-web-app-capable\" content=\"yes\">\');" +
+                        "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\');" +
 
-                            "document.getElementById(\"pn\").value = \"$pID\";" +
-                            "document.getElementById(\"sn\").value = \"$surname\";" +
+                        "var target = document.getElementById(\"page-wrap\");" +
+                        "var observer = new MutationObserver(function (mutations) {" +
+                        "mutations.forEach(function (mutation) {" +
+                            "androidApp.testi(target.children.length);" +
+                            "if(target.children.length > 2){" +
+                                "androidApp.close();" +
+                                "var name = document.getElementsByClassName(\"sn\")[0].innerHTML;" +
+                                "var surname = document.getElementsByClassName(\"fn\")[0].innerHTML;" +
+                                "var birth = document.getElementsByClassName(\"dob\")[0].innerHTML;" +
+                                "var address = document.getElementsByClassName(\"mis\")[0].innerHTML;" +
+                                "var lat = document.getElementById(\"lat\").innerHTML;" +
+                                "var lng = document.getElementById(\"lng\").innerHTML;" +
+                                "androidApp.ceskoSuccess(name, surname, birth, address, lat, lng);" +
 
-                            "var target = document.getElementById(\"page-wrap\");" +
-                            "var observer = new MutationObserver(function (mutations) {" +
-                                "mutations.forEach(function (mutation) {" +
-                                    "if(target.innerHTML != \"\"){" +
-                                        "androidApp.close();" +
-                                        "var name = document.getElementsByClassName(\"sn\")[0].innerHTML;" +
-                                        "var surname = document.getElementsByClassName(\"fn\")[0].innerHTML;" +
-                                        "var birth = document.getElementsByClassName(\"dob\")[0].innerHTML;" +
-                                        "var address = document.getElementsByClassName(\"mis\")[0].innerHTML;" +
-                                        "var lat = document.getElementById(\"lat\").innerHTML;" +
-                                        "var lng = document.getElementById(\"lng\").innerHTML;" +
-                                        "androidApp.ceskoSuccess(name, surname, birth, address, lat, lng);" +
-                                "}});" +
-                            "});"+
-                            "var config = { childList: true };" +
-                            "observer.observe(target, config);" +
+//                            "} else {" +
+//                                "androidApp.testi(-1);" +
+                            "}});" +
+                        "});"+
+                        "var config = { childList: true };" +
+                        "observer.observe(target, config);" +
                         "})")
             }
         }
-        webView.loadUrl("https://voters.cec.gov.ge/")
+    }
 
+    private fun configureSubmit() {
         submit.setOnClickListener {
 
-            webView.visibility = View.VISIBLE
-            webView.loadUrl("javascript:(window.onload = function(){" +
-                        "document.getElementById(\"pn\").value = \"01008061140\";" +
-                        "document.getElementById(\"sn\").value = \"პერტაია\";" +
+//            activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
+            when (currState) {
+                LoginState.LOGIN ->
+                    loginAttempt()
+                LoginState.CESKOCHECK -> {
+                    val pID = personId.text.toString()
+                    val surname = surnameEdit.text.toString()
+                    webView.visibility = View.VISIBLE
+                    webView.loadUrl(
+                        "javascript:(function(){" +
+                                "document.getElementById(\"pn\").value = \"$pID\";" +
+                                "document.getElementById(\"sn\").value = \"$surname\";" +
 
-                        "setInterval(() => {" +
-                            "if(document.getElementById(\"g-recaptcha-response\").value != \"\"){" +
+                                "setInterval(() => {" +
+                                "if(document.getElementById(\"g-recaptcha-response\").value != \"\"){" +
                                 "document.getElementById(\"submit\").click();" +
-                        "}}, 500);" +
-
-                    "})()")
-
-            if (!validatePersonId()) {
-                activity?.showAlertDialogWithAutoDismiss("Personal number used or illegal!")
-            } else if (phoneEdit.isVisible && codeEdit.isVisible) {
-                if (time != 0){
-                    authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
-                } else {
-                    authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
-                    submit.text = "SUBMIT"
+                                "}}, 500);" +
+                                "})()"
+                    )
                 }
-            } else if (phoneEdit.isVisible){
-                authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
-            } else {
-                loginAttempt()
+                LoginState.PHONENUM ->
+                    authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
+                LoginState.PHONECODE ->
+                    if (time != 0){
+                        authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
+                    } else {
+                        authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
+                        submit.text = "SUBMIT"
+                    }
             }
             hideKeyboard()
         }
-//        CheckSafetynetreCAPTCHA()
-        return root
     }
+
 
     fun animateGeorgia() {
         for(i in 0..11) {
@@ -188,19 +215,23 @@ class LoginFragment: Fragment() {
 
     }
 
-    class JsWebInterface(private val context: Context) {
+    class JsWebInterface(private val fragment: LoginFragment) {
         @JavascriptInterface
         fun ceskoSuccess(name: String, surname: String, birthDate: String, address: String, lat: String, lng: String) {
-            Toast.makeText(
-                context,
-                name,
-                Toast.LENGTH_LONG
-            ).show()
+            fragment.currState = LoginState.PHONENUM
+            Log.d("aeeee", name)
         }
 
         @JavascriptInterface
         fun close() {
-            webView.visibility = View.INVISIBLE
+            CoroutineScope(Dispatchers.Main).async {
+                fragment.webView.visibility = View.GONE
+            }
+        }
+
+        @JavascriptInterface
+        fun testi(ln: Int) {
+            Log.d("aeeee", ln.toString())
         }
     }
 
@@ -254,20 +285,25 @@ class LoginFragment: Fragment() {
         disabled.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#f3f3f3"))
     }
 
-    fun configureVisibility(phone: Boolean, code: Boolean){
-        phoneText.visibility = if (phone) View.VISIBLE else View.GONE
-        phoneEdit.visibility = if (phone) View.VISIBLE else View.GONE
-        codeText.visibility = if (code) View.VISIBLE else View.GONE
-        codeEdit.visibility = if (code) View.VISIBLE else View.GONE
+    fun configureVisibility(){
+        surnameTxt.visibility = if (currState in arrayOf(LoginState.CESKOCHECK, LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
+        surnameEdit.visibility = if (currState in arrayOf(LoginState.CESKOCHECK, LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
+        phoneText.visibility = if (currState in arrayOf(LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
+        phoneEdit.visibility = if (currState in arrayOf(LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
+        codeText.visibility = if (currState in arrayOf(LoginState.PHONECODE)) View.VISIBLE else View.GONE
+        codeEdit.visibility = if (currState in arrayOf(LoginState.PHONECODE)) View.VISIBLE else View.GONE
     }
 
     private fun retrieveViews(root: View){
         logIn = root.findViewById(R.id.loginBtn)
         signUp = root.findViewById(R.id.signUpBtn)
         personId = root.findViewById(R.id.editTextTextPersonName)
+        surnameTxt = root.findViewById(R.id.surnameText)
+        surnameEdit = root.findViewById(R.id.editSurname)
         password = root.findViewById(R.id.editTextTextPersonName2)
         phoneText = root.findViewById(R.id.textView21)
         phoneEdit = root.findViewById(R.id.editTextPhone)
+        inputs = root.findViewById(R.id.inputs)
         codeText = root.findViewById(R.id.textView22)
         codeEdit = root.findViewById(R.id.phoneCode)
         submit = root.findViewById(R.id.login_submit)
