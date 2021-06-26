@@ -70,7 +70,6 @@ class LoginFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
         retrieveViews(root)
-        animateGeorgia()
         configureVisibility(false, false)
         authenticate = Authenticate(this.requireActivity() as AppCompatActivity, this)
 
@@ -83,6 +82,8 @@ class LoginFragment: Fragment() {
             setBtnColors(signUp, logIn)
             configureVisibility(true,false)
         }
+
+        animateGeorgia()
 
         webView.settings.javaScriptEnabled = true
         webView!!.addJavascriptInterface(JsWebInterface(requireContext()), "androidApp")
@@ -170,22 +171,13 @@ class LoginFragment: Fragment() {
     fun animateGeorgia() {
         for(i in 0..11) {
             val path = georgia.findRichPathByIndex(i)
-            if(path!!.name == "აბხაზეთი" || path!!.name == "შიდა ქართლი") {
                 RichPathAnimator.animate(path)
                     .interpolator(DecelerateInterpolator())
-                    .fillColor(Color.RED)
-                    .duration(16000)
+                    .strokeColor(Color.YELLOW)
+                    .duration(4000)
                     .startDelay(50)
                     .start()
-            }
-//            RichPathAnimator.animate(path)
-//                .interpolator(DecelerateInterpolator())
-//                .strokeColor(Color.YELLOW)
-//                .duration(16000)
-//                .startDelay(50)
-//                .start()
         }
-
     }
 
     class JsWebInterface(private val context: Context) {

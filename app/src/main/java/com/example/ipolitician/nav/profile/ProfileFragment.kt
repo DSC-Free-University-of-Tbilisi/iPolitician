@@ -65,11 +65,9 @@ class ProfileFragment : Fragment() {
         // access the spinner
         spinner1 = root.findViewById(R.id.spinner)
         spinner2 = root.findViewById(R.id.spinner2)
-        spinner3 = root.findViewById(R.id.spinner3)
 
         setSpinner(spinner1, root.context, ages, MainActivity.user!!.age)
         setSpinner(spinner2, root.context, genders, MainActivity.user!!.gender)
-        setSpinner(spinner3, root.context, regions)
 
         val but = root.findViewById<Button>(R.id.save)
 

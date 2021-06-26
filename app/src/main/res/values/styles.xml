@@ -11,6 +11,7 @@
         <item name="textClr">@color/lightTextColor</item>
         <item name="buttonColorStart">@color/lightButtonColorStart </item>
         <item name="buttonColorEnd">@color/lightButtonColorEnd </item>
+        <item name="toolsClr">@color/lightToolsClr </item>
     </style>
 
     <style name="DarkMode" parent="LightMode">
@@ -21,6 +22,7 @@
 
         <item name="buttonColorStart">@color/darkButtonColorStart </item>
         <item name="buttonColorEnd">@color/darkButtonColorEnd </item>
+        <item name="toolsClr">@color/darkToolsClr </item>
     </style>
 
     <style name="LightMode.NoActionBar">
@@ -43,7 +45,7 @@
     </style>
 
     <style name="SwitchCompatTheme" >
-        <item name="android:textColor"> @color/darkButtonColorStart </item>
+        <item name="android:textColor"> ?attr/toolsClr </item>
         <item name="colorControlActivated"> @color/darkButtonColorStart </item>
     </style>
 

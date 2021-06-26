@@ -4,15 +4,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.PopupWindow
+import android.view.*
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,11 +16,13 @@ import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
 import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.firebase.DataAPI
+import com.example.ipolitician.hideKeyboard
 import com.example.ipolitician.recycler.FilterableRecyclerView
 import com.example.ipolitician.recycler.ProblemsRecyclerViewAdapter
 import com.example.ipolitician.search.SearchComponent
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.textColor
+import com.google.android.material.snackbar.Snackbar
 
 
 class ProblemsFragment : Fragment() {
@@ -62,19 +60,35 @@ class ProblemsFragment : Fragment() {
             pw.animationStyle = R.style.Animation
             pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
             pw.setBackgroundDrawable(ColorDrawable(Color.BLACK))
-//            root.foreground.alpha = 220
+            pw.inputMethodMode = PopupWindow.INPUT_METHOD_NEEDED
+            pw.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+            if (activity != null) {
+                requireActivity().window.attributes.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
+                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            }
+            pw.contentView.findViewById<Button>(R.id.post_button1).setOnClickListener {
 
-            pw.contentView.findViewById<Button>(R.id.post_button).setOnClickListener {
-                val problem = pw.contentView.findViewById<EditText>(R.id.problem_post).text.toString()
-                pw.dismiss()
+                val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), 800, ViewGroup.LayoutParams.WRAP_CONTENT, true)
+                reg_pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
+                reg_pw.setBackgroundDrawable(ColorDrawable(Color.BLACK))
 
-                val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), 800, 800, true)
-                if(problem.isNotEmpty()) {
-                    DB.getProblemID() { id ->
-                        DB.setProblem(PV(id=id, problem = problem, upvotes = 0, downvotes = 0))
-                        (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
+                reg_pw.contentView.findViewById<Button>(R.id.post_button2).setOnClickListener {
+                    val problem = pw.contentView.findViewById<EditText>(R.id.problem_post).text.toString()
+
+                    if(problem.isNotEmpty()) {
+                        val regs = reg_pw.contentView.findViewById<RadioGroup>(R.id.regions)
+                        val region = if (regs.checkedRadioButtonId >= 0) regs.findViewById<RadioButton>(regs.checkedRadioButtonId).text.toString() else ""
+
+                        DB.getProblemID() { id ->
+                            DB.setProblem(PV(id=id, problem = problem, upvotes = 0, downvotes = 0, region = region))
+                            (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
+                        }
+
                     }
+                    reg_pw.dismiss()
+                    pw.dismiss()
                 }
+
             }
         }
 
