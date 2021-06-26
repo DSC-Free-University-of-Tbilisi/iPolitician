@@ -30,16 +30,13 @@ fun Activity.showAlertDialogWithAutoDismiss(message: String) {
     builder.setTitle("Alert")
         .setMessage(message)
         .setCancelable(false)
-        .setPositiveButton("OK") { dialog, _ -> //this for skip dialog
-            dialog.cancel()
-        }
     val alertDialog = builder.create()
     alertDialog.show()
     Handler().postDelayed(Runnable {
         if (alertDialog.isShowing) {
             alertDialog.dismiss()
         }
-    }, 5000) //change 5000 with a specific time you want
+    }, 3000) //change 5000 with a specific time you want
 }
 
 fun String.md5(): String {

@@ -62,7 +62,8 @@ class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
 
                 storedVerificationId = verificationId
                 resendToken = token
-                fragment.configureVisibility(true,true)
+                fragment.currState = LoginFragment.LoginState.PHONECODE
+                fragment.configureVisibility()
                 fragment.codeSent()
             }
         }
