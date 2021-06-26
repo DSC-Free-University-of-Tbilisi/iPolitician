@@ -1,31 +1,23 @@
 package com.example.ipolitician.nav.auth
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.opengl.Visibility
-import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.view.animation.DecelerateInterpolator
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.ipolitician.*
 import com.example.ipolitician.Auth.Authenticate
 import com.example.ipolitician.Util.dialog
@@ -34,21 +26,14 @@ import com.example.ipolitician.Util.sha256
 import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.CommonStatusCodes
-import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.material.textfield.TextInputLayout
-import com.richpath.RichPath
 import com.richpath.RichPathView
 import com.richpathanimator.RichPathAnimator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import org.json.JSONException
-import org.json.JSONObject
-import org.w3c.dom.Text
 import kotlin.properties.Delegates
+
 
 class LoginFragment: Fragment() {
 
@@ -67,6 +52,7 @@ class LoginFragment: Fragment() {
     lateinit var signUp: Button
     lateinit var submit: Button
     lateinit var inputs: LinearLayout
+    lateinit var blurView: View
     lateinit var webView: WebView
     private lateinit var georgia: RichPathView
     private val DB = DataAPI()
@@ -81,6 +67,7 @@ class LoginFragment: Fragment() {
         prevState = old
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
         retrieveViews(root)
@@ -103,6 +90,7 @@ class LoginFragment: Fragment() {
         configureWebView()
         configureSubmit()
 
+        blurView.foreground.alpha = 220
         webView.loadUrl("https://voters.cec.gov.ge/")
 
         return root
@@ -134,9 +122,13 @@ class LoginFragment: Fragment() {
                         "var target = document.getElementById(\"page-wrap\");" +
                         "var observer = new MutationObserver(function (mutations) {" +
                         "mutations.forEach(function (mutation) {" +
-                            "androidApp.testi(target.children.length);" +
-                            "if(target.children.length > 2){" +
-                                "androidApp.close();" +
+                            "if(target.children.length == 0){ return; }" +
+
+                            "androidApp.close();" +
+                            "var p = [...target.children].find((elem) => elem.tagName === \"P\");" +
+                            "var div = [...target.children].find((elem) => elem.tagName === \"DIV\");" +
+                            "if(p != null){ androidApp.error(p.innerHTML); }" +
+                            "if(div != null){" +
                                 "var name = document.getElementsByClassName(\"sn\")[0].innerHTML;" +
                                 "var surname = document.getElementsByClassName(\"fn\")[0].innerHTML;" +
                                 "var birth = document.getElementsByClassName(\"dob\")[0].innerHTML;" +
@@ -144,9 +136,6 @@ class LoginFragment: Fragment() {
                                 "var lat = document.getElementById(\"lat\").innerHTML;" +
                                 "var lng = document.getElementById(\"lng\").innerHTML;" +
                                 "androidApp.ceskoSuccess(name, surname, birth, address, lat, lng);" +
-
-//                            "} else {" +
-//                                "androidApp.testi(-1);" +
                             "}});" +
                         "});"+
                         "var config = { childList: true };" +
@@ -166,15 +155,18 @@ class LoginFragment: Fragment() {
                 LoginState.CESKOCHECK -> {
                     val pID = personId.text.toString()
                     val surname = surnameEdit.text.toString()
+                    blurView.visibility = View.VISIBLE
                     webView.visibility = View.VISIBLE
                     webView.loadUrl(
                         "javascript:(function(){" +
                                 "document.getElementById(\"pn\").value = \"$pID\";" +
                                 "document.getElementById(\"sn\").value = \"$surname\";" +
 
-                                "setInterval(() => {" +
+                                "let closeInt = function (){clearInterval(inter);};" +
+                                "var inter = setInterval(() => {" +
                                 "if(document.getElementById(\"g-recaptcha-response\").value != \"\"){" +
-                                "document.getElementById(\"submit\").click();" +
+                                    "document.getElementById(\"submit\").click();" +
+                                    "closeInt();" +
                                 "}}, 500);" +
                                 "})()"
                     )
@@ -226,12 +218,20 @@ class LoginFragment: Fragment() {
         fun close() {
             CoroutineScope(Dispatchers.Main).async {
                 fragment.webView.visibility = View.GONE
+                fragment.blurView.visibility = View.GONE
             }
         }
 
         @JavascriptInterface
-        fun testi(ln: Int) {
-            Log.d("aeeee", ln.toString())
+        fun error(err: String) {
+            CoroutineScope(Dispatchers.Main).async {
+                fragment.activity?.showAlertDialogWithAutoDismiss(err)
+            }
+        }
+
+        @JavascriptInterface
+        fun testi(ln: String) {
+            Log.d("aeeee", ln)
         }
     }
 
@@ -307,6 +307,7 @@ class LoginFragment: Fragment() {
         codeText = root.findViewById(R.id.textView22)
         codeEdit = root.findViewById(R.id.phoneCode)
         submit = root.findViewById(R.id.login_submit)
+        blurView = root.findViewById(R.id.blurView)
         webView = root.findViewById(R.id.webView)
         georgia = root.findViewById(R.id.georgia_back)
     }

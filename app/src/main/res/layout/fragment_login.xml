@@ -139,7 +139,7 @@
                 android:backgroundTint="@color/lightBackground"
                 android:ems="10"
                 android:fontFamily="monospace"
-                android:hint="e.g. დედალამაზიშვილი"
+                android:hint="e.g. ბაგრატიონი"
                 android:inputType="textPersonName"
                 android:padding="8dp"
                 android:textSize="15sp" />
@@ -260,6 +260,18 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/blurView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/blur_background"
+        android:clickable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <WebView
         android:id="@+id/webView"
