@@ -85,6 +85,16 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.nav_public)
             }
         })
+
+        root.findViewById<TextView>(R.id.region).text = MainActivity.user!!.region
+
+        var fullName = MainActivity.user!!.optional[0] + " " + MainActivity.user!!.optional[1]
+        root.findViewById<TextView>(R.id.full_name).text = fullName
+
+        root.findViewById<TextView>(R.id.birth_date).text = MainActivity.user!!.optional[2]
+
+        root.findViewById<TextView>(R.id.address).text = MainActivity.user!!.optional[3]
+
         return root
     }
 

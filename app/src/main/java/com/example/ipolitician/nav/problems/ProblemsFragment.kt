@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -59,21 +60,18 @@ class ProblemsFragment : Fragment() {
             val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 800, 800, true)
             pw.animationStyle = R.style.Animation
             pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
-            pw.setBackgroundDrawable(ColorDrawable(Color.BLACK))
-            pw.inputMethodMode = PopupWindow.INPUT_METHOD_NEEDED
-            pw.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
-            if (activity != null) {
-                requireActivity().window.attributes.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
-                requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-            }
-            pw.contentView.findViewById<Button>(R.id.post_button1).setOnClickListener {
 
+            pw.contentView.findViewById<Button>(R.id.post_button1).setOnClickListener {
+                pw.dismiss()
                 val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), 800, ViewGroup.LayoutParams.WRAP_CONTENT, true)
+                reg_pw.animationStyle = R.style.Animation
                 reg_pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
-                reg_pw.setBackgroundDrawable(ColorDrawable(Color.BLACK))
 
                 reg_pw.contentView.findViewById<Button>(R.id.post_button2).setOnClickListener {
-                    val problem = pw.contentView.findViewById<EditText>(R.id.problem_post).text.toString()
+
+                    val editText = pw.contentView.findViewById<EditText>(R.id.problem_post)
+                    editText.inputType = InputType.TYPE_NULL;
+                    val problem = editText.text.toString()
 
                     if(problem.isNotEmpty()) {
                         val regs = reg_pw.contentView.findViewById<RadioGroup>(R.id.regions)
@@ -86,7 +84,6 @@ class ProblemsFragment : Fragment() {
 
                     }
                     reg_pw.dismiss()
-                    pw.dismiss()
                 }
 
             }

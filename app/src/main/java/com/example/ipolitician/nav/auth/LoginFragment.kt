@@ -57,6 +57,8 @@ class LoginFragment: Fragment() {
     private lateinit var georgia: RichPathView
     private val DB = DataAPI()
     private var time = 0
+    lateinit var region: String
+    lateinit var optional: List<String>
     var prevState = LoginState.CESKOCHECK
     var currState by Delegates.observable(LoginState.LOGIN) { property, old, new ->
         Log.d("aeeee", "$old $new")
@@ -202,6 +204,8 @@ class LoginFragment: Fragment() {
         @JavascriptInterface
         fun ceskoSuccess(name: String, surname: String, birthDate: String, address: String, lat: String, lng: String) {
             fragment.currState = LoginState.PHONENUM
+            fragment.region = "თბილისი"
+            fragment.optional = listOf(name, surname, birthDate, address, lat, lng)
             Log.d("aeeee", name)
         }
 
@@ -262,7 +266,9 @@ class LoginFragment: Fragment() {
     fun authenticationComplete(){
         val usr = User(
             password = password.editText?.text.toString().md5(),
-            phoneNumber = phoneEdit.text.toString()
+            phoneNumber = phoneEdit.text.toString(),
+            region = region,
+            optional = optional
         )
         DB.setUser(personId.text.toString().sha256(), usr)
         MainActivity.uniqueID = personId.text.toString().sha256()
