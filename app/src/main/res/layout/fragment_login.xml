@@ -26,14 +26,14 @@
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:vector="@drawable/ic_georgia" />
+        app:vector="@drawable/ic_georgia_trans" />
 
-    <ImageView
-        android:id="@+id/imageView6"
+    <com.richpath.RichPathView
+        android:id="@+id/launch_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="65dp"
-        android:background="@drawable/ic_app_trans"
+        app:vector="@drawable/ic_app_trans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

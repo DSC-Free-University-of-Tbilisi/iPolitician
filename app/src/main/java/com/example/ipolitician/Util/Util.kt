@@ -13,6 +13,7 @@ import com.example.ipolitician.Util.externalMap
 var backgroundColor = TypedValue()
 var componentColor = TypedValue()
 var textColor = TypedValue()
+var buttonColor = TypedValue()
 
 fun Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }

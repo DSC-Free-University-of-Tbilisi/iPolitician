@@ -27,6 +27,8 @@ import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
 import com.google.android.material.textfield.TextInputLayout
+import com.richpath.RichPath
+import com.richpath.RichPath.OnPathClickListener
 import com.richpath.RichPathView
 import com.richpathanimator.RichPathAnimator
 import kotlinx.coroutines.CoroutineScope
@@ -55,6 +57,7 @@ class LoginFragment: Fragment() {
     lateinit var blurView: View
     lateinit var webView: WebView
     private lateinit var georgia: RichPathView
+    private lateinit var appIcon: RichPathView
     private val DB = DataAPI()
     private var time = 0
     lateinit var region: String
@@ -73,7 +76,7 @@ class LoginFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
         retrieveViews(root)
-        animateGeorgia()
+        animateLaunch()
 
         currState = LoginState.LOGIN
         prevState = LoginState.CESKOCHECK
@@ -188,16 +191,52 @@ class LoginFragment: Fragment() {
     }
 
 
-    fun animateGeorgia() {
-        for(i in 0..11) {
-            val path = georgia.findRichPathByIndex(i)
-                RichPathAnimator.animate(path)
-                    .interpolator(DecelerateInterpolator())
-                    .strokeColor(Color.YELLOW)
-                    .duration(4000)
-                    .startDelay(50)
-                    .start()
-        }
+    fun animateLaunch() {
+        val dst = 128f
+        animateGeorgiaPath(georgia.findRichPathByIndex(0)!!, -dst, -dst)
+        animateGeorgiaPath(georgia.findRichPathByIndex(7)!!, -dst/2, -dst/2)
+        animateGeorgiaPath(georgia.findRichPathByIndex(10)!!, -dst/4, -dst/4)
+
+        animateGeorgiaPath(georgia.findRichPathByIndex(4)!!, dst, dst)
+        animateGeorgiaPath(georgia.findRichPathByIndex(5)!!, dst/2, dst/2)
+
+        animateGeorgiaPath(georgia.findRichPathByIndex(6)!!, dst, -dst)
+        animateGeorgiaPath(georgia.findRichPathByIndex(9)!!, dst/2, -dst/2)
+
+
+        animateGeorgiaPath(georgia.findRichPathByIndex(1)!!, -dst, dst)
+        animateGeorgiaPath(georgia.findRichPathByIndex(2)!!, -dst/2, dst/2)
+        animateGeorgiaPath(georgia.findRichPathByIndex(3)!!, -dst/2, dst/2)
+        animateGeorgiaPath(georgia.findRichPathByIndex(8)!!, -dst/4, dst/4)
+        animateGeorgiaPath(georgia.findRichPathByIndex(11)!!, -dst/4, dst/4)
+
+        animateIconPath(appIcon.findRichPathByIndex(0)!!, dst, dst, "#FFBF00")       // YELLOW
+        animateIconPath(appIcon.findRichPathByIndex(1)!!, -dst, -dst,"#FF0000")     // RED
+        animateIconPath(appIcon.findRichPathByIndex(2)!!, dst, -dst, "#3E9C42")      // GREEN
+        animateIconPath(appIcon.findRichPathByIndex(3)!!, -dst, dst,"#03A9F4")      // BLUE
+    }
+
+    fun animateGeorgiaPath(richPath: RichPath, tx: Float, ty: Float) {
+        RichPathAnimator.animate(richPath)
+            .interpolator(DecelerateInterpolator())
+            .fillColor(Color.BLACK)
+            .strokeColor(Color.YELLOW)
+            .translationX(tx,0f)
+            .translationY(ty,0f)
+            .duration(4000)
+            .startDelay(1)
+            .start()
+    }
+
+    fun animateIconPath(richPath: RichPath, tx: Float, ty: Float, color: String) {
+        RichPathAnimator.animate(richPath)
+            .interpolator(DecelerateInterpolator())
+            .fillColor(Color.parseColor(color))
+            .translationX(tx,0f)
+            .translationY(ty,0f)
+            .duration(2000)
+            .startDelay(4000)
+            .start()
     }
 
     class JsWebInterface(private val fragment: LoginFragment) {
@@ -307,5 +346,6 @@ class LoginFragment: Fragment() {
         blurView = root.findViewById(R.id.blurView)
         webView = root.findViewById(R.id.webView)
         georgia = root.findViewById(R.id.georgia_back)
+        appIcon = root.findViewById(R.id.launch_icon)
     }
 }

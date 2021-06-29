@@ -80,14 +80,15 @@ class MainActivity : AppCompatActivity() {
             } else {
                 supportActionBar?.show()
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                animateGeorgia(user!!.region)
             }
         }
 
         drawerLayout.addDrawerListener(object: DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
 
-            override fun onDrawerOpened(drawerView: View) {}
+            override fun onDrawerOpened(drawerView: View) {
+                animateGeorgia(user!!.region)
+            }
 
             override fun onDrawerClosed(drawerView: View) {}
 
@@ -131,14 +132,23 @@ class MainActivity : AppCompatActivity() {
 
         val switch = findViewById<View>(R.id.switch_theme) as SwitchCompat
         switch.isChecked = getMode() == R.style.DarkMode_NoActionBar
-        switch.setOnClickListener(View.OnClickListener {
+//        switch.setOnClickListener(View.OnClickListener {
+//            Toast.makeText(
+//                applicationContext,
+//                if (switch.isChecked) "Dark Mode" else "Light Mode",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            switchMode()
+//        })
+        switch.setOnCheckedChangeListener { _, isChecked ->
             Toast.makeText(
                 applicationContext,
-                if (switch.isChecked) "Dark Mode" else "Light Mode",
+                if (isChecked) "Dark Mode" else "Light Mode",
                 Toast.LENGTH_SHORT
             ).show()
             switchMode()
-        })
+            animateGeorgia(user!!.region)
+        }
         return true
     }
 
@@ -154,60 +164,36 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-//        val currentUser = authenticate.auth.currentUser
-//        updateUI(currentUser)
-    }
-
-//    private fun updateUI(user: FirebaseUser? = authenticate.auth.currentUser) {
-//
-//    }
-
-//    private fun setUpUser() {
-//        DB.getUser(uniqueID!!) { user ->
-//            Log.d("CALLBACK", user.toString())
-//            if(user != null) {
-//                Companion.user = user
-//            } else {
-////                loadProfilePopUp(getString(R.string.welcome))
-//            }
-//        }
-//    }
-
     private fun retreiveThemeAttrs(){
         theme.resolveAttribute(R.attr.textClr, textColor, true)
         theme.resolveAttribute(R.attr.backgroundClr, backgroundColor, true)
         theme.resolveAttribute(R.attr.componentClr, componentColor, true)
+        theme.resolveAttribute(R.attr.buttonColorStart, buttonColor, true)
     }
 
     fun animateGeorgia(region: String): Boolean {
         val navHeader = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0)
+        navHeader.setBackgroundResource(R.drawable.button_background_shape)
+
         val notificationsRichPathView = navHeader.findViewById<RichPathView>(R.id.app_nav_header_background)
+        notificationsRichPathView.setVectorDrawable(R.drawable.ic_georgia)
 
         for(i in 0..11) {
             val path = notificationsRichPathView.findRichPathByIndex(i)
             if(region == path!!.name) {
                 RichPathAnimator.animate(path)
                     .interpolator(DecelerateInterpolator())
-                    .fillColor(Color.YELLOW)
-                    .duration(4000)
-                    .startDelay(50)
+                    .fillColor(Color.GREEN)
+                    .duration(10000)
                     .start()
             }
 
             RichPathAnimator.animate(path)
                 .interpolator(DecelerateInterpolator())
-//                .rotation(0f, 1f, -1f, 1f, -1f, 1f, -1f, 1f, -1f, 0f)
-                .strokeColor(Color.RED)
-                .duration(4000)
-                .startDelay(50)
+                .strokeColor(buttonColor.data)
+                .duration(10000)
                 .start()
         }
-        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-        drawer.closeDrawer(GravityCompat.START)
         return true
     }
 }

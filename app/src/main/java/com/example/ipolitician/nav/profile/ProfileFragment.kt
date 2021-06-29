@@ -78,6 +78,8 @@ class ProfileFragment : Fragment() {
                     phoneNumber = MainActivity.user!!.phoneNumber,
                     age = spinner1.selectedItemPosition,
                     gender = spinner2.selectedItemPosition,
+                    region = MainActivity.user!!.region,
+                    optional = MainActivity.user!!.optional
                 )
                 MainActivity.user = usr
                 DB.updateUser(it1, usr)
