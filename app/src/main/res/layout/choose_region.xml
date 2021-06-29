@@ -4,9 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_background">
+    android:background="@drawable/border_shape">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="საჭიროების შემთხვევაში, დაამატეთ რეგიონის შეზღუდვა"
+        android:textAlignment="center"
+        android:textColor="?attr/textClr"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
+        android:id="@+id/regions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -14,78 +30,114 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <RadioButton
             android:id="@+id/radioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="აბხაზეთი" />
+            android:buttonTint="?attr/textClr"
+            android:text="აბხაზეთი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="აჭარა" />
+            android:buttonTint="?attr/textClr"
+            android:text="აჭარა"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="გურია" />
+            android:buttonTint="?attr/textClr"
+            android:text="გურია"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="იმერეთი" />
+            android:buttonTint="?attr/textClr"
+            android:text="იმერეთი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="კახეთი" />
+            android:buttonTint="?attr/textClr"
+            android:text="კახეთი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ქვემო ქართლი" />
+            android:buttonTint="?attr/textClr"
+            android:text="ქვემო ქართლი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="მცხეთა-მთიანეთი" />
+            android:buttonTint="?attr/textClr"
+            android:text="მცხეთა-მთიანეთი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="რაჭა-ლეჩხუმი და ქვემო სვანეთი" />
+            android:buttonTint="?attr/textClr"
+            android:text="რაჭა-ლეჩხუმი და ქვემო სვანეთი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="სამცხე-ჯავახეთი" />
+            android:buttonTint="?attr/textClr"
+            android:text="სამცხე-ჯავახეთი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="შიდა ქართლი" />
-
-        <RadioButton
-            android:id="@+id/radioButton11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="სამეგრელო ზემო სვანეთი" />
+            android:buttonTint="?attr/textClr"
+            android:text="შიდა ქართლი"
+            android:textColor="?attr/textClr" />
 
         <RadioButton
             android:id="@+id/radioButton12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="თბილისი" />
+            android:buttonTint="?attr/textClr"
+            android:text="თბილისი"
+            android:textColor="?attr/textClr" />
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regions" />
+
+    <Button
+        android:id="@+id/post_button2"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

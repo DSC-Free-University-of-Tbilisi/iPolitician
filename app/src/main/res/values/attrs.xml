@@ -5,4 +5,5 @@
     <attr name="textClr" format="reference" />
     <attr name="buttonColorStart" format="reference" />
     <attr name="buttonColorEnd" format="reference" />
+    <attr name="toolsClr" format="reference" />
 </resources>

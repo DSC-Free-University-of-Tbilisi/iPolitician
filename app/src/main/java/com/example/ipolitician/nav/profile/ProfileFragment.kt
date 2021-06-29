@@ -65,11 +65,9 @@ class ProfileFragment : Fragment() {
         // access the spinner
         spinner1 = root.findViewById(R.id.spinner)
         spinner2 = root.findViewById(R.id.spinner2)
-        spinner3 = root.findViewById(R.id.spinner3)
 
         setSpinner(spinner1, root.context, ages, MainActivity.user!!.age)
         setSpinner(spinner2, root.context, genders, MainActivity.user!!.gender)
-        setSpinner(spinner3, root.context, regions)
 
         val but = root.findViewById<Button>(R.id.save)
 
@@ -87,6 +85,16 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.nav_public)
             }
         })
+
+        root.findViewById<TextView>(R.id.region).text = MainActivity.user!!.region
+
+        var fullName = MainActivity.user!!.optional[0] + " " + MainActivity.user!!.optional[1]
+        root.findViewById<TextView>(R.id.full_name).text = fullName
+
+        root.findViewById<TextView>(R.id.birth_date).text = MainActivity.user!!.optional[2]
+
+        root.findViewById<TextView>(R.id.address).text = MainActivity.user!!.optional[3]
+
         return root
     }
 

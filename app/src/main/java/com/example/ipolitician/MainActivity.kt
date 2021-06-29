@@ -5,12 +5,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.view.animation.DecelerateInterpolator
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -23,11 +26,9 @@ import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.*
 import com.richpath.RichPath
 import com.richpath.RichPathView
 import com.richpathanimator.RichPathAnimator
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         var uniqueID: String? = null
         var user: User? = null
         private const val TAG = "PhoneAuthActivity"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,6 +107,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         setUpNavHeader(navView.getHeaderView(0))
+//        navView.setNavigationItemSelectedListener(this)
     }
 
     private fun setUpNavHeader(navHeader: View) {
@@ -115,14 +118,6 @@ class MainActivity : AppCompatActivity() {
                 "Action",
                 null
             ).show()
-
-            RichPathAnimator.animate(richPath)
-                .interpolator(DecelerateInterpolator())
-                .rotation(0f, 1f, -1f, 1f, -1f, 1f, -1f, 1f, -1f, 0f)
-                .strokeColor(Color.RED)
-                .duration(32000)
-                .startDelay(50)
-                .start()
         })
     }
 
@@ -184,4 +179,32 @@ class MainActivity : AppCompatActivity() {
         theme.resolveAttribute(R.attr.backgroundClr, backgroundColor, true)
         theme.resolveAttribute(R.attr.componentClr, componentColor, true)
     }
+
+//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//        val navHeader = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0)
+//        val notificationsRichPathView = navHeader.findViewById<RichPathView>(R.id.app_nav_header_background)
+//
+//        for(i in 0..11) {
+//            val path = notificationsRichPathView.findRichPathByIndex(i)
+//            if(user!!.region == path!!.name) {
+//                RichPathAnimator.animate(path)
+//                    .interpolator(DecelerateInterpolator())
+//                    .fillColor(Color.RED)
+//                    .duration(4000)
+//                    .startDelay(50)
+//                    .start()
+//            }
+//
+//            RichPathAnimator.animate(path)
+//                .interpolator(DecelerateInterpolator())
+////                .rotation(0f, 1f, -1f, 1f, -1f, 1f, -1f, 1f, -1f, 0f)
+//                .strokeColor(Color.parseColor("#6BE29A"))
+//                .duration(4000)
+//                .startDelay(50)
+//                .start()
+//        }
+//        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+//        drawer.closeDrawer(GravityCompat.START)
+//        return true
+//    }
 }

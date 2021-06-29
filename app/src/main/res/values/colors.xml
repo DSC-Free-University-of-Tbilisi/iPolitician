@@ -15,6 +15,10 @@
     <color name="lightButtonColorStart">#FFC636</color>
     <color name="lightButtonColorEnd">#FF830A</color>
 
+    <color name="lightToolsClr">#989898</color>
+    <color name="darkToolsClr">#AAAAAA</color>
+
+
     <color name="upVoteClr"> #00ff04 </color>
     <color name="downVoteClr"> #ff0000 </color>
     <color name="totVoteClr"> #FF9800 </color>
@@ -26,4 +30,5 @@
     <color name="green">#64DD17</color>
     <color name="violet">#AA00FF</color>
     <color name="orange">#FF6D00</color>
+
 </resources>
