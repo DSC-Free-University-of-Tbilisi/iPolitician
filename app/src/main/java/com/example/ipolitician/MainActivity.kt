@@ -72,13 +72,24 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             if (nd.id == R.id.nav_login || nd.id == R.id.nav_profile) {
-//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 supportActionBar?.hide()
             } else {
                 supportActionBar?.show()
-//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             }
         }
+
+        drawerLayout.addDrawerListener(object: DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+
+            override fun onDrawerOpened(drawerView: View) {}
+
+            override fun onDrawerClosed(drawerView: View) {}
+
+            override fun onDrawerStateChanged(newState: Int) {}
+
+        })
 //        navController.navigate(R.id.nav_login)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

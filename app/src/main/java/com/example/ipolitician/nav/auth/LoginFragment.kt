@@ -129,8 +129,8 @@ class LoginFragment: Fragment() {
                             "var div = [...target.children].find((elem) => elem.tagName === \"DIV\");" +
                             "if(p != null){ androidApp.error(p.innerHTML); }" +
                             "if(div != null){" +
-                                "var name = document.getElementsByClassName(\"sn\")[0].innerHTML;" +
-                                "var surname = document.getElementsByClassName(\"fn\")[0].innerHTML;" +
+                                "var name = document.getElementsByClassName(\"fn\")[0].innerHTML;" +
+                                "var surname = document.getElementsByClassName(\"sn\")[0].innerHTML;" +
                                 "var birth = document.getElementsByClassName(\"dob\")[0].innerHTML;" +
                                 "var address = document.getElementsByClassName(\"mis\")[0].innerHTML;" +
                                 "var lat = document.getElementById(\"lat\").innerHTML;" +
