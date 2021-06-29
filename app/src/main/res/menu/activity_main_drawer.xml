@@ -13,11 +13,15 @@
             android:id="@+id/nav_survey"
             android:icon="@drawable/checking"
             android:title="@string/menu_survey" />
+        <item
+            android:id="@+id/nav_cesko"
+            android:icon="@drawable/ic_nav_profile"
+            android:title="Cesko" />
     </group>
 
     <item
         android:id="@+id/tribune"
-        android:title="Tribune">
+        android:title="Hall">
         <menu>
             <group android:checkableBehavior="single">
                 <item

@@ -40,4 +40,9 @@
         android:name="com.example.ipolitician.nav.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_cesko"
+        android:name="com.example.ipolitician.nav.cesko.CeskoFragment"
+        android:label="fragment_cesko"
+        tools:layout="@layout/fragment_cesko" />
 </navigation>

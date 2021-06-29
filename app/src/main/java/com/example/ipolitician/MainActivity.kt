@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -79,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 supportActionBar?.show()
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                animateGeorgia(user!!.region)
             }
         }
 
@@ -99,6 +101,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_public,
                 R.id.nav_survey,
+                R.id.nav_cesko,
                 R.id.nav_problems,
                 R.id.nav_vocab,
                 R.id.nav_election
@@ -180,31 +183,31 @@ class MainActivity : AppCompatActivity() {
         theme.resolveAttribute(R.attr.componentClr, componentColor, true)
     }
 
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        val navHeader = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0)
-//        val notificationsRichPathView = navHeader.findViewById<RichPathView>(R.id.app_nav_header_background)
-//
-//        for(i in 0..11) {
-//            val path = notificationsRichPathView.findRichPathByIndex(i)
-//            if(user!!.region == path!!.name) {
-//                RichPathAnimator.animate(path)
-//                    .interpolator(DecelerateInterpolator())
-//                    .fillColor(Color.RED)
-//                    .duration(4000)
-//                    .startDelay(50)
-//                    .start()
-//            }
-//
-//            RichPathAnimator.animate(path)
-//                .interpolator(DecelerateInterpolator())
-////                .rotation(0f, 1f, -1f, 1f, -1f, 1f, -1f, 1f, -1f, 0f)
-//                .strokeColor(Color.parseColor("#6BE29A"))
-//                .duration(4000)
-//                .startDelay(50)
-//                .start()
-//        }
-//        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-//        drawer.closeDrawer(GravityCompat.START)
-//        return true
-//    }
+    fun animateGeorgia(region: String): Boolean {
+        val navHeader = findViewById<NavigationView>(R.id.nav_view).getHeaderView(0)
+        val notificationsRichPathView = navHeader.findViewById<RichPathView>(R.id.app_nav_header_background)
+
+        for(i in 0..11) {
+            val path = notificationsRichPathView.findRichPathByIndex(i)
+            if(region == path!!.name) {
+                RichPathAnimator.animate(path)
+                    .interpolator(DecelerateInterpolator())
+                    .fillColor(Color.YELLOW)
+                    .duration(4000)
+                    .startDelay(50)
+                    .start()
+            }
+
+            RichPathAnimator.animate(path)
+                .interpolator(DecelerateInterpolator())
+//                .rotation(0f, 1f, -1f, 1f, -1f, 1f, -1f, 1f, -1f, 0f)
+                .strokeColor(Color.RED)
+                .duration(4000)
+                .startDelay(50)
+                .start()
+        }
+        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+        drawer.closeDrawer(GravityCompat.START)
+        return true
+    }
 }
