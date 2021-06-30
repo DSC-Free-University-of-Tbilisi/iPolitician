@@ -9,6 +9,8 @@
     <color name="lightComponentColor">#FFFFFF</color>
     <color name="darkTextColor">#f7f7f7</color>
     <color name="lightTextColor">#0C0C0C</color>
+    <color name="darkSecTextColor">@color/lightBackground</color>
+    <color name="lightSecTextColor">@android:color/tertiary_text_light</color>
 
     <color name="darkButtonColorStart">#F35A43</color>
     <color name="darkButtonColorEnd">#EC3549</color>

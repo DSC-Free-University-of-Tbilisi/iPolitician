@@ -12,6 +12,7 @@
         <item name="buttonColorStart">@color/lightButtonColorStart </item>
         <item name="buttonColorEnd">@color/lightButtonColorEnd </item>
         <item name="toolsClr">@color/lightToolsClr </item>
+        <item name="secTextClr">@color/lightSecTextColor</item>
     </style>
 
     <style name="DarkMode" parent="LightMode">
@@ -23,6 +24,7 @@
         <item name="buttonColorStart">@color/darkButtonColorStart </item>
         <item name="buttonColorEnd">@color/darkButtonColorEnd </item>
         <item name="toolsClr">@color/darkToolsClr </item>
+        <item name="secTextClr">@color/darkSecTextColor</item>
     </style>
 
     <style name="LightMode.NoActionBar">

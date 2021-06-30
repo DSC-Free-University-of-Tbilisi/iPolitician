@@ -265,7 +265,7 @@
         android:id="@+id/blurView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:foreground="@drawable/blur_background"
+        android:background="@drawable/blur_background"
         android:clickable="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

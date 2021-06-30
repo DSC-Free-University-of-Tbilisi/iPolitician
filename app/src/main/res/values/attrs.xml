@@ -3,6 +3,7 @@
     <attr name="backgroundClr" format="reference" />
     <attr name="componentClr" format="reference" />
     <attr name="textClr" format="reference" />
+    <attr name="secTextClr" format="reference" />
     <attr name="buttonColorStart" format="reference" />
     <attr name="buttonColorEnd" format="reference" />
     <attr name="toolsClr" format="reference" />

@@ -25,6 +25,7 @@ import com.example.ipolitician.Util.md5
 import com.example.ipolitician.Util.sha256
 import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
+import com.example.ipolitician.nav.webview.WebViewFragment
 import com.example.ipolitician.structures.User
 import com.google.android.material.textfield.TextInputLayout
 import com.richpath.RichPath
@@ -37,7 +38,7 @@ import kotlinx.coroutines.async
 import kotlin.properties.Delegates
 
 
-class LoginFragment: Fragment() {
+class LoginFragment: Fragment(), WebViewFragment {
 
     enum class LoginState { LOGIN, CESKOCHECK, PHONENUM, PHONECODE }
 
@@ -72,7 +73,6 @@ class LoginFragment: Fragment() {
         prevState = old
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_login, container, false)
         retrieveViews(root)
@@ -92,62 +92,12 @@ class LoginFragment: Fragment() {
             currState = prevState
         }
 
-        configureWebView()
+        configureWebView(this, webView)
         configureSubmit()
 
-        blurView.foreground.alpha = 220
-        webView.loadUrl("https://voters.cec.gov.ge/")
+        blurView.background.alpha = 220
 
         return root
-    }
-
-    private fun configureWebView() {
-        webView.settings.javaScriptEnabled = true
-        webView!!.addJavascriptInterface(JsWebInterface(this), "androidApp")
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean { return true }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                view?.loadUrl("javascript:(window.onload = function(){" +
-                        "var bChildren = document.getElementsByTagName(\"body\")[0].children;" +
-                        "for (let element of bChildren) {" +
-                            "element.style.display = \"none\";" +
-                        "}" +
-                        "document.getElementsByClassName(\"envelope\")[1].style.display = \"block\";" +
-                        "document.getElementById(\"numonly\").style.display = \"none\";" +
-                        "document.getElementById(\"sn\").style.display = \"none\";" +
-                        "document.getElementById(\"submit\").style.display = \"none\";" +
-                        "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.envelope {border:none; padding: 0;} center {display:none;}</style>');" +
-                        "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>#votersform {margin: 0 0; width: auto;}</style>');" +
-                        "document.getElementsByTagName(\"body\")[0].insertAdjacentHTML(\'beforeend\', '<style>.g-recaptcha {display: flex; justify-content:center;} .g-recaptcha div div {border: none}</style>');" +
-
-                        "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"mobile-web-app-capable\" content=\"yes\">\');" +
-                        "document.getElementsByTagName(\"head\")[0].insertAdjacentHTML(\'beforeend\', \'<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\');" +
-
-                        "var target = document.getElementById(\"page-wrap\");" +
-                        "var observer = new MutationObserver(function (mutations) {" +
-                        "mutations.forEach(function (mutation) {" +
-                            "if(target.children.length == 0){ return; }" +
-
-                            "androidApp.close();" +
-                            "var p = [...target.children].find((elem) => elem.tagName === \"P\");" +
-                            "var div = [...target.children].find((elem) => elem.tagName === \"DIV\");" +
-                            "if(p != null){ androidApp.error(p.innerHTML); }" +
-                            "if(div != null){" +
-                                "var name = document.getElementsByClassName(\"fn\")[0].innerHTML;" +
-                                "var surname = document.getElementsByClassName(\"sn\")[0].innerHTML;" +
-                                "var birth = document.getElementsByClassName(\"dob\")[0].innerHTML;" +
-                                "var address = document.getElementsByClassName(\"mis\")[0].innerHTML;" +
-                                "var lat = document.getElementById(\"lat\").innerHTML;" +
-                                "var lng = document.getElementById(\"lng\").innerHTML;" +
-                                "androidApp.ceskoSuccess(name, surname, birth, address, lat, lng);" +
-                            "}});" +
-                        "});"+
-                        "var config = { childList: true };" +
-                        "observer.observe(target, config);" +
-                        "})")
-            }
-        }
     }
 
     private fun configureSubmit() {
@@ -162,19 +112,7 @@ class LoginFragment: Fragment() {
                     val surname = surnameEdit.text.toString()
                     blurView.visibility = View.VISIBLE
                     webView.visibility = View.VISIBLE
-                    webView.loadUrl(
-                        "javascript:(function(){" +
-                                "document.getElementById(\"pn\").value = \"$pID\";" +
-                                "document.getElementById(\"sn\").value = \"$surname\";" +
-
-                                "let closeInt = function (){clearInterval(inter);};" +
-                                "var inter = setInterval(() => {" +
-                                "if(document.getElementById(\"g-recaptcha-response\").value != \"\"){" +
-                                    "document.getElementById(\"submit\").click();" +
-                                    "closeInt();" +
-                                "}}, 500);" +
-                                "})()"
-                    )
+                    activateListener(webView, pID, surname)
                 }
                 LoginState.PHONENUM ->
                     authenticate.startPhoneNumberVerification(phoneEdit.text.toString())
@@ -239,34 +177,35 @@ class LoginFragment: Fragment() {
             .start()
     }
 
-    class JsWebInterface(private val fragment: LoginFragment) {
-        @JavascriptInterface
-        fun ceskoSuccess(name: String, surname: String, birthDate: String, address: String, lat: String, lng: String) {
-            fragment.currState = LoginState.PHONENUM
-            fragment.region = "თბილისი"
-            fragment.optional = listOf(name, surname, birthDate, address, lat, lng)
-            Log.d("aeeee", name)
-        }
-
-        @JavascriptInterface
-        fun close() {
-            CoroutineScope(Dispatchers.Main).async {
-                fragment.webView.visibility = View.GONE
-                fragment.blurView.visibility = View.GONE
+    //WebViewFragment
+    override fun ceskoSuccess(
+        name: String,
+        surname: String,
+        birthDate: String,
+        address: String,
+        lat: String,
+        lng: String,
+        img: String
+    ) {
+        DB.getUser(personId.text.toString().sha256()) {
+            if (it == null){
+                currState = LoginState.PHONENUM
+                region = "თბილისი"
+                optional = listOf(name, surname, birthDate, address, lat, lng)
+                Log.d("aeeee", name)
+            } else {
+                activity?.showAlertDialogWithAutoDismiss("ასეთი მომხმარებელი უკვე დარეგისტრირებულია!")
             }
         }
+    }
 
-        @JavascriptInterface
-        fun error(err: String) {
-            CoroutineScope(Dispatchers.Main).async {
-                fragment.activity?.showAlertDialogWithAutoDismiss(err)
-            }
-        }
+    override fun close() {
+        webView.visibility = View.GONE
+        blurView.visibility = View.GONE
+    }
 
-        @JavascriptInterface
-        fun testi(ln: String) {
-            Log.d("aeeee", ln)
-        }
+    override fun error(err: String) {
+        activity?.showAlertDialogWithAutoDismiss(err)
     }
 
     fun loginAttempt(){
@@ -279,7 +218,7 @@ class LoginFragment: Fragment() {
                 findNavController().navigateUp()
                 findNavController().navigate(R.id.nav_public)
             } else {
-                activity?.showAlertDialogWithAutoDismiss("Personal number or password invalid!")
+                activity?.showAlertDialogWithAutoDismiss("პირადი ნომერი ან პაროლი არასწორია!")
             }
         }
     }
@@ -296,10 +235,6 @@ class LoginFragment: Fragment() {
                  submit.text = "RESEND THE CODE"
              }
          }.start()
-    }
-
-    private fun validatePersonId(): Boolean {
-        return personId.text.toString().length == 3
     }
 
     fun authenticationComplete(){
