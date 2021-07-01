@@ -66,6 +66,7 @@ class LoginFragment: Fragment(), WebViewFragment {
     var prevState = LoginState.CESKOCHECK
     var currState by Delegates.observable(LoginState.LOGIN) { property, old, new ->
         Log.d("aeeee", "$old $new")
+        submit.text = if(new == LoginState.LOGIN) "Login" else "Submit"
         CoroutineScope(Dispatchers.Main).async {
             configureVisibility()
             inputs.invalidate()
@@ -161,7 +162,7 @@ class LoginFragment: Fragment(), WebViewFragment {
             .strokeColor(Color.YELLOW)
             .translationX(tx,0f)
             .translationY(ty,0f)
-            .duration(4000)
+            .duration(6000)
             .startDelay(1)
             .start()
     }
@@ -172,8 +173,8 @@ class LoginFragment: Fragment(), WebViewFragment {
             .fillColor(Color.parseColor(color))
             .translationX(tx,0f)
             .translationY(ty,0f)
-            .duration(2000)
-            .startDelay(4000)
+            .duration(3000)
+            .startDelay(6000)
             .start()
     }
 

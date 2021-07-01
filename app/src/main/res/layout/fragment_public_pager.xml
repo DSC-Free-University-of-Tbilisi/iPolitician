@@ -53,33 +53,6 @@ tools:context=".nav.publics.PublicFragment">
 
 
         <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:text="Age"
-            android:textColor="?attr/textClr"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:cardCornerRadius="12dp">
-
-            <Spinner
-                android:id="@+id/spinner4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:popupBackground="@drawable/rounded_background" />
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,6 +104,68 @@ tools:context=".nav.publics.PublicFragment">
                 android:popupBackground="@drawable/rounded_background"/>
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="Age"
+            android:textColor="?attr/textClr"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="?attr/backgroundClr">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/rounded_background">
+
+                <EditText
+                    android:id="@+id/ageFrom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="from"
+                    android:inputType="number"
+                    android:textColor="?attr/textClr"
+                    android:textColorHint="?attr/toolsClr"/>
+
+                <TextView
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="-"
+                    android:textAlignment="center"
+                    android:textColor="?attr/textClr"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/ageTo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="to"
+                    android:inputType="number"
+                    android:textColor="?attr/textClr"
+                    android:textColorHint="?attr/toolsClr"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <Button
             android:id="@+id/filterBtn"
             android:layout_width="match_parent"
@@ -142,13 +177,7 @@ tools:context=".nav.publics.PublicFragment">
             android:background="@drawable/button_background_shape"
             android:text="FILTER"
             android:textSize="18sp" />
-
-        <!--            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView-->
-        <!--                android:id="@+id/aa_chart_view2"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="350dp">-->
-        <!--            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>-->
-    </LinearLayout>
+        </LinearLayout>
 </ScrollView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

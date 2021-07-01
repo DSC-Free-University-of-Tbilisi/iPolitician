@@ -109,4 +109,5 @@
             "* Your vote is important - don't let others to influence on it.\n"</string>
     <string name="welcome">Welcome</string>
     <string name="save">Save</string>
+    <string name="action_log_out">Log out</string>
 </resources>

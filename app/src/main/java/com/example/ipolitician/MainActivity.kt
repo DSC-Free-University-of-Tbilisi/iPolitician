@@ -155,6 +155,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> findNavController(R.id.nav_host_fragment).navigate(R.id.nav_profile)
+            R.id.action_log_out -> findNavController(R.id.nav_host_fragment).navigate(R.id.nav_login)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -184,14 +185,14 @@ class MainActivity : AppCompatActivity() {
                 RichPathAnimator.animate(path)
                     .interpolator(DecelerateInterpolator())
                     .fillColor(Color.GREEN)
-                    .duration(10000)
+                    .duration(8000)
                     .start()
             }
 
             RichPathAnimator.animate(path)
                 .interpolator(DecelerateInterpolator())
                 .strokeColor(buttonColor.data)
-                .duration(10000)
+                .duration(8000)
                 .start()
         }
         return true

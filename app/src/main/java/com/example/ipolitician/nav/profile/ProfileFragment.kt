@@ -2,7 +2,6 @@ package com.example.ipolitician.nav.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,21 +11,18 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
-import com.example.ipolitician.Util.md5
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ProfileFragment : Fragment() {
 
     private lateinit var slideshowViewModel: ProfileViewModel
     private val DB = DataAPI.instance
-    private lateinit var spinner1: Spinner
-    private lateinit var spinner2: Spinner
-    private lateinit var spinner3: Spinner
+    private lateinit var spinner: Spinner
 
     companion object {
         val ages = arrayListOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
@@ -45,6 +41,22 @@ class ProfileFragment : Fragment() {
                 spinner.setSelection(position)
             }
         }
+
+        fun getAge(date: String) : Int {
+            val dob: Calendar = Calendar.getInstance()
+            val today: Calendar = Calendar.getInstance()
+
+            val year = date.split(date[2])[2].toInt()
+            val month = date.split(date[2])[1].toInt()
+            val day = date.split(date[2])[0].toInt()
+
+            dob.set(year, month, day)
+            var age: Int = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
+            if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+                age--
+            }
+            return age
+        }
     }
 
     override fun onCreateView(
@@ -56,18 +68,8 @@ class ProfileFragment : Fragment() {
                 ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
 
-
-//        val textView: TextView = root.findViewById(R.id.text_slideshow)
-//        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
-
-        // access the spinner
-        spinner1 = root.findViewById(R.id.spinner)
-        spinner2 = root.findViewById(R.id.spinner2)
-
-        setSpinner(spinner1, root.context, ages, MainActivity.user!!.age)
-        setSpinner(spinner2, root.context, genders, MainActivity.user!!.gender)
+        spinner = root.findViewById(R.id.spinner)
+        setSpinner(spinner, root.context, genders, MainActivity.user!!.gender)
 
         val but = root.findViewById<Button>(R.id.save)
 
@@ -76,8 +78,8 @@ class ProfileFragment : Fragment() {
                 val usr = User(
                     password = MainActivity.user!!.password,
                     phoneNumber = MainActivity.user!!.phoneNumber,
-                    age = spinner1.selectedItemPosition,
-                    gender = spinner2.selectedItemPosition,
+                    age = getAge(MainActivity.user!!.optional[2]),
+                    gender = spinner.selectedItemPosition,
                     region = MainActivity.user!!.region,
                     optional = MainActivity.user!!.optional
                 )
@@ -90,10 +92,11 @@ class ProfileFragment : Fragment() {
 
         root.findViewById<TextView>(R.id.region).text = MainActivity.user!!.region
 
-        var fullName = MainActivity.user!!.optional[0] + " " + MainActivity.user!!.optional[1]
+        val fullName = MainActivity.user!!.optional[0] + " " + MainActivity.user!!.optional[1]
         root.findViewById<TextView>(R.id.full_name).text = fullName
 
-        root.findViewById<TextView>(R.id.birth_date).text = MainActivity.user!!.optional[2]
+        val fullAge = MainActivity.user!!.optional[2] + " - Age: " + MainActivity.user!!.age
+        root.findViewById<TextView>(R.id.birth_date).text = fullAge
 
         root.findViewById<TextView>(R.id.address).text = MainActivity.user!!.optional[3]
 

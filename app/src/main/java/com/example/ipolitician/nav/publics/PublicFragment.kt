@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -40,7 +41,8 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val DB = DataAPI()
 
     private lateinit var swipe: SwipeRefreshLayout
-    private lateinit var spinner1 : Spinner
+    private lateinit var ageFrom : EditText
+    private lateinit var ageTo : EditText
     private lateinit var spinner2 : Spinner
     private lateinit var spinner3 : Spinner
     private var ages = arrayListOf("All")
@@ -66,15 +68,11 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         swipe = root.findViewById(R.id.home)
         swipe.setOnRefreshListener(this)
-        spinner1 = root.findViewById<Spinner>(R.id.spinner4)
+        ageFrom = root.findViewById(R.id.ageFrom)
+        ageTo = root.findViewById(R.id.ageTo)
         spinner2 = root.findViewById<Spinner>(R.id.spinner5)
         spinner3 = root.findViewById<Spinner>(R.id.spinner6)
 
-        ProfileFragment.setSpinner(
-            spinner1,
-            root.context,
-            ages,
-        )
         ProfileFragment.setSpinner(
             spinner2,
             root.context,
@@ -87,7 +85,17 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         )
 
         root.findViewById<Button>(R.id.filterBtn).setOnClickListener {
-            currentPage?.repaintGraph(spinner1.selectedItemPosition - 1, spinner2.selectedItemPosition - 1, spinner3.selectedItemPosition - 1)
+            val from = if(ageFrom.text.isEmpty()) 0 else ageFrom.text.toString().toInt()
+            val to = if(ageTo.text.isEmpty()) 1000 else ageTo.text.toString().toInt()
+            if(from > to) {
+                Snackbar.make(it, "Age range isn't correct", Snackbar.LENGTH_LONG).setAction(
+                    "Action",
+                    null
+                ).show()
+                return@setOnClickListener
+            }
+
+            currentPage?.repaintGraph(from, to, spinner2.selectedItemPosition - 1, spinner3.selectedItemPosition - 1)
             if(currentPage?.load == -1) {
                 Snackbar.make(it, "No such data found", Snackbar.LENGTH_LONG).setAction(
                     "Action",
@@ -171,11 +179,11 @@ class PublicFragmentPage: Fragment() {
         return root
     }
 
-    fun repaintGraph(ageIdx: Int = -1, genderIdx: Int = -1, regionIdx: Int = -1){
+    fun repaintGraph(ageFrom: Int = 0, ageTo: Int = 1000, genderIdx: Int = -1, regionIdx: Int = -1){
         dialog.show()
         chartData.clear()
         DB.getUsers() { users, ids ->
-            val idxs = ids.filterIndexed { index, _ -> (ageIdx == -1 || users[index].age == ageIdx)
+            val idxs = ids.filterIndexed { index, _ -> (users[index].age in ageFrom..ageTo)
                     && (genderIdx == -1 || users[index].gender == genderIdx) && (regionIdx == -1 || users[index].region == ProfileFragment.regions[regionIdx])}
             load = idxs.size
             for (id in idxs){
