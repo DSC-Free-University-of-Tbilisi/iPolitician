@@ -48,18 +48,18 @@
                 android:text="TextView"
                 android:textColor="#00FFFFFF" />
 
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="#00FFFFFF" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView20"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="TextView"-->
+<!--                android:textColor="#00FFFFFF" />-->
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:srcCompat="@drawable/ic_app" />
+            <com.richpath.RichPathView
+                android:id="@+id/app_nav_header_app_icon"
+                android:layout_width="77dp"
+                android:layout_height="77dp"
+                app:vector="@drawable/ic_app" /> />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -24,6 +24,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.ipolitician.firebase.DataAPI
+import com.example.ipolitician.nav.auth.LoginFragment
 import com.example.ipolitician.structures.User
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -185,7 +186,7 @@ class MainActivity : AppCompatActivity() {
                 RichPathAnimator.animate(path)
                     .interpolator(DecelerateInterpolator())
                     .fillColor(Color.GREEN)
-                    .duration(8000)
+                    .duration(12000)
                     .start()
             }
 
@@ -195,6 +196,27 @@ class MainActivity : AppCompatActivity() {
                 .duration(8000)
                 .start()
         }
+
+        val notificationsRichPathView1 = navHeader.findViewById<RichPathView>(R.id.app_nav_header_app_icon)
+        notificationsRichPathView1.setVectorDrawable(R.drawable.ic_app)
+        for(i in 0..5) {
+            val path = notificationsRichPathView1.findRichPathByIndex(i)
+            if(i < 2) {
+                RichPathAnimator.animate(path)
+                    .interpolator(DecelerateInterpolator())
+                    .fillColor(Color.parseColor("#636978"))
+                    .duration(2000)
+                    .start()
+            } else {
+                RichPathAnimator.animate(path)
+                    .interpolator(DecelerateInterpolator())
+                    .strokeColor(LoginFragment.getColor(path!!.name))
+                    .duration(5000)
+                    .start()
+            }
+
+        }
+
         return true
     }
 }

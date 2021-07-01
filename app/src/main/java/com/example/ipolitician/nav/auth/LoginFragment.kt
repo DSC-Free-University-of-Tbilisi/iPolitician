@@ -41,7 +41,15 @@ import kotlin.properties.Delegates
 class LoginFragment: Fragment(), WebViewFragment {
 
     enum class LoginState { LOGIN, CESKOCHECK, PHONENUM, PHONECODE }
-
+    companion object {
+        fun getColor(clrName: String) : Int {
+            if(clrName == "YELLOW") return Color.parseColor("#FFBF00")
+            if(clrName == "RED") return Color.parseColor("#FF0000")
+            if(clrName == "GREEN") return Color.parseColor("#3E9C42")
+            if(clrName == "BLUE") return Color.parseColor("#03A9F4")
+            return Color.WHITE
+        }
+    }
     lateinit var authenticate: Authenticate
     lateinit var personId: EditText
     lateinit var surnameTxt: TextView
@@ -149,10 +157,16 @@ class LoginFragment: Fragment(), WebViewFragment {
         animateGeorgiaPath(georgia.findRichPathByIndex(8)!!, -dst/4, dst/4)
         animateGeorgiaPath(georgia.findRichPathByIndex(11)!!, -dst/4, dst/4)
 
-        animateIconPath(appIcon.findRichPathByIndex(0)!!, dst, dst, "#FFBF00")       // YELLOW
-        animateIconPath(appIcon.findRichPathByIndex(1)!!, -dst, -dst,"#FF0000")     // RED
-        animateIconPath(appIcon.findRichPathByIndex(2)!!, dst, -dst, "#3E9C42")      // GREEN
-        animateIconPath(appIcon.findRichPathByIndex(3)!!, -dst, dst,"#03A9F4")      // BLUE
+        appIcon.setOnPathClickListener {
+            animateIconPath(appIcon.findRichPathByIndex(0)!!, dst, dst)      // YELLOW
+            animateIconPath(appIcon.findRichPathByIndex(1)!!, -dst, -dst)     // RED
+            animateIconPath(appIcon.findRichPathByIndex(2)!!, dst, -dst)     // GREEN
+            animateIconPath(appIcon.findRichPathByIndex(3)!!, -dst, dst)      // BLUE
+        }
+        animateIconPath(appIcon.findRichPathByIndex(0)!!, dst, dst,6000L)       // YELLOW
+        animateIconPath(appIcon.findRichPathByIndex(1)!!, -dst, -dst,6000L)     // RED
+        animateIconPath(appIcon.findRichPathByIndex(2)!!, dst, -dst,6000L)      // GREEN
+        animateIconPath(appIcon.findRichPathByIndex(3)!!, -dst, dst,6000L)      // BLUE
     }
 
     fun animateGeorgiaPath(richPath: RichPath, tx: Float, ty: Float) {
@@ -167,14 +181,14 @@ class LoginFragment: Fragment(), WebViewFragment {
             .start()
     }
 
-    fun animateIconPath(richPath: RichPath, tx: Float, ty: Float, color: String) {
+    fun animateIconPath(richPath: RichPath, tx: Float, ty: Float, dly: Long = 0L) {
         RichPathAnimator.animate(richPath)
             .interpolator(DecelerateInterpolator())
-            .fillColor(Color.parseColor(color))
+            .fillColor(getColor(richPath.name))
             .translationX(tx,0f)
             .translationY(ty,0f)
             .duration(3000)
-            .startDelay(6000)
+            .startDelay(dly)
             .start()
     }
 
