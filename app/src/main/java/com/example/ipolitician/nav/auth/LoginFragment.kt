@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.anychart.core.polar.series.Polygon
 import com.example.ipolitician.*
 import com.example.ipolitician.Auth.Authenticate
 import com.example.ipolitician.Util.dialog
@@ -25,9 +26,11 @@ import com.example.ipolitician.Util.md5
 import com.example.ipolitician.Util.sha256
 import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
+import com.example.ipolitician.nav.profile.ProfileFragment
 import com.example.ipolitician.nav.webview.WebViewFragment
 import com.example.ipolitician.structures.User
 import com.google.android.material.textfield.TextInputLayout
+import com.google.maps.android.PolyUtil
 import com.richpath.RichPath
 import com.richpath.RichPath.OnPathClickListener
 import com.richpath.RichPathView
@@ -105,7 +108,6 @@ class LoginFragment: Fragment(), WebViewFragment {
         configureSubmit()
 
         blurView.background.alpha = 220
-
         return root
     }
 
@@ -205,13 +207,22 @@ class LoginFragment: Fragment(), WebViewFragment {
         DB.getUser(personId.text.toString().sha256()) {
             if (it == null){
                 currState = LoginState.PHONENUM
-                region = "თბილისი"
+                region = retrieveRegion(lat.toDouble(), lng.toDouble())
                 optional = listOf(name, surname, birthDate, address, lat, lng)
                 Log.d("aeeee", name)
             } else {
                 activity?.showAlertDialogWithAutoDismiss("ასეთი მომხმარებელი უკვე დარეგისტრირებულია!")
             }
         }
+    }
+
+    fun retrieveRegion(lat: Double, lng: Double): String {
+        for(pair in ProfileFragment.geoLocs){
+            if (PolyUtil.containsLocation(lat, lng, pair.value, true)){
+                return pair.key
+            }
+        }
+        return "ემიგრანტი"
     }
 
     override fun close() {

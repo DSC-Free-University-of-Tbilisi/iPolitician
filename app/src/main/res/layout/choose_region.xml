@@ -119,6 +119,14 @@
             android:buttonTint="?attr/textClr"
             android:text="თბილისი"
             android:textColor="?attr/textClr" />
+
+        <RadioButton
+            android:id="@+id/radioButton11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/textClr"
+            android:text="ემიგრანტი"
+            android:textColor="?attr/textClr" />
     </RadioGroup>
 
     <TextView

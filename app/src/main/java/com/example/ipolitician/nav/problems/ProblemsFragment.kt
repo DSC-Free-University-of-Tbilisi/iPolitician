@@ -30,7 +30,7 @@ class ProblemsFragment : Fragment() {
 
     private lateinit var ProblemsRecyclerView: RecyclerView
     private lateinit var search: SearchComponent
-    private lateinit var viewModel: ProblemsViewModel
+    private lateinit var blurView: View
     private val DB = DataAPI.instance
 
     private lateinit var upSort: Button
@@ -46,6 +46,8 @@ class ProblemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_problems, container, false)
+        blurView = root.findViewById(R.id.blurViewProb)
+        blurView.background.alpha = 220
 //        root.foreground.alpha = 0
 
         ProblemsRecyclerView = root.findViewById(R.id.problems_recyclerview)
@@ -59,10 +61,11 @@ class ProblemsFragment : Fragment() {
         root.findViewById<Button>(R.id.add_post).setOnClickListener {
             val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 800, 800, true)
             pw.animationStyle = R.style.Animation
+            blurView.visibility = View.VISIBLE
             pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
 
             pw.contentView.findViewById<Button>(R.id.post_button1).setOnClickListener {
-                pw.dismiss()
+                pw.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
                 val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), 800, ViewGroup.LayoutParams.WRAP_CONTENT, true)
                 reg_pw.animationStyle = R.style.Animation
                 reg_pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
@@ -83,10 +86,11 @@ class ProblemsFragment : Fragment() {
                         }
 
                     }
+                    pw.dismiss()
                     reg_pw.dismiss()
                 }
-
             }
+            pw.setOnDismissListener { blurView.visibility = View.GONE }
         }
 
         upSort = root.findViewById(R.id.sort_by_up_votes)
