@@ -133,22 +133,13 @@ class MainActivity : AppCompatActivity() {
 
         val switch = findViewById<View>(R.id.switch_theme) as SwitchCompat
         switch.isChecked = getMode() == R.style.DarkMode_NoActionBar
-//        switch.setOnClickListener(View.OnClickListener {
+        switch.setOnCheckedChangeListener { _, isChecked ->
 //            Toast.makeText(
 //                applicationContext,
-//                if (switch.isChecked) "Dark Mode" else "Light Mode",
+//                if (isChecked) "Dark Mode" else "Light Mode",
 //                Toast.LENGTH_SHORT
 //            ).show()
-//            switchMode()
-//        })
-        switch.setOnCheckedChangeListener { _, isChecked ->
-            Toast.makeText(
-                applicationContext,
-                if (isChecked) "Dark Mode" else "Light Mode",
-                Toast.LENGTH_SHORT
-            ).show()
             switchMode()
-            animateGeorgia(user!!.region)
         }
         return true
     }
@@ -185,7 +176,7 @@ class MainActivity : AppCompatActivity() {
             if(region == path!!.name) {
                 RichPathAnimator.animate(path)
                     .interpolator(DecelerateInterpolator())
-                    .fillColor(Color.GREEN)
+                    .fillColor(Color.parseColor("#3E9C42"))
                     .duration(12000)
                     .start()
             }
@@ -197,25 +188,25 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
 
-        val notificationsRichPathView1 = navHeader.findViewById<RichPathView>(R.id.app_nav_header_app_icon)
-        notificationsRichPathView1.setVectorDrawable(R.drawable.ic_app)
-        for(i in 0..5) {
-            val path = notificationsRichPathView1.findRichPathByIndex(i)
-            if(i < 2) {
-                RichPathAnimator.animate(path)
-                    .interpolator(DecelerateInterpolator())
-                    .fillColor(Color.parseColor("#636978"))
-                    .duration(2000)
-                    .start()
-            } else {
-                RichPathAnimator.animate(path)
-                    .interpolator(DecelerateInterpolator())
-                    .strokeColor(LoginFragment.getColor(path!!.name))
-                    .duration(5000)
-                    .start()
-            }
-
-        }
+//        val notificationsRichPathView1 = navHeader.findViewById<RichPathView>(R.id.app_nav_header_app_icon)
+//        notificationsRichPathView1.setVectorDrawable(R.drawable.ic_app)
+//        for(i in 0..5) {
+//            val path = notificationsRichPathView1.findRichPathByIndex(i)
+//            if(i < 2) {
+//                RichPathAnimator.animate(path)
+//                    .interpolator(DecelerateInterpolator())
+//                    .fillColor(Color.parseColor("#636978"))
+//                    .duration(2000)
+//                    .start()
+//            } else {
+//                RichPathAnimator.animate(path)
+//                    .interpolator(DecelerateInterpolator())
+//                    .strokeColor(LoginFragment.getColor(path!!.name))
+//                    .duration(5000)
+//                    .start()
+//            }
+//
+//        }
 
         return true
     }

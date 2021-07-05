@@ -6,9 +6,11 @@
     android:viewportHeight="512">
     <path
         android:pathData="M256,256m-256,0a256,256 0,1 1,512 0a256,256 0,1 1,-512 0"
+        android:fillColor="#636978"
         android:name="BACK"/>
     <path
         android:pathData="m274.274,511.358c126.832,-8.945 228.157,-110.281 237.086,-237.118l-77.829,-78.102 -4.034,-3.761 -218.26,45.307 -101.074,-44.689 -35.981,118.27 4.818,5.122z"
+        android:fillColor="#636978"
         android:name="SHADOW"/>
 
     <path

@@ -16,12 +16,12 @@
         <item
             android:id="@+id/nav_cesko"
             android:icon="@drawable/ic_nav_profile"
-            android:title="Cesko" />
+            android:title="@string/menu_cesko" />
     </group>
 
     <item
         android:id="@+id/tribune"
-        android:title="Hall">
+        android:title="@string/menu_tribune">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -32,23 +32,23 @@
                 <item
                     android:id="@+id/nav_election"
                     android:icon="@drawable/ic_nav_vote"
-                    android:title="Elections" />
+                    android:title="@string/menu_elections" />
 
                 <item
                     android:id="@+id/nav_vocab"
                     android:icon="@drawable/ic_nav_vocab"
-                    android:title="Vocabulary" />
+                    android:title="@string/menu_vocabulary" />
             </group>
         </menu>
     </item>
 
     <item android:id="@+id/options"
-        android:title="Options">
+        android:title="@string/menu_options">
         <menu>
             <item android:id="@+id/nav_switch"
                 app:actionLayout="@layout/switch_menu"
                 android:icon="@drawable/contrast"
-                android:title="Theme"/>
+                android:title="@string/menu_theme"/>
         </menu>
     </item>
 </menu>

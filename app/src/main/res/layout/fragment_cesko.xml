@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:paddingLeft="16dp"
-                android:text="Personal Number"
+                android:paddingLeft="24dp"
+                android:text="@string/personal_number"
                 android:textColor="?attr/textClr"
                 android:textSize="15sp" />
 
@@ -38,7 +38,7 @@
                 android:backgroundTint="?attr/componentClr"
                 android:ems="10"
                 android:fontFamily="monospace"
-                android:hint="e.g. 01001234567"
+                android:hint="@string/e_g_01001234567"
                 android:inputType="numberDecimal"
                 android:padding="8dp"
                 android:textColor="?attr/textClr"
@@ -49,8 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:paddingLeft="16dp"
-                android:text="Surname"
+                android:paddingLeft="24dp"
+                android:text="@string/surname"
                 android:textColor="?attr/textClr"
                 android:textSize="15sp" />
 
@@ -65,7 +65,7 @@
                 android:backgroundTint="?attr/componentClr"
                 android:ems="10"
                 android:fontFamily="monospace"
-                android:hint="e.g. ბაგრატიონი"
+                android:hint="@string/e_g"
                 android:inputType="textPersonName"
                 android:padding="8dp"
                 android:textColor="?attr/textClr"
@@ -87,8 +87,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
+                android:textSize="17sp"
                 android:background="@drawable/button_background_shape"
-                android:text="search" />
+                android:text="@string/search" />
 
             <LinearLayout
                 android:id="@+id/citizen"

@@ -5,15 +5,16 @@
     <string name="nav_header_title">iPolitician</string>
     <string name="nav_header_subtitle">by Free University of Tbilisi</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_settings_profile">Profile</string>
-    <string name="action_profile">Profile</string>
+    <string name="action_settings_profile"> პროფილი </string>
+    <string name="action_profile"> პროფილი </string>
 
-    <string name="menu_public">Public</string>
-    <string name="menu_survey">Survey</string>
-    <string name="menu_problems">Problems</string>
-    <string name="nav_vocabulary">Vocabulary</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_public"> მთავარი </string>
+    <string name="menu_survey"> კითხვარი </string>
+    <string name="menu_problems"> პრობლემები </string>
+    <string name="menu_cesko"> ცესკო </string>
+    <string name="menu_elections"> არჩევნები </string>
+    <string name="menu_vocabulary"> ლექსიკონი </string>
+    <string name="menu_theme"> თემა </string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -107,7 +108,37 @@
             "* Find your political party and keep up to political life to make your future better.\n\n"
             "* Keep it in mind that the choice you make in Election will affect people around you.\n\n"
             "* Your vote is important - don't let others to influence on it.\n"</string>
-    <string name="welcome">Welcome</string>
-    <string name="save">Save</string>
-    <string name="action_log_out">Log out</string>
+    <string name="save"> შენახვა </string>
+    <string name="action_log_out"> გასვლა </string>
+    <string name="menu_options"> პარამეტრები </string>
+    <string name="menu_tribune"> ტრიბუნა </string>
+    <string name="gender"> სქესი </string>
+    <string name="region"> რეგიონი </string>
+    <string name="age"> ასაკი </string>
+    <string name="filter"> გაფილტვრა </string>
+    <string name="from"> დან </string>
+    <string name="to"> მდე </string>
+    <string name="changed_your_mind"> შეხედულების შეცვლა </string>
+    <string name="tell_a_little_bit_about_yourself"> ცოტაოდენი რამ შენს შესახებ </string>
+    <string name="full_name"> სახელი გვარი </string>
+    <string name="birth_date_age"> დაბ. თარიღი / ასაკი </string>
+    <string name="address"> მისამართი </string>
+    <string name="personal_number"> პირადი ნომერი </string>
+    <string name="e_g_01001234567"> მაგ: 01001234567 </string>
+    <string name="surname"> გვარი </string>
+    <string name="e_g"> მაგ: ბაგრატიონი </string>
+    <string name="search"> ძებნა </string>
+    <string name="positive"> დადებითი </string>
+    <string name="negative"> უარყოფითი </string>
+    <string name="votes"> ჯამური </string>
+    <string name="vote"> ხმის მიცემა </string>
+    <string name="log_in">შესვლა</string>
+    <string name="sign_up">რეგისტრაცია</string>
+    <string name="password">პაროლი</string>
+    <string name="phone_number">მობ. ნომერი</string>
+    <string name="e_g_995597555555">მაგ: +995597555555</string>
+    <string name="enter_code">შეიყვანეთ კოდი</string>
+    <string name="e_g_123456">მაგ: 123456</string>
+    <string name="submit">დადასტურება</string>
+    <string name="loading"> იტვირთება... </string>
 </resources>

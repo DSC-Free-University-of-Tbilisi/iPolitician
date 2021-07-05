@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
-        android:text="Loading..."
+        android:text="@string/loading"
         android:textColor="?attr/textClr"
         android:textSize="16sp"
         android:textStyle="bold"

@@ -1,5 +1,6 @@
 package com.example.ipolitician.nav.problems
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -59,7 +60,9 @@ class ProblemsFragment : Fragment() {
         setFromFireStore()
 
         root.findViewById<Button>(R.id.add_post).setOnClickListener {
-            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), 800, 800, true)
+            val width: Int = (Resources.getSystem().displayMetrics.widthPixels * 0.75).toInt()
+            val height: Int = (Resources.getSystem().displayMetrics.heightPixels * 0.4).toInt()
+            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), width, height, true)
             pw.animationStyle = R.style.Animation
             blurView.visibility = View.VISIBLE
             pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)

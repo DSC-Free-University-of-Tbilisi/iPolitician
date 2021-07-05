@@ -30,6 +30,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.fragment_public.*
 import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
 
@@ -45,9 +46,8 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var ageTo : EditText
     private lateinit var spinner2 : Spinner
     private lateinit var spinner3 : Spinner
-    private var ages = arrayListOf("All")
-    private var genders = arrayListOf("All")
-    private var regions = arrayListOf("All")
+    private var genders = arrayListOf("ყველა")
+    private var regions = arrayListOf("ყველა")
 
     private var _currentPage: WeakReference<PublicFragmentPage>? = null
     private val currentPage
@@ -62,7 +62,6 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_public_pager, container, false)
-        ages.addAll(ProfileFragment.ages)
         genders.addAll(ProfileFragment.genders)
         regions.addAll(ProfileFragment.regions)
 
@@ -88,7 +87,7 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             val from = if(ageFrom.text.isEmpty()) 0 else ageFrom.text.toString().toInt()
             val to = if(ageTo.text.isEmpty()) 1000 else ageTo.text.toString().toInt()
             if(from > to) {
-                Snackbar.make(it, "Age range isn't correct", Snackbar.LENGTH_LONG).setAction(
+                Snackbar.make(it, "მიუთითეთ სწორი ასაკობრივი შეზღუდვა", Snackbar.LENGTH_LONG).setAction(
                     "Action",
                     null
                 ).show()
@@ -97,10 +96,11 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
             currentPage?.repaintGraph(from, to, spinner2.selectedItemPosition - 1, spinner3.selectedItemPosition - 1)
             if(currentPage?.load == -1) {
-                Snackbar.make(it, "No such data found", Snackbar.LENGTH_LONG).setAction(
+                Snackbar.make(it, "ასეთი მონაცემები არ მოიძებნა", Snackbar.LENGTH_LONG).setAction(
                     "Action",
                     null
                 ).show()
+
             }
         }
 

@@ -82,8 +82,8 @@ class CeskoFragment : Fragment(), WebViewFragment {
         img: String
     ) {
         citizenName.text = "$name $surname"
-        citizenSurname.text = "(პ/ნ ${personId.text.toString()})"
-        citizenBirth.text = birthDate
+        citizenSurname.text = "პ/ნ.  ${personId.text}"
+        citizenBirth.text = "დ/თ.  $birthDate"
         citizenAddr.text = address
 
         val decodedString: ByteArray = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

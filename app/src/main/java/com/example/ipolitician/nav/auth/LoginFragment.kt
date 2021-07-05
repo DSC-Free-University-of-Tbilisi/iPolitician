@@ -76,8 +76,8 @@ class LoginFragment: Fragment(), WebViewFragment {
     lateinit var optional: List<String>
     var prevState = LoginState.CESKOCHECK
     var currState by Delegates.observable(LoginState.LOGIN) { property, old, new ->
-        Log.d("aeeee", "$old $new")
-        submit.text = if(new == LoginState.LOGIN) "Login" else "Submit"
+        Log.d("state", "$old $new")
+        submit.text = if(new == LoginState.LOGIN) getString(R.string.log_in) else getString(R.string.submit)
         CoroutineScope(Dispatchers.Main).async {
             configureVisibility()
             inputs.invalidate()
@@ -132,7 +132,7 @@ class LoginFragment: Fragment(), WebViewFragment {
                         authenticate.verifyPhoneNumberWithCode(authenticate.storedVerificationId, codeEdit.text.toString())
                     } else {
                         authenticate.resendVerificationCode(phoneEdit.text.toString(), authenticate.resendToken)
-                        submit.text = "SUBMIT"
+                        submit.text = getString(R.string.submit)
                     }
             }
             hideKeyboard()
@@ -209,7 +209,6 @@ class LoginFragment: Fragment(), WebViewFragment {
                 currState = LoginState.PHONENUM
                 region = retrieveRegion(lat.toDouble(), lng.toDouble())
                 optional = listOf(name, surname, birthDate, address, lat, lng)
-                Log.d("aeeee", name)
             } else {
                 activity?.showAlertDialogWithAutoDismiss("ასეთი მომხმარებელი უკვე დარეგისტრირებულია!")
             }
@@ -222,7 +221,7 @@ class LoginFragment: Fragment(), WebViewFragment {
                 return pair.key
             }
         }
-        return "ემიგრანტი"
+        return ProfileFragment.regions.last()
     }
 
     override fun close() {

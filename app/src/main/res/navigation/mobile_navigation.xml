@@ -20,16 +20,16 @@
     <fragment
         android:id="@+id/nav_problems"
         android:name="com.example.ipolitician.nav.problems.ProblemsFragment"
-        android:label="Problems"
+        android:label="@string/menu_problems"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nav_vocab"
         android:name="com.example.ipolitician.nav.vocab.VocabularyFragment"
-        android:label="Vocabulary" />
+        android:label="@string/menu_vocabulary" />
     <fragment
         android:id="@+id/nav_election"
         android:name="com.example.ipolitician.nav.election.ElectionFragment"
-        android:label="Election"
+        android:label="@string/menu_elections"
         tools:layout="@layout/fragment_election" />
     <fragment
         android:id="@+id/nav_login"
@@ -38,11 +38,11 @@
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.ipolitician.nav.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="@string/action_settings_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nav_cesko"
         android:name="com.example.ipolitician.nav.cesko.CeskoFragment"
-        android:label="Cesko"
+        android:label="@string/menu_cesko"
         tools:layout="@layout/fragment_cesko" />
 </navigation>

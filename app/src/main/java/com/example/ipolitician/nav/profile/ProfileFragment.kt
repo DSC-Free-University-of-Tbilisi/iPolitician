@@ -27,10 +27,9 @@ class ProfileFragment : Fragment() {
     private lateinit var spinner: Spinner
 
     companion object {
-        val ages = arrayListOf("Under 18", "18-24", "25-30", "31-40", "40-55", "56+")
-        val genders = arrayListOf("Male", "Female", "Non-binary/third gender")
+        val genders = arrayListOf("მამრობითი", "მდედრობითი", "სხვა")
         val regions = arrayListOf("აბხაზეთი", "აჭარა", "გურია", "იმერეთი", "კახეთი", "ქვემო ქართლი", "მცხეთა-მთიანეთი",
-            "რაჭა-ლეჩხუმი და ქვემო სვანეთი", "სამცხე-ჯავახეთი", "შიდა ქართლი", "სამეგრელო ზემო სვანეთი", "თბილისი")
+            "რაჭა-ლეჩხუმი და ქვემო სვანეთი", "სამცხე-ჯავახეთი", "შიდა ქართლი", "სამეგრელო ზემო სვანეთი", "თბილისი", "ემიგრანტი")
         val geoLocs = mapOf("თბილისი" to listOf(getLatLng(41.714831, 44.686803),
                                                 getLatLng(41.807827, 44.715138),
                                                 getLatLng(41.809704, 44.838550),
@@ -191,7 +190,7 @@ class ProfileFragment : Fragment() {
         val fullName = MainActivity.user!!.optional[0] + " " + MainActivity.user!!.optional[1]
         root.findViewById<TextView>(R.id.full_name).text = fullName
 
-        val fullAge = MainActivity.user!!.optional[2] + " - Age: " + MainActivity.user!!.age
+        val fullAge = MainActivity.user!!.optional[2] + "  /  " + MainActivity.user!!.age + " წლის"
         root.findViewById<TextView>(R.id.birth_date).text = fullAge
 
         root.findViewById<TextView>(R.id.address).text = MainActivity.user!!.optional[3]
