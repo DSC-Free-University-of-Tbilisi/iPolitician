@@ -27,7 +27,7 @@ fun Fragment.createDialog() : AlertDialog{
 
 fun Activity.showAlertDialogWithAutoDismiss(message: String) {
     val builder = AlertDialog.Builder(this)
-    builder.setTitle("Alert")
+    builder.setTitle("შეტყობინება")
         .setMessage(message)
         .setCancelable(false)
     val alertDialog = builder.create()

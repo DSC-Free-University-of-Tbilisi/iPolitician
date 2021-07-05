@@ -252,12 +252,12 @@ class LoginFragment: Fragment(), WebViewFragment {
         time = 60
         val value = object : CountDownTimer(60000, 1000) {
              override fun onTick(p0: Long) {
-                 codeText.text = "Code sent. Valid for $time seconds"
+                 codeText.text = "კოდი ვალიდურია $time წამი"
                  time--
              }
              override fun onFinish() {
-                 codeText.text = "Try again"
-                 submit.text = "RESEND THE CODE"
+                 codeText.text = "ხელახლა ცადე"
+                 submit.text = "კოდის გამოგზავნა"
              }
          }.start()
     }
@@ -267,6 +267,7 @@ class LoginFragment: Fragment(), WebViewFragment {
             password = password.editText?.text.toString().md5(),
             phoneNumber = phoneEdit.text.toString(),
             region = region,
+            age = ProfileFragment.getAge(optional[2]),
             optional = optional
         )
         DB.setUser(personId.text.toString().sha256(), usr)
@@ -282,6 +283,10 @@ class LoginFragment: Fragment(), WebViewFragment {
     }
 
     fun configureVisibility(){
+        personId.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN)
+        surnameEdit.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN)
+        password.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN)
+        phoneEdit.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN, LoginState.PHONENUM)
         surnameTxt.visibility = if (currState in arrayOf(LoginState.CESKOCHECK, LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
         surnameEdit.visibility = if (currState in arrayOf(LoginState.CESKOCHECK, LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
         phoneText.visibility = if (currState in arrayOf(LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE

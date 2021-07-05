@@ -33,6 +33,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_public.*
 import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 
 class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -95,13 +97,6 @@ class PublicFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             }
 
             currentPage?.repaintGraph(from, to, spinner2.selectedItemPosition - 1, spinner3.selectedItemPosition - 1)
-            if(currentPage?.load == -1) {
-                Snackbar.make(it, "ასეთი მონაცემები არ მოიძებნა", Snackbar.LENGTH_LONG).setAction(
-                    "Action",
-                    null
-                ).show()
-
-            }
         }
 
         return root
@@ -153,7 +148,6 @@ class PublicFragmentPage: Fragment() {
     private var chartData : MutableMap<String, Int> = mutableMapOf()
     private var chartElection : EV? = null
     private var chartPosition: Int = 0
-    var load = 0
 
     companion object {
         fun newInstance(position: Int, election: EV?) : PublicFragmentPage {
@@ -185,47 +179,55 @@ class PublicFragmentPage: Fragment() {
         DB.getUsers() { users, ids ->
             val idxs = ids.filterIndexed { index, _ -> (users[index].age in ageFrom..ageTo)
                     && (genderIdx == -1 || users[index].gender == genderIdx) && (regionIdx == -1 || users[index].region == ProfileFragment.regions[regionIdx])}
-            load = idxs.size
-            for (id in idxs){
-                if(chartElection == null) {
-                    DB.getSubmission(id) { sel ->
-                        if(sel.selected.isEmpty() || sel.party == "") { return@getSubmission }
 
-                        if (chartData.containsKey(sel.party)){
-                            chartData[sel.party] = chartData[sel.party]!! + 1
-                        } else {
-                            chartData[sel.party] = 1
-                        }
-                        tryDraw()
-                    }
-                } else {
-                    DB.getUserElections(id) { voted ->
-                        if(voted.voted.isEmpty()) { return@getUserElections }
+            val latch = CountDownLatch(idxs.size)
 
-                        if(voted.voted.containsKey(chartElection!!.id)) {
-                            val candidate = chartElection!!.candidates[voted.voted[chartElection!!.id]!!]
-                            if (chartData.containsKey(candidate)){
-                                chartData[candidate] = chartData[candidate]!! + 1
+            GlobalScope.launch {
+                for (id in idxs){
+
+                    if(chartElection == null) {
+                        Log.d("aeeeeeeeeeeeee","if")
+                        DB.getSubmission(id) { sel ->
+                            latch.countDown()
+                            Log.d("aeeeeeeeeeeeee","ifcount")
+                            if(sel.selected.isEmpty() || sel.party == "") { return@getSubmission }
+
+                            if (chartData.containsKey(sel.party)){
+                                chartData[sel.party] = chartData[sel.party]!! + 1
                             } else {
-                                chartData[candidate] = 1
+                                chartData[sel.party] = 1
                             }
-                            Log.d("CHART", chartData.toString())
-                            tryDraw()
+
+                        }
+                    } else {
+                        Log.d("aeeeeeeeeeeeee","else")
+                        DB.getUserElections(id) { voted ->
+                            latch.countDown()
+                            Log.d("aeeeeeeeeeeeee","elsecount")
+                            if(voted.voted.isEmpty()) { return@getUserElections }
+
+                            if(voted.voted.containsKey(chartElection!!.id)) {
+                                val candidate = chartElection!!.candidates[voted.voted[chartElection!!.id]!!]
+                                if (chartData.containsKey(candidate)){
+                                    chartData[candidate] = chartData[candidate]!! + 1
+                                } else {
+                                    chartData[candidate] = 1
+                                }
+                                Log.d("CHART", chartData.toString())
+                            }
                         }
                     }
                 }
-
-            }
-            dialog.dismiss()
-            if(chartData.isEmpty()) {
-                tryDraw()
-                load = -1
+                latch.await(5, TimeUnit.SECONDS)
+                CoroutineScope(Dispatchers.Main).async {
+                    tryDraw()
+                    dialog.dismiss()
+                }
             }
         }
     }
 
     private fun tryDraw() {
-        if(--load > 0) return
 
         var sorted = chartData.map { it }.sortedBy { -it.value }
         val sum = sorted.map { it.value }.sum()
@@ -236,6 +238,12 @@ class PublicFragmentPage: Fragment() {
             barDataSet.valueTextColor = textColor.data
             barDataSet.colors = listOf(COLORS[chartPosition % COLORS.size][index % ColorTemplate.LIBERTY_COLORS.size])
         }
+
+        if(datasets.isEmpty()){
+            barView.clear()
+            return
+        }
+
         val lineData = BarData(datasets)
         lineData.setValueFormatter(PercentFormatter())
 
@@ -255,13 +263,14 @@ class PublicFragmentPage: Fragment() {
         legend.xEntrySpace = 12f
         legend.yEntrySpace = 4f
 
-
+        barView.setNoDataText("ასეთი მონაცემები არ მოიძებნა")
         barView.description.isEnabled = false
         barView.isScaleXEnabled = false
         barView.isScaleYEnabled = false
         barView.data = lineData
         barView.setFitBars(true)
         barView.invalidate() // refresh
+
         dialog.dismiss()
     }
 
@@ -269,7 +278,6 @@ class PublicFragmentPage: Fragment() {
         arguments?.takeIf { it.containsKey(ARG_OBJECT)}?.apply {
             chartElection = getParcelable(ARG_OBJECT)
             chartPosition = getInt(ARG_POSITION)
-            Log.d("BUNDLE", "load" + chartElection.toString())
             repaintGraph()
         }
     }

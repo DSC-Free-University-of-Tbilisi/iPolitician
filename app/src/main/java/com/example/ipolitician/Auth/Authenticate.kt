@@ -48,7 +48,7 @@ class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
                     // The SMS quota for the project has been exceeded
                 }
                 // Show a message and update the UI
-                activity.showAlertDialogWithAutoDismiss("Wrong phone number format!")
+                activity.showAlertDialogWithAutoDismiss("ნომერი არის არასწორი ფორმატის!")
             }
 
             override fun onCodeSent(
@@ -123,9 +123,9 @@ class Authenticate(activity: AppCompatActivity, fragment: LoginFragment) {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
-                        activity.showAlertDialogWithAutoDismiss("Verification code entered incorrect!")
+                        activity.showAlertDialogWithAutoDismiss("კოდი ჩაწერილია არასწორად!")
                     } else {
-                        activity.showAlertDialogWithAutoDismiss("Personal number or password incorrect!")
+                        activity.showAlertDialogWithAutoDismiss("კოდი ჩაწერილია არასწორად!")
                     }
                 }
             }
