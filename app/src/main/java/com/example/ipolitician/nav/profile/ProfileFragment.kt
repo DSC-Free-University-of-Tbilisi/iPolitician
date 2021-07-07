@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.ipolitician.MainActivity
 import com.example.ipolitician.R
+import com.example.ipolitician.Util.showAlertDialogWithAutoDismiss
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.User
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +28,7 @@ class ProfileFragment : Fragment() {
     private lateinit var spinner: Spinner
 
     companion object {
-        val genders = arrayListOf("მამრობითი", "მდედრობითი", "სხვა")
+        val genders = arrayListOf("მამრობითი", "მდედრობითი", "სხვა", "აირჩიეთ სქესი")
         val regions = arrayListOf("აბხაზეთი", "აჭარა", "გურია", "იმერეთი", "კახეთი", "ქვემო ქართლი", "მცხეთა-მთიანეთი",
             "რაჭა-ლეჩხუმი და ქვემო სვანეთი", "სამცხე-ჯავახეთი", "შიდა ქართლი", "სამეგრელო ზემო სვანეთი", "თბილისი", "ემიგრანტი")
         val geoLocs = mapOf("თბილისი" to listOf(getLatLng(41.714831, 44.686803),
@@ -168,22 +169,9 @@ class ProfileFragment : Fragment() {
 
         val but = root.findViewById<Button>(R.id.save)
 
-        setBtnListener(but, onClick = {
-            MainActivity.uniqueID?.let { it1 ->
-                val usr = User(
-                    password = MainActivity.user!!.password,
-                    phoneNumber = MainActivity.user!!.phoneNumber,
-                    age = getAge(MainActivity.user!!.optional[2]),
-                    gender = spinner.selectedItemPosition,
-                    region = MainActivity.user!!.region,
-                    optional = MainActivity.user!!.optional
-                )
-                MainActivity.user = usr
-                DB.updateUser(it1, usr)
-                findNavController().navigateUp()
-                findNavController().navigate(R.id.nav_public)
-            }
-        })
+        but.setOnClickListener {
+            setBtnListener(it)
+        }
 
         root.findViewById<TextView>(R.id.region).text = MainActivity.user!!.region
 
@@ -199,9 +187,27 @@ class ProfileFragment : Fragment() {
     }
 
 
-    private fun setBtnListener(button: Button, onClick: () -> Unit){
-        button.setOnClickListener {
-            onClick()
+    private fun setBtnListener(it: View){
+        MainActivity.uniqueID?.let { it1 ->
+            val usr = User(
+                password = MainActivity.user!!.password,
+                phoneNumber = MainActivity.user!!.phoneNumber,
+                age = getAge(MainActivity.user!!.optional[2]),
+                gender = spinner.selectedItemPosition,
+                region = MainActivity.user!!.region,
+                optional = MainActivity.user!!.optional
+            )
+            if(genders[usr.gender] == "აირჩიეთ სქესი") {
+                activity?.showAlertDialogWithAutoDismiss("აირჩიეთ სქესი!")
+                return@setBtnListener
+            }
+            if(genders[genders.lastIndex] == "აირჩიეთ სქესი") { genders.removeLast() }
+
+            MainActivity.user = usr
+            DB.updateUser(it1, usr)
+            findNavController().navigateUp()
+            findNavController().navigate(R.id.nav_public)
+
             Snackbar.make(it, "Profile saved successfully.", Snackbar.LENGTH_LONG).setAction(
                 "Action",
                 null

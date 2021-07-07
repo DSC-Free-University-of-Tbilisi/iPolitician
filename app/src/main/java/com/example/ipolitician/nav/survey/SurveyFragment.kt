@@ -158,8 +158,8 @@ class SurveyFragment : Fragment() {
         surveyTitle.visibility = if (first) View.VISIBLE else View.INVISIBLE
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onPause() {
+        super.onPause()
         fab.visibility = View.GONE
     }
 

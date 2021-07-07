@@ -268,7 +268,8 @@ class LoginFragment: Fragment(), WebViewFragment {
             phoneNumber = phoneEdit.text.toString(),
             region = region,
             age = ProfileFragment.getAge(optional[2]),
-            optional = optional
+            optional = optional,
+            gender = ProfileFragment.genders.lastIndex
         )
         DB.setUser(personId.text.toString().sha256(), usr)
         MainActivity.uniqueID = personId.text.toString().sha256()

@@ -263,6 +263,7 @@ class PublicFragmentPage: Fragment() {
         legend.xEntrySpace = 12f
         legend.yEntrySpace = 4f
 
+
         barView.setNoDataText("ასეთი მონაცემები არ მოიძებნა")
         barView.description.isEnabled = false
         barView.isScaleXEnabled = false
@@ -270,7 +271,7 @@ class PublicFragmentPage: Fragment() {
         barView.data = lineData
         barView.setFitBars(true)
         barView.invalidate() // refresh
-
+        barView.notifyDataSetChanged()
         dialog.dismiss()
     }
 
