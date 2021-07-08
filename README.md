@@ -39,7 +39,7 @@
     <li>
       <a href="#current-and-next-steps">Current And Next Steps</a>
       <ul>
-        <li><a href="#welcome">Welcome</a></li>
+        <li><a href="#welcome"> Login / Register </a></li>
         <li><a href="#public-page">Public Page</a></li>
         <li><a href="#survey-page">Survey Page</a></li>
         <li><a href="#profile-page">Profile Page</a></li>
@@ -70,7 +70,7 @@ United Nations' Sustainable Development Goals (SDGs):
 
                 
                                                           With this application:
-- You can now gain some knowledge in political life, find the party which shares you opinion and world view.
+- You can now gain some knowledge in political life, find the party which shares your opinion and world view.
 - Decide on your own!
 - You can take part in voting for any problems that consists in your country/region.
 - Political life should be partially digitized so emigrants are able to influence the fate of motherland.
@@ -107,15 +107,19 @@ Tips how the application now works and features should be done during next steps
 Note: Current state of application is bilingual(english menu, georgian data) - we are going to make it clearly in both language,
 the app should be full georgian and has option to change language to full english.*
 
-### Welcome
-<img src="images/welcome.png" width="250" height="450">
-
+### Login / Register
+<img src="images/login.png" width="250" height="450">
+<img src="images/register.png" width="250" height="450">
 - Current State
 
-At the first launch of the application on the device, the User will be asked: "tell a little bit about yourself".
+At the first launch of the application on the device, the User will be asked to Log In or Register
 
-The user should select - the age range he/she/non-binary belongs.
-The user should select - the gender he/she/non-binary belongs to.
+If the user i already registered, he/she will be able to sign in the app - with Personal Id and password.
+Else user has to create account and create one - with Personal Id and last name, we can get all info about
+user, like age, name, region, address or picture.
+
+After phone veryfication, user should only select the gender(he/she/other) - which we can't guess.
+That's it ^^
 
 - Next Step / App Feature
 
