@@ -108,14 +108,14 @@ Note: The APP is fully georgian and current states means that it's how the app c
 next step/app features means, what should be added for improvement.
 
 <div style="display:flex">
-  <img src="images/menu-light.png" width="230" height="450">
-  <img src="images/menu-dark.png" width="230" height="450">
+  <img src="images/menu-light.png" width="250" height="450">
+  <img src="images/menu-dark.png" width="250" height="450">
 </div>
 
 ### Login Register Page
 <div style="display:flex">
-  <img src="images/login.png" width="230" height="450">
-  <img src="images/register.png" width="230" height="450">
+  <img src="images/login.png" width="250" height="450">
+  <img src="images/register.png" width="250" height="450">
 </div>
 - Current State
 
@@ -129,10 +129,12 @@ That's it ^^
 
 ### Public Page
 <div style="display:flex">
-  <img src="images/public-light.png" width="230" height="450">
-  <img src="images/public-dark.png" width="230" height="450">
-  <img src="images/public1-light.png" width="230" height="450">
-  <img src="images/public1-dark.png" width="230" height="450">
+  <img src="images/public-light.png" width="250" height="450">
+  <img src="images/public-dark.png" width="250" height="450">
+</div>
+<div style="display:flex">
+  <img src="images/public1-light.png" width="250" height="450">
+  <img src="images/public1-dark.png" width="250" height="450">
 </div>
 
 - Current State
@@ -151,11 +153,14 @@ Charts and statistics of all the other pages(currently, it contains only the sur
 
 ### Survey Page
 <div style="display:flex">
-  <img src="images/survey-light.png" width="230" height="450">
-  <img src="images/survey-dark.png" width="230" height="450">
-  <img src="images/survey1-light.png" width="230" height="450">
-  <img src="images/survey1-dark.png" width="230" height="450">
+  <img src="images/survey-light.png" width="250" height="450">
+  <img src="images/survey-dark.png" width="250" height="450">
 </div>
+<div style="display:flex">
+  <img src="images/survey1-light.png" width="250" height="450">
+  <img src="images/survey1-dark.png" width="250" height="450">
+</div>
+
 
 - Current State
 
@@ -169,10 +174,12 @@ Negotiation with other political parties increases the number of questions in th
 
 ### Cesko Page
 <div style="display:flex">
-  <img src="images/cesko-light.png" width="230" height="450">
-  <img src="images/cesko-dark.png" width="230" height="450">
-  <img src="images/cesko1-light.png" width="230" height="450">
-  <img src="images/cesko1-dark.png" width="230" height="450">
+  <img src="images/cesko-light.png" width="250" height="450">
+  <img src="images/cesko-dark.png" width="250" height="450">
+</div>
+<div style="display:flex">
+  <img src="images/cesko1-light.png" width="250" height="450">
+  <img src="images/cesko1-dark.png" width="250" height="450">
 </div>
 
 - Current State
@@ -188,8 +195,8 @@ You can see the official version here: https://voters.cec.gov.ge/
 
 ### Problems Page
 <div style="display:flex">
-  <img src="images/problems-light.png" width="230" height="450">
-  <img src="images/problems-dark.png" width="230" height="450">
+  <img src="images/problems-light.png" width="250" height="450">
+  <img src="images/problems-dark.png" width="250" height="450">
 </div>
 
 
@@ -203,8 +210,8 @@ Also, the users should be given limited posts to avoid spam.
 
 ### Election Page
 <div style="display:flex">
-  <img src="images/elections-light.png" width="230" height="450">
-  <img src="images/elections-dark.png" width="230" height="450">
+  <img src="images/elections-light.png" width="250" height="450">
+  <img src="images/elections-dark.png" width="250" height="450">
 </div>
 
 
@@ -216,8 +223,8 @@ In case, by adding location restrictions we can avoid votes from other regions.
 
 ### Vocabulary Page
 <div style="display:flex">
-  <img src="images/vocabulary-light.png" width="230" height="450">
-  <img src="images/vocabulary-dark.png" width="230" height="450">
+  <img src="images/vocabulary-light.png" width="250" height="450">
+  <img src="images/vocabulary-dark.png" width="250" height="450">
 </div>
 
 The user should be able to find the political word or phrases and find out what they mean
