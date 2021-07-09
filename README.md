@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician">
-    <img src="images/freeuni-dsc-logo.png" alt="Logo" width="80" height="80">
+    <img src="images/georgia-app-logo.png" alt="Logo" width="230" height="120">
   </a>
 
   <h3 align="center">iPolitician</h3>
@@ -37,12 +37,12 @@
       </ul>
     </li>
     <li>
-      <a href="#current-and-next-steps">Current And Next Steps</a>
+      <a href="#current-and-next-steps">Pages - Current And Next Steps</a>
       <ul>
-        <li><a href="#login-register"> Login/Register </a></li>
+        <li><a href="#login-register-page"> Login/Register </a></li>
         <li><a href="#public-page">Public Page</a></li>
         <li><a href="#survey-page">Survey Page</a></li>
-        <li><a href="#cesko-page">Profile Page</a></li>
+        <li><a href="#cesko-page">Cesko Page</a></li>
         <li><a href="#problems-page">Problems Page</a></li>
         <li><a href="#election-page">Election Page</a></li>
         <li><a href="#vocabulary-page">Vocabulary Page</a></li>
