@@ -11,7 +11,7 @@
     DSContinental <br />
     Free University of Tbilisi <br />
     <a href="https://dsc.community.dev/free-university-of-tbilisi/"> <img src="https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_hPnue3j.svg"></a> <br />
-    <a href="https://www.youtube.com/watch?v=-QUlc0P6oTI">View Demo</a>
+    <a href="">View Demo</a>
     ·
     <a href="https://github.com/DSC-Free-University-of-Tbilisi/iPolitician/issues">Report Bug</a>
     ·
@@ -39,10 +39,10 @@
     <li>
       <a href="#current-and-next-steps">Current And Next Steps</a>
       <ul>
-        <li><a href="#welcome"> Login / Register </a></li>
+        <li><a href="#login-register"> Login/Register </a></li>
         <li><a href="#public-page">Public Page</a></li>
         <li><a href="#survey-page">Survey Page</a></li>
-        <li><a href="#profile-page">Profile Page</a></li>
+        <li><a href="#cesko-page">Profile Page</a></li>
         <li><a href="#problems-page">Problems Page</a></li>
         <li><a href="#election-page">Election Page</a></li>
         <li><a href="#vocabulary-page">Vocabulary Page</a></li>
@@ -72,8 +72,8 @@ United Nations' Sustainable Development Goals (SDGs):
                                                           With this application:
 - You can now gain some knowledge in political life, find the party which shares your opinion and world view.
 - Decide on your own!
-- You can take part in voting for any problems that consists in your country/region.
-- Political life should be partially digitized so emigrants are able to influence the fate of motherland.
+- You can take part in voting for any problems that consist in your country/region.
+- Political life should be partially digitized so emigrants are able to influence the fate of the motherland.
 - More people are politically educated stronger countries institutions become.
 - Create safe and trusted data by people.
 
@@ -103,54 +103,59 @@ Download Android Studio - [Android Studio](https://developer.android.com/studio?
 ---
 
 ## Current And Next Steps
-Tips how the application now works and features should be done during next steps. 
-Note: Current state of application is bilingual(english menu, georgian data) - we are going to make it clearly in both language,
-the app should be full georgian and has option to change language to full english.*
+Tips on how the application now works and features should be done during the next steps.
+Note: The APP is fully georgian and current states means that it's how the app currently works and
+next step/app features means, what should be added for improvement.
 
-### Login / Register
-<img src="images/login.png" width="250" height="450">
-<img src="images/register.png" width="250" height="450">
+<div style="display:flex">
+  <img src="images/menu-light.png" width="230" height="450">
+  <img src="images/menu-dark.png" width="230" height="450">
+</div>
+
+### Login Register Page
+<div style="display:flex">
+  <img src="images/login.png" width="230" height="450">
+  <img src="images/register.png" width="230" height="450">
+</div>
 - Current State
 
 At the first launch of the application on the device, the User will be asked to Log In or Register
 
-If the user i already registered, he/she will be able to sign in the app - with Personal Id and password.
-Else user has to create account and create one - with Personal Id and last name, we can get all info about
-user, like age, name, region, address or picture.
+If the user is already registered, he/she will be able to sign in to the app - with Personal Id and password.
+Else the user has to create an account and create one - with Personal Id and last name, we can get all info about user, like age, name, region, address, or picture.
 
-After phone veryfication, user should only select the gender(he/she/other) - which we can't guess.
+After phone verification, the user should only select the gender(he/she/other) - which we can't guess.
 That's it ^^
 
-- Next Step / App Feature
-
-The user should select - the region he/she/non-binary lives in.
-[optional] - the user should be asked to use location permission to make sure the region was selected correctly.
-
 ### Public Page
-<img src="images/public1.png" width="250" height="450">
+<div style="display:flex">
+  <img src="images/public-light.png" width="230" height="450">
+  <img src="images/public-dark.png" width="230" height="450">
+  <img src="images/public1-light.png" width="230" height="450">
+  <img src="images/public1-dark.png" width="230" height="450">
+</div>
 
 - Current State
 
-The Display of Charts and Statistics of all users let the user find out how the public thinks nowadays and which political parties are in the lead.
+The Display of Charts and Statistics of all users lets the user find out how the public thinks nowadays and which political parties or candidates are in the lead.
 Also, they can use filters to see how the different categories of people think and what’s their opinion.
 
-- Next Step / App Feature
+Charts and statistics of all the other pages(currently, it contains only the survey page stats):
 
-Add charts and statistic of all the other pages(currently, it contains only the survey page stats):
-
-  from Profile Page - add region filter, citizen from (ქართლი/გურია/აჭარა/სამეგრელო/რაჭა/ხევსურეთი/სვანეთი/მთიულეთი/კახეთი/იმერეთი) and citizen from outside country (emigrant / ემიგრანტი).
+  from Profile Page - add region filter, citizen from ("აბხაზეთი", "აჭარა", "გურია", "იმერეთი", "კახეთი", "ქვემო ქართლი", "მცხეთა-მთიანეთი",
+            "რაჭა-ლეჩხუმი და ქვემო სვანეთი", "სამცხე-ჯავახეთი", "შიდა ქართლი", "სამეგრელო ზემო სვანეთი", "თბილისი", "ემიგრანტი") and citizen from outside country (emigrant / ემიგრანტი).
 
   from Problems Page - add most important problems according to the votes.
   
   from Election Page - add which candidats are liked most by publc.
 
-
 ### Survey Page
 <div style="display:flex">
-  <img src="images/survey.png" width="250" height="450">
-  <img src="images/survey1.png" width="250" height="450">
+  <img src="images/survey-light.png" width="230" height="450">
+  <img src="images/survey-dark.png" width="230" height="450">
+  <img src="images/survey1-light.png" width="230" height="450">
+  <img src="images/survey1-dark.png" width="230" height="450">
 </div>
-
 
 - Current State
 
@@ -162,45 +167,58 @@ Also, the user is able to change the answers and resubmit the survey, but for ev
 
 Negotiation with other political parties increases the number of questions in the survey, which will guarantee better results after taking the survey.
 
-### Profile Page
-<img src="images/profile.png" width="250" height="450">
+### Cesko Page
+<div style="display:flex">
+  <img src="images/cesko-light.png" width="230" height="450">
+  <img src="images/cesko-dark.png" width="230" height="450">
+  <img src="images/cesko1-light.png" width="230" height="450">
+  <img src="images/cesko1-dark.png" width="230" height="450">
+</div>
 
 - Current State
 
-The user can update the personal info. Also, now the user is identified per-app-installation,
-This means the user is unique by app installation - the unique id is generated in the first launch by app context.  
+The user can see the personal info in the CESKO database, 
+or check election region, address or details by personal id and last name.
+You can see the official version here: https://voters.cec.gov.ge/
 
 - Next Step / App Feature
 
-* To avoid false/double/spam votes the user should be identified per-device by using the Mac Address of the Device.
-* To make stronger consistency data, as we know lots of people have multiple devices today, the user should be identified by a real ID, but here comes another problem about data security of citizens.
+* To avoid problems, the app should use the direct API, not cesko page, but the data is still consistent now.
+
 
 ### Problems Page
-<img src="images/problems.png" width="250" height="450">
+<div style="display:flex">
+  <img src="images/problems-light.png" width="230" height="450">
+  <img src="images/problems-dark.png" width="230" height="450">
+</div>
+
 
 - Current State
-
 The user can vote whether the problems should be solved at first by the government or not.
+The user will be able to post the problem and wait for how the public will react or search for similar problems.
+*some votes should be allowed by the region
 
 - Next Step / App Feature
-
-The user will be able to post the problem and wait for how the public will react or search similar problems.
 Also, the users should be given limited posts to avoid spam.
 
 ### Election Page
-<img src="images/menu.png" width="250" height="450">
+<div style="display:flex">
+  <img src="images/elections-light.png" width="230" height="450">
+  <img src="images/elections-dark.png" width="230" height="450">
+</div>
 
 
-- Next Step / App Feature
+- Current State
 
 This page should be like an online election in different aspects, like the whole country or given regions.
 If today is the election who wins - the user should vote for the candidates.
-Incase, by adding location future we can avoid votes from other regions.
+In case, by adding location restrictions we can avoid votes from other regions.
 
 ### Vocabulary Page
-<img src="images/menu.png" width="250" height="450">
-
-- Next Step / App Feature
+<div style="display:flex">
+  <img src="images/vocabulary-light.png" width="230" height="450">
+  <img src="images/vocabulary-dark.png" width="230" height="450">
+</div>
 
 The user should be able to find the political word or phrases and find out what they mean
 or ask the word/phrase he/she couldn't understand and wait for the answers. Here the users will be able to
