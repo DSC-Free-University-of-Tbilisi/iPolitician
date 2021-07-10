@@ -49,9 +49,10 @@
       </ul>
     </li>
     <li>
-      <a href="#options">Options Menu</a>
+      <a href="#options-menu">Options Menu</a>
       <ul>
-        <li><a href="#options"> Options </a></li>
+        <li><a href="#profile"> Profile </a></li>
+        <li><a href="#log-out"> Log Out </a></li>
       </ul>
     </li>
     <li><a href="#faq">FAQ</a></li>
@@ -238,21 +239,29 @@ or ask the word/phrase he/she couldn't understand and wait for the answers. Here
 help each other to become more politically educated.
 
 ---
+## Options Menu
 
-### Options
-<div style="display:flex">
+ ### Profile
+ <div style="display:flex">
   <img src="images/options-light.png" width="250" height="450">
-  <img src="images/options-dark.png" width="250" height="450">
-</div>
-<div style="display:flex">
   <img src="images/options1-light.png" width="250" height="450">
   <img src="images/options1-dark.png" width="250" height="450">
 </div>
  - Current State
 
-From Options the user can see profile details and update it.
 
-Also, one can log out from account and join or register with another one.
+The user can see profile details take from CESKO and update gender, if needed.
+
+### Log Out
+<div style="display:flex">
+  <img src="images/options-dark.png" width="250" height="450">
+  <img src="images/login.png" width="250" height="450">
+  <img src="images/register.png" width="250" height="450">
+</div>
+ - Current State
+
+
+The user can log out from account and join or register with another one.
  
 ---
 ### FAQ
