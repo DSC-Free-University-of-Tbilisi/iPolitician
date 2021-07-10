@@ -237,6 +237,8 @@ The user should be able to find the political word or phrases and find out what 
 or ask the word/phrase he/she couldn't understand and wait for the answers. Here the users will be able to
 help each other to become more politically educated.
 
+---
+
 ### Options
 <div style="display:flex">
   <img src="images/options-light.png" width="250" height="450">
