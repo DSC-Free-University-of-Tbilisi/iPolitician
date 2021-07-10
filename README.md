@@ -49,9 +49,9 @@
       </ul>
     </li>
     <li>
-      <a href="#options">Options</a>
+      <a href="#options">Options Menu</a>
       <ul>
-        <li><a href="#options"> Options Menu </a></li>
+        <li><a href="#options"> Options </a></li>
       </ul>
     </li>
     <li><a href="#faq">FAQ</a></li>
