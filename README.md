@@ -39,13 +39,19 @@
     <li>
       <a href="#current-and-next-steps">Pages - Current And Next Steps</a>
       <ul>
-        <li><a href="#login-register-page"> Login/Register </a></li>
+        <li><a href="#login-and-register-page"> Login/Register </a></li>
         <li><a href="#public-page">Public Page</a></li>
         <li><a href="#survey-page">Survey Page</a></li>
         <li><a href="#cesko-page">Cesko Page</a></li>
         <li><a href="#problems-page">Problems Page</a></li>
         <li><a href="#election-page">Election Page</a></li>
         <li><a href="#vocabulary-page">Vocabulary Page</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#options">Options</a>
+      <ul>
+        <li><a href="#options"> Options Menu </a></li>
       </ul>
     </li>
     <li><a href="#faq">FAQ</a></li>
@@ -112,7 +118,7 @@ next step/app features means, what should be added for improvement.
   <img src="images/menu-dark.png" width="250" height="450">
 </div>
 
-### Login Register Page
+### Login And Register Page
 <div style="display:flex">
   <img src="images/login.png" width="250" height="450">
   <img src="images/register.png" width="250" height="450">
@@ -231,6 +237,21 @@ The user should be able to find the political word or phrases and find out what 
 or ask the word/phrase he/she couldn't understand and wait for the answers. Here the users will be able to
 help each other to become more politically educated.
 
+### Options
+<div style="display:flex">
+  <img src="images/options-light.png" width="250" height="450">
+  <img src="images/options-dark.png" width="250" height="450">
+</div>
+<div style="display:flex">
+  <img src="images/options1-light.png" width="250" height="450">
+  <img src="images/options1-dark.png" width="250" height="450">
+</div>
+ - Current State
+
+From Options the user can see profile details and update it.
+
+Also, one can log out from account and join or register with another one.
+ 
 ---
 ### FAQ
 
