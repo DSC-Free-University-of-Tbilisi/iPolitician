@@ -28,7 +28,8 @@ class ProfileFragment : Fragment() {
     private lateinit var spinner: Spinner
 
     companion object {
-        val genders = arrayListOf("მამრობითი", "მდედრობითი", "სხვა", "აირჩიეთ სქესი")
+        val choose_gender = "აირჩიეთ სქესი"
+        val genders = arrayListOf("მამრობითი", "მდედრობითი", "სხვა")
         val regions = arrayListOf("აბხაზეთი", "აჭარა", "გურია", "იმერეთი", "კახეთი", "ქვემო ქართლი", "მცხეთა-მთიანეთი",
             "რაჭა-ლეჩხუმი და ქვემო სვანეთი", "სამცხე-ჯავახეთი", "შიდა ქართლი", "სამეგრელო ზემო სვანეთი", "თბილისი", "ემიგრანტი")
         val geoLocs = mapOf("თბილისი" to listOf(getLatLng(41.714831, 44.686803),
@@ -193,22 +194,24 @@ class ProfileFragment : Fragment() {
                 password = MainActivity.user!!.password,
                 phoneNumber = MainActivity.user!!.phoneNumber,
                 age = getAge(MainActivity.user!!.optional[2]),
-                gender = spinner.selectedItemPosition,
+                gender = if (genders[0] == choose_gender) spinner.selectedItemPosition - 1 else spinner.selectedItemPosition,
                 region = MainActivity.user!!.region,
                 optional = MainActivity.user!!.optional
             )
-            if(genders[usr.gender] == "აირჩიეთ სქესი") {
+            if(usr.gender == -1) {
                 activity?.showAlertDialogWithAutoDismiss("აირჩიეთ სქესი!")
                 return@setBtnListener
             }
-            if(genders[genders.lastIndex] == "აირჩიეთ სქესი") { genders.removeLast() }
+            if(genders[0] == choose_gender) {
+                genders.removeFirst()
+            }
 
             MainActivity.user = usr
             DB.updateUser(it1, usr)
             findNavController().navigateUp()
             findNavController().navigate(R.id.nav_public)
 
-            Snackbar.make(it, "Profile saved successfully.", Snackbar.LENGTH_LONG).setAction(
+            Snackbar.make(it, "პროფილი შეინახა წარმატებით!", Snackbar.LENGTH_LONG).setAction(
                 "Action",
                 null
             ).show()

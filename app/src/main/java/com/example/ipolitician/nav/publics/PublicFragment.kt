@@ -1,7 +1,5 @@
 package com.example.ipolitician.nav.publics
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -19,12 +18,13 @@ import com.example.ipolitician.Util.dialog
 import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.nav.profile.ProfileFragment
 import com.example.ipolitician.structures.EV
-import com.example.ipolitician.structures.Voted
 import com.example.ipolitician.textColor
 import com.github.aachartmodel.aainfographics.aachartcreator.*
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.snackbar.Snackbar
@@ -143,6 +143,7 @@ private const val ARG_POSITION = "position_data"
 class PublicFragmentPage: Fragment() {
 
     private lateinit var barView: BarChart
+    private lateinit var description: TextView
 
     private val DB = DataAPI.instance
     private var chartData : MutableMap<String, Int> = mutableMapOf()
@@ -170,6 +171,7 @@ class PublicFragmentPage: Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_public, container, false)
         barView = root.findViewById(R.id.bar_view)
+        description = root.findViewById(R.id.chart_description)
         return root
     }
 
@@ -186,10 +188,8 @@ class PublicFragmentPage: Fragment() {
                 for (id in idxs){
 
                     if(chartElection == null) {
-                        Log.d("aeeeeeeeeeeeee","if")
                         DB.getSubmission(id) { sel ->
                             latch.countDown()
-                            Log.d("aeeeeeeeeeeeee","ifcount")
                             if(sel.selected.isEmpty() || sel.party == "") { return@getSubmission }
 
                             if (chartData.containsKey(sel.party)){
@@ -200,10 +200,8 @@ class PublicFragmentPage: Fragment() {
 
                         }
                     } else {
-                        Log.d("aeeeeeeeeeeeee","else")
                         DB.getUserElections(id) { voted ->
                             latch.countDown()
-                            Log.d("aeeeeeeeeeeeee","elsecount")
                             if(voted.voted.isEmpty()) { return@getUserElections }
 
                             if(voted.voted.containsKey(chartElection!!.id)) {
@@ -228,7 +226,6 @@ class PublicFragmentPage: Fragment() {
     }
 
     private fun tryDraw() {
-
         var sorted = chartData.map { it }.sortedBy { -it.value }
         val sum = sorted.map { it.value }.sum()
 
@@ -263,6 +260,9 @@ class PublicFragmentPage: Fragment() {
         legend.xEntrySpace = 12f
         legend.yEntrySpace = 4f
 
+        description.text = "სულ ხმები: $sum"
+        barView.axisLeft.axisMinimum = 0F
+        barView.axisLeft.axisMaximum = 120F
 
         barView.setNoDataText("ასეთი მონაცემები არ მოიძებნა")
         barView.description.isEnabled = false

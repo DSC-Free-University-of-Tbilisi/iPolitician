@@ -83,7 +83,7 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
             if(elections[pos].region.isNotEmpty() && elections[pos].region != MainActivity.user!!.region) {
                 Toast.makeText(
                     it.context,
-                    "You aren't allowed to vote in this region",
+                    "თქვენ არ შეგიძლიათ ამ რეგიონში ხმის მიცემა!",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -102,13 +102,13 @@ class ElectionRecyclerViewAdapter(private var elections: ArrayList<EV>, private 
             )
             DB.setUserElections(MainActivity.uniqueID!!, voted)
 
-            var newId = (holder.candidates.getChildAt(voted.voted[elections[pos].id]!!) as RadioButton).text.split(":")[0]
+            var newId = (radio.getChildAt(voted.voted[elections[pos].id]!!) as RadioButton).text.split(":")[0]
             newId += "+" + elections[pos].title
             DB.voteElection(newId)
 
             Toast.makeText(
                 it.context,
-                "successfully voted to " + newId.split("+")[0],
+                "თქვენ ხმა მიეცით '" + newId.split("+")[0] +"'-ს",
                 Toast.LENGTH_SHORT
             ).show()
 

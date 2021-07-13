@@ -118,12 +118,12 @@ class MainActivity : AppCompatActivity() {
     private fun setUpNavHeader(navHeader: View) {
         val notificationsRichPathView = navHeader.findViewById<RichPathView>(R.id.app_nav_header_background)
 
-        notificationsRichPathView.setOnPathClickListener(RichPath.OnPathClickListener { richPath ->
-            Snackbar.make(navHeader, richPath.name, Snackbar.LENGTH_LONG).setAction(
-                "Action",
-                null
-            ).show()
-        })
+//        notificationsRichPathView.setOnPathClickListener(RichPath.OnPathClickListener { richPath ->
+//            Snackbar.make(navHeader, richPath.name, Snackbar.LENGTH_LONG).setAction(
+//                "Action",
+//                null
+//            ).show()
+//        })
     }
 
 

@@ -268,12 +268,13 @@ class LoginFragment: Fragment(), WebViewFragment {
             phoneNumber = phoneEdit.text.toString(),
             region = region,
             age = ProfileFragment.getAge(optional[2]),
-            optional = optional,
-            gender = ProfileFragment.genders.lastIndex
+            optional = optional
         )
         DB.setUser(personId.text.toString().sha256(), usr)
         MainActivity.uniqueID = personId.text.toString().sha256()
         MainActivity.user = usr
+
+        ProfileFragment.genders.add(0, ProfileFragment.choose_gender)
         findNavController().navigateUp()
         findNavController().navigate(R.id.nav_profile)
     }

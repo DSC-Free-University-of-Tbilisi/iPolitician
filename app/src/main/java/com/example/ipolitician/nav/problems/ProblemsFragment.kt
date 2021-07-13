@@ -69,7 +69,7 @@ class ProblemsFragment : Fragment() {
 
             pw.contentView.findViewById<Button>(R.id.post_button1).setOnClickListener {
                 pw.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
-                val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), 800, ViewGroup.LayoutParams.WRAP_CONTENT, true)
+                val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
                 reg_pw.animationStyle = R.style.Animation
                 reg_pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
 
