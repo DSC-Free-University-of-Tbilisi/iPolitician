@@ -27,10 +27,5 @@
     <color name="noVoteClr"> #FFFFFF </color>
 
 <!--    graphic colors-->
-    <color name="red">#FF0000</color>
-    <color name="blue">#002AFF</color>
-    <color name="green">#64DD17</color>
-    <color name="violet">#AA00FF</color>
-    <color name="orange">#FF6D00</color>
 
 </resources>
