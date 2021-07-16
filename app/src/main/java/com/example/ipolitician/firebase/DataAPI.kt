@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.security.KeyPair
+import java.security.Timestamp
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -115,7 +116,8 @@ class DataAPI : DataAPInterface {
     }
 
     @Synchronized
-    override fun setProblem(problem: PV) {
+    override fun setProblem(user_id: String, problem: PV) {
+        setUserTimestamp(user_id)
         FS.collection("problems").document(problem.id)
             .set(problem)
             .addOnSuccessListener { Log.d("listener", "SUBMISSION SET success") }
@@ -147,17 +149,10 @@ class DataAPI : DataAPInterface {
 
     @Synchronized
     override fun getProblemID(callback: (String) -> Unit) {
-        Log.d("IDDDDDDDDDDDDDDDDDDDDDD", "")
         FS.collection("problems").get()
             .addOnSuccessListener { documents ->
-                var id: String = "problem00"
-                for (dc in documents) {
-                    Log.d("load Problem", "${dc.id}")
-                    id = (dc.toObject(PV::class.java)).id
-                }
-                var next_id = id.substring(7).toInt() + 1
-                id = "problem" + if(next_id > 9) next_id.toString() else "0" + next_id.toString()
-                callback(id)
+                val nextId = if(documents.size() > 9) documents.size().toString() else "0" + documents.size().toString()
+                callback("problem$nextId")
             }.addOnFailureListener {
                 callback("problem00000")
             }
@@ -227,7 +222,9 @@ class DataAPI : DataAPInterface {
     override fun getElections(callback: (ArrayList<EV>) -> Unit) {
         FS.collection("elections").get()
             .addOnSuccessListener { documents ->
-                callback(ArrayList(documents.map{it.toObject(EV::class.java)}))
+                val elections: ArrayList<EV> = ArrayList(documents.map{it.toObject(EV::class.java)})
+                elections.sortBy{it.id}
+                callback(elections)
             }.addOnFailureListener {
                 callback(ArrayList())
             }
@@ -290,5 +287,22 @@ class DataAPI : DataAPInterface {
             .update("votes", FieldValue.increment(-1))
             .addOnSuccessListener { Log.d("listener", "setUserProblems success") }
             .addOnFailureListener { Log.d("listener", "setUserProblems fail") }
+    }
+
+    @Synchronized
+    override fun setUserTimestamp(user_id: String) {
+        FS.collection("user_timestamps").document(user_id)
+            .set(TM())
+            .addOnSuccessListener { Log.d("listener", "setUserTimestamp success") }
+            .addOnFailureListener { Log.d("listener", "setUserTimestamp fail") }
+    }
+
+    @Synchronized
+    override fun getUserTimestamp(user_id: String, callback: (TM?) -> Unit) {
+        FS.collection("user_timestamps").document(user_id).get()
+            .addOnSuccessListener { document ->
+                callback(document.toObject(TM::class.java))
+                Log.d("listener", "getUserTimestamp success") }
+            .addOnFailureListener { Log.d("listener", "getUserTimestamp fail") }
     }
 }

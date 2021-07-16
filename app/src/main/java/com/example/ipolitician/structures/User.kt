@@ -1,5 +1,7 @@
 package com.example.ipolitician.structures
 
+import com.google.firebase.Timestamp
+
 data class User(
     val password: String = "",
     val phoneNumber: String = "",
@@ -9,4 +11,7 @@ data class User(
     val optional: List<String> = listOf()
 )
 
+data class TM(
+    val timestamp: Timestamp = Timestamp.now()
+)
 

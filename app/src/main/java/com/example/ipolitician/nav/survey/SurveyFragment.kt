@@ -86,14 +86,14 @@ class SurveyFragment : Fragment() {
 
             var done = selected.selected.count { x -> x != -1 }
             if(done < questions.size) {
-                Snackbar.make(it, "Please complete the survey, you have $done/${questions.size}", Snackbar.LENGTH_LONG).setAction(
+                Snackbar.make(it, "გთხოვთ უპასუხოთ ყველა კითხვას: $done/${questions.size}", Snackbar.LENGTH_LONG).setAction(
                     "Action",
                     null
                 ).show()
             } else {
                 configureFragment(root, false)
 
-                Snackbar.make(it, "Survey submitted successfully.", Snackbar.LENGTH_LONG).setAction(
+                Snackbar.make(it, "თქვენი აზრი დაფიქსირდა წარმატებით!", Snackbar.LENGTH_LONG).setAction(
                     "Action",
                     null
                 ).show()

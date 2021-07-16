@@ -12,6 +12,7 @@ import com.example.ipolitician.structures.PV
 
 class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val problem: TextView
+    val date: TextView
     val votes: Button
     val up_votes: Button
     val down_votes: Button
@@ -26,6 +27,7 @@ class ProblemsRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     init {
         problem = itemView.findViewById(R.id.problem)
+        date = itemView.findViewById(R.id.date)
         votes = itemView.findViewById(R.id.votes)
         up_votes = itemView.findViewById(R.id.up_vote)
         down_votes = itemView.findViewById(R.id.down_vote)

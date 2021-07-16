@@ -1,6 +1,7 @@
 package com.example.ipolitician.firebase
 
 import com.example.ipolitician.structures.*
+import java.sql.Timestamp
 
 interface DataAPInterface {
 
@@ -20,7 +21,7 @@ interface DataAPInterface {
     fun getProblems(callback: (ArrayList<PV>) -> Unit)
     fun getProblem(problem_id: String, callback: (PV?) -> Unit)
     fun voteProblem(problem_id: String, upvote: Long, downvote: Long)
-    fun setProblem(problem: PV)
+    fun setProblem(user_id: String, problem: PV)
 
     fun getProblemID(callback: (String) -> Unit)
 
@@ -39,5 +40,8 @@ interface DataAPInterface {
 
     fun setUserElections(user_id: String, voted: Voted)
     fun getUserElections(user_id: String, callback: (Voted) -> Unit)
+
+    fun setUserTimestamp(user_id: String)
+    fun getUserTimestamp(user_id: String, callback: (TM?) -> Unit)
 
 }

@@ -25,6 +25,7 @@ import com.example.ipolitician.search.SearchComponent
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.textColor
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
 
 
 class ProblemsFragment : Fragment() {
@@ -39,6 +40,8 @@ class ProblemsFragment : Fragment() {
     private lateinit var totSort: Button
     val sortByState = mutableMapOf<Int,Int>()
     val sortByColor = mutableMapOf<Int,Int>()
+
+    private val PROBLEM_DELAY = 7 * 24 * 360 * 1000
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -59,41 +62,21 @@ class ProblemsFragment : Fragment() {
         dialog.show()
         setFromFireStore()
 
-        root.findViewById<Button>(R.id.add_post).setOnClickListener {
-            val width: Int = (Resources.getSystem().displayMetrics.widthPixels * 0.75).toInt()
-            val height: Int = (Resources.getSystem().displayMetrics.heightPixels * 0.4).toInt()
-            val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), width, height, true)
-            pw.animationStyle = R.style.Animation
-            blurView.visibility = View.VISIBLE
-            pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
+        root.findViewById<Button>(R.id.add_post).setOnClickListener { itView ->
+            DB.getUserTimestamp(MainActivity.uniqueID!!) {timestamp ->
+                val now = Timestamp.now().toDate().time
+                val bfr = timestamp?.timestamp?.toDate()?.time
 
-            pw.contentView.findViewById<Button>(R.id.post_button1).setOnClickListener {
-                pw.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
-                val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-                reg_pw.animationStyle = R.style.Animation
-                reg_pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
-
-                reg_pw.contentView.findViewById<Button>(R.id.post_button2).setOnClickListener {
-
-                    val editText = pw.contentView.findViewById<EditText>(R.id.problem_post)
-                    editText.inputType = InputType.TYPE_NULL;
-                    val problem = editText.text.toString()
-
-                    if(problem.isNotEmpty()) {
-                        val regs = reg_pw.contentView.findViewById<RadioGroup>(R.id.regions)
-                        val region = if (regs.checkedRadioButtonId >= 0) regs.findViewById<RadioButton>(regs.checkedRadioButtonId).text.toString() else ""
-
-                        DB.getProblemID() { id ->
-                            DB.setProblem(PV(id=id, problem = problem, upvotes = 0, downvotes = 0, region = region))
-                            (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
-                        }
-
-                    }
-                    pw.dismiss()
-                    reg_pw.dismiss()
+                if(bfr == null || now - bfr > PROBLEM_DELAY) {
+                    addPost(root, inflater)
+                } else {
+                    val days = (PROBLEM_DELAY - (now - bfr))/(1000*360*24) + 1
+                    Snackbar.make(itView, "შემდეგი პოსტის დადება შეგეძლებათ $days დღეში", Snackbar.LENGTH_LONG).setAction(
+                        "Action",
+                        null
+                    ).show()
                 }
             }
-            pw.setOnDismissListener { blurView.visibility = View.GONE }
         }
 
         upSort = root.findViewById(R.id.sort_by_up_votes)
@@ -111,6 +94,42 @@ class ProblemsFragment : Fragment() {
         configureSortButtons(totSort)
 
         return root
+    }
+
+    private fun addPost(root: View, inflater: LayoutInflater) {
+        val width: Int = (Resources.getSystem().displayMetrics.widthPixels * 0.75).toInt()
+        val height: Int = (Resources.getSystem().displayMetrics.heightPixels * 0.4).toInt()
+        val pw = PopupWindow(inflater.inflate(R.layout.fragment_problem_post, null, false), width, height, true)
+        pw.animationStyle = R.style.Animation
+        blurView.visibility = View.VISIBLE
+        pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
+
+        pw.contentView.findViewById<Button>(R.id.post_button1).setOnClickListener {
+            pw.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+            val reg_pw = PopupWindow(inflater.inflate(R.layout.choose_region, null, false), width, ViewGroup.LayoutParams.WRAP_CONTENT, true)
+            reg_pw.animationStyle = R.style.Animation
+            reg_pw.showAtLocation(root.findViewById(R.id.problem), Gravity.CENTER, 0, 0)
+
+            reg_pw.contentView.findViewById<Button>(R.id.post_button2).setOnClickListener {
+
+                val editText = pw.contentView.findViewById<EditText>(R.id.problem_post)
+                editText.inputType = InputType.TYPE_NULL;
+                val problem = editText.text.toString()
+
+                if(problem.isNotEmpty()) {
+                    val regs = reg_pw.contentView.findViewById<RadioGroup>(R.id.regions)
+                    val region = if (regs.checkedRadioButtonId >= 0) regs.findViewById<RadioButton>(regs.checkedRadioButtonId).text.toString() else ""
+
+                    DB.getProblemID() { id ->
+                        DB.setProblem(MainActivity.uniqueID!!, PV(id=id, problem = problem, upvotes = 0, downvotes = 0, region = region))
+                        (ProblemsRecyclerView.adapter as ProblemsRecyclerViewAdapter).fetch_data()
+                    }
+                }
+                pw.dismiss()
+                reg_pw.dismiss()
+            }
+        }
+        pw.setOnDismissListener { blurView.visibility = View.GONE }
     }
 
     private fun setDefaultExcept(button: Button? = null, df_clr: Int = textColor.data) : Int {

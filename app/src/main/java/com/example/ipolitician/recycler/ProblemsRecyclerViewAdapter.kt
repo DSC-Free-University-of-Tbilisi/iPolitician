@@ -1,6 +1,5 @@
 package com.example.ipolitician.recycler
 
-import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,6 +13,9 @@ import com.example.ipolitician.firebase.DataAPI
 import com.example.ipolitician.structures.PV
 import com.example.ipolitician.structures.Voted
 import kotlinx.android.synthetic.main.holder_problem.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private var voted: Voted) : RecyclerView.Adapter<ProblemsRecyclerViewHolder>(), FilterableRecyclerView  {
@@ -39,10 +41,13 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
         holder.setID(problems[position].id)
         holder.setVote(voted.voted.getOrDefault(problems[position].id, 0))
 
+        val sfd = SimpleDateFormat("dd.MM.yyyy")
+        holder.date.text = sfd.format(problems[position].date.toDate())
+
         holder.up_votes.setOnClickListener {
             val reg = problems[holder.adapterPosition].region
             if(reg.isNotEmpty() && MainActivity.user!!.region != reg) {
-                Toast.makeText(it.context, "You aren't allowed to upvote in this region", Toast.LENGTH_SHORT).show()
+                Toast.makeText(it.context, "თქვენ არ შეგიძლიათ ამ რეგიონში ხმის მიცემა!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             holder.UpVote()
@@ -52,7 +57,7 @@ class ProblemsRecyclerViewAdapter(private var problems: ArrayList<PV>, private v
         holder.down_votes.setOnClickListener {
             val reg = problems[holder.adapterPosition].region
             if(reg.isNotEmpty() && MainActivity.user!!.region != reg) {
-                Toast.makeText(it.context, "You aren't allowed to downvote in this region", Toast.LENGTH_SHORT).show()
+                Toast.makeText(it.context, "თქვენ არ შეგიძლიათ ამ რეგიონში ხმის მიცემა!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             holder.DownVote()
