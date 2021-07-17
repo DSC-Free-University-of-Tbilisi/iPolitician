@@ -26,6 +26,7 @@ import com.example.ipolitician.structures.PV
 import com.example.ipolitician.textColor
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
+import java.util.concurrent.TimeUnit
 
 
 class ProblemsFragment : Fragment() {
@@ -41,7 +42,7 @@ class ProblemsFragment : Fragment() {
     val sortByState = mutableMapOf<Int,Int>()
     val sortByColor = mutableMapOf<Int,Int>()
 
-    private val PROBLEM_DELAY = 7 * 24 * 360 * 1000
+    private val PROBLEM_DELAY = 7
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -67,10 +68,10 @@ class ProblemsFragment : Fragment() {
                 val now = Timestamp.now().toDate().time
                 val bfr = timestamp?.timestamp?.toDate()?.time
 
-                if(bfr == null || now - bfr > PROBLEM_DELAY) {
+                if(bfr == null || TimeUnit.DAYS.convert(now - bfr, TimeUnit.MILLISECONDS) > PROBLEM_DELAY) {
                     addPost(root, inflater)
                 } else {
-                    val days = (PROBLEM_DELAY - (now - bfr))/(1000*360*24) + 1
+                    val days = PROBLEM_DELAY - TimeUnit.DAYS.convert(now - bfr, TimeUnit.MILLISECONDS)
                     Snackbar.make(itView, "შემდეგი პოსტის დადება შეგეძლებათ $days დღეში", Snackbar.LENGTH_LONG).setAction(
                         "Action",
                         null

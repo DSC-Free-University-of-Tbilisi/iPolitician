@@ -26,6 +26,11 @@
     <color name="totVoteClr"> #FF9800 </color>
     <color name="noVoteClr"> #FFFFFF </color>
 
-<!--    graphic colors-->
+    <color name="iconYELLOW"> #FFBF00 </color>
+    <color name="iconRED"> #FF0000 </color>
+    <color name="iconBLUE"> #03A9F4 </color>
+    <color name="iconGREEN"> #3E9C42 </color>
+
+    <!--    graphic colors-->
 
 </resources>

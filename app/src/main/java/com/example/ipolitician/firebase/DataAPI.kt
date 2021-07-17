@@ -301,7 +301,8 @@ class DataAPI : DataAPInterface {
     override fun getUserTimestamp(user_id: String, callback: (TM?) -> Unit) {
         FS.collection("user_timestamps").document(user_id).get()
             .addOnSuccessListener { document ->
-                callback(document.toObject(TM::class.java))
+                if(document.exists()) callback(document.toObject(TM::class.java))
+                else callback(null)
                 Log.d("listener", "getUserTimestamp success") }
             .addOnFailureListener { Log.d("listener", "getUserTimestamp fail") }
     }

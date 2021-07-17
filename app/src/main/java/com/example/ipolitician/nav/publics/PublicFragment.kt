@@ -161,7 +161,7 @@ class PublicFragmentPage: Fragment() {
             return fragment
         }
 
-        val COLORS = listOf(ColorTemplate.LIBERTY_COLORS, ColorTemplate.JOYFUL_COLORS, ColorTemplate.PASTEL_COLORS, ColorTemplate.VORDIPLOM_COLORS)
+        val COLORS = listOf(ColorTemplate.JOYFUL_COLORS, ColorTemplate.PASTEL_COLORS, ColorTemplate.VORDIPLOM_COLORS, ColorTemplate.LIBERTY_COLORS)
     }
 
     override fun onCreateView(
