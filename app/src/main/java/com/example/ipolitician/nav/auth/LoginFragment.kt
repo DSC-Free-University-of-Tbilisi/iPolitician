@@ -288,7 +288,6 @@ class LoginFragment: Fragment(), WebViewFragment {
         personId.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN)
         surnameEdit.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN)
         password.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN)
-        phoneEdit.isEnabled = currState in arrayOf(LoginState.CESKOCHECK, LoginState.LOGIN, LoginState.PHONENUM)
         surnameTxt.visibility = if (currState in arrayOf(LoginState.CESKOCHECK, LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
         surnameEdit.visibility = if (currState in arrayOf(LoginState.CESKOCHECK, LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
         phoneText.visibility = if (currState in arrayOf(LoginState.PHONENUM, LoginState.PHONECODE)) View.VISIBLE else View.GONE
